@@ -1,0 +1,39 @@
+server:
+  address: 0.0.0.0
+  port: 2023
+  #??tomcat??
+  tomcat:
+    uri-encoding: UTF-8
+    max-connections: 10000
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+logging:
+  charset:
+    console: UTF-8
+    file: UTF-8
+  level:
+    us.codecraft.webmagic: warn
+spring:
+  messages:
+    encoding: UTF-8
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  #thymeleaf????
+  thymeleaf:
+    cache: false
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
+    #????H5??
+    mode: HTML
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+  #??????
+  mvc:
+    static-path-pattern: /static/**
