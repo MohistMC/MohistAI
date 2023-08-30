@@ -1,6 +1,7 @@
 package com.mohistmc.ai;
 
 import com.mohistmc.ai.bots.discord.DiscordBot;
+import com.mohistmc.ai.bots.gpt.OpenAI;
 import com.mohistmc.ai.bots.qq.MiraiListener;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.console.plugin.jvm.JavaPlugin;
@@ -26,6 +27,7 @@ public class MohistAI extends JavaPlugin {
     @Override
     public void onEnable() {
         DiscordBot.init();
+        OpenAI.init(null);
         GlobalEventChannel.INSTANCE.registerListenerHost(new MiraiListener());
         getLogger().info("Plugin loaded!");
     }
