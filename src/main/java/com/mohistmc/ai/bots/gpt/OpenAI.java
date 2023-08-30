@@ -4,6 +4,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalCause;
 import com.google.common.cache.RemovalListener;
+import com.mohistmc.ai.MohistConfig;
 import com.theokanning.openai.completion.CompletionRequest;
 import com.theokanning.openai.service.OpenAiService;
 
@@ -17,10 +18,10 @@ public class OpenAI {
     private static OpenAiService service;
     public static Cache<Long, StringBuilder> CACHE;
 
-    public static void init(String key) {
-        if (key == null) return;
+    public static void init() {
+        if (!MohistConfig.chatgpt) return;
         System.out.println("初始化ChatGPT...");
-        service = new OpenAiService(key, Duration.ZERO);
+        service = new OpenAiService(MohistConfig.chatgpt_api_key, Duration.ZERO);
         CACHE = CacheBuilder.newBuilder()
                 .expireAfterWrite(30, TimeUnit.MINUTES)
                 .removalListener((RemovalListener<Long, StringBuilder>) notification -> {

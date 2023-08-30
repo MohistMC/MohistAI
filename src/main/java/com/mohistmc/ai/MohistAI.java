@@ -26,8 +26,9 @@ public class MohistAI extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        MohistConfig.init();
         DiscordBot.init();
-        OpenAI.init(null);
+        OpenAI.init();
         GlobalEventChannel.INSTANCE.registerListenerHost(new MiraiListener());
         getLogger().info("Plugin loaded!");
     }
