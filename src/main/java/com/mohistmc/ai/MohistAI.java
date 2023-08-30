@@ -36,6 +36,8 @@ public class MohistAI extends JavaPlugin {
     }
 
     public static void sendMsgToGroup(Long g, String msg) {
-        MohistAI.INSTANCE.QQ.getGroup(g).sendMessage(msg);
+        if (MohistAI.INSTANCE.QQ != null && MohistAI.INSTANCE.QQ.getGroup(g) != null) {
+            MohistAI.INSTANCE.QQ.getGroup(g).sendMessage(msg);
+        }
     }
 }

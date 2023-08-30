@@ -45,15 +45,15 @@ public class BiliBiliLive implements PageProcessor {
     }
 
     public void run() {
-        LIVE.scheduleAtFixedRate(this::run0, 1000, 1000 * 3, TimeUnit.MILLISECONDS);
+        if (!MohistConfig.live_bilibili) return;
+        System.out.println("B站开播推送服务已启用");
+        LIVE.scheduleAtFixedRate(this::run0, 1000, 1000 * 10, TimeUnit.MILLISECONDS);
     }
 
     private void run0() {
-        if (!MohistConfig.live_bilibili) return;
         Spider.create(new BiliBiliLive())
                 .addUrl("https://api.live.bilibili.com/xlive/web-room/v1/index/getInfoByRoom?room_id=43087")
                 .addPipeline(new QQPipeline())
                 .runAsync();
-        System.out.println("B站开播推送服务已启用");
     }
 }

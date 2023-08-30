@@ -42,12 +42,11 @@ dependencies {
     implementation 'com.mohistmc.yaml:yaml:0.4'
     implementation 'org.yaml:snakeyaml:2.0'
     implementation 'com.google.zxing:core:3.5.0'
-    implementation('us.codecraft:webmagic-extension:0.7.5') {
+    implementation('us.codecraft:webmagic-extension:0.9.0') {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
     }
     implementation 'com.mysql:mysql-connector-j:8.0.33'
     implementation 'com.theokanning.openai-gpt3-java:service:0.14.0'
-    implementation "com.github.oshi:oshi-core:6.4.4"
 }
 
 mirai {

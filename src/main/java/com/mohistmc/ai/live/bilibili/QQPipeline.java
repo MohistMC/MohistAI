@@ -28,8 +28,10 @@ public class QQPipeline implements Pipeline {
                     """).formatted(title);
 
             System.out.println(ms);
-            MohistAI.sendMsgToGroup(Account.mohistQQGGroup, ms);
-            BiliBiliLive.setPushQQ(true);
+            if (MohistAI.INSTANCE.QQ != null) {
+                MohistAI.sendMsgToGroup(Account.mohistQQGGroup, ms);
+                BiliBiliLive.setPushQQ(true);
+            }
         } else {
             BiliBiliLive.setPushQQ(false);
         }
