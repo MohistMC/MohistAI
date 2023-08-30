@@ -72,8 +72,9 @@ public class MohistConfig {
         }
     }
 
-    private static void set(String path, Object val) {
+    public static void set(String path, Object val) {
         config.set(path, val);
+        save();
     }
 
     private static boolean getBoolean(String path, boolean def) {
@@ -109,6 +110,7 @@ public class MohistConfig {
     public static String discord_proxy_address;
     public static int discord_proxy_port;
     public static boolean live_bilibili;
+    public static boolean live_bilibili_pushqq;
 
     private static void mohist() {
         chatgpt = getBoolean("chatgpt.enable", false);
@@ -117,6 +119,7 @@ public class MohistConfig {
         discord_token = getString("discord.token", "");
         discord_proxy_address = getString("discord.proxy.address", "127.0.0.1");
         discord_proxy_port = getInt("discord.proxy.port", 7890);
-        live_bilibili = getBoolean("live.bilibili", true);
+        live_bilibili = getBoolean("live.bilibili.enable", true);
+        live_bilibili_pushqq = getBoolean("live.bilibili.pushqq", false);
     }
 }

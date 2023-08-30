@@ -2,6 +2,7 @@ package com.mohistmc.ai.live.bilibili;
 
 import com.mohistmc.ai.Account;
 import com.mohistmc.ai.MohistAI;
+import com.mohistmc.ai.MohistConfig;
 import com.mohistmc.ai.live.bilibili.entry.LiveApiData;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
@@ -19,7 +20,6 @@ public class QQPipeline implements Pipeline {
         String title = liveApiData.getRoom_info().getTitle();
 
         if (liveStatus == 1) {
-            if (BiliBiliLive.isPushQQ) return;
             String ms = ("""
                     你关注的主播已开播
                                         
@@ -28,12 +28,11 @@ public class QQPipeline implements Pipeline {
                     """).formatted(title);
 
             System.out.println(ms);
-            if (MohistAI.INSTANCE.QQ != null) {
+            if (MohistAI.INSTANCE.QQ != null && !MohistConfig.live_bilibili_pushqq) {
                 MohistAI.sendMsgToGroup(Account.mohistQQGGroup, ms);
-                BiliBiliLive.setPushQQ(true);
+                MohistConfig.set("live.bilibili.pushqq", true);
+                System.out.println("已推送至QQ");
             }
-        } else {
-            BiliBiliLive.setPushQQ(false);
         }
     }
 }

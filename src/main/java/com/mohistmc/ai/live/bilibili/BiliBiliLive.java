@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.mohistmc.ai.MohistConfig;
 import com.mohistmc.ai.live.bilibili.entry.LiveApiBody;
 import com.mohistmc.ai.utils.NamedThreadFactory;
-import lombok.Setter;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
@@ -20,8 +19,6 @@ public class BiliBiliLive implements PageProcessor {
 
     public static final ScheduledExecutorService LIVE = new ScheduledThreadPoolExecutor(1, new NamedThreadFactory("BiliBili - Live"));
     public static LiveApiBody liveApiBody;
-    @Setter
-    public static boolean isPushQQ = false;
     private final Site site = Site.me().setRetryTimes(3).setSleepTime(1000).setTimeOut(10000).setCharset(StandardCharsets.UTF_8.displayName());
 
     @Override
@@ -32,7 +29,7 @@ public class BiliBiliLive implements PageProcessor {
         //直播状态码 1为开播
         int live_status = liveApiBody.getData().getRoom_info().getLive_status();
         if (live_status == 0) {
-            isPushQQ = false;
+            if (MohistConfig.live_bilibili_pushqq) MohistConfig.set("live.bilibili.pushqq", false);
             page.setSkip(true);
         }
 
