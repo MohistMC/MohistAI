@@ -3,6 +3,7 @@ package com.mohistmc.ai;
 import com.mohistmc.ai.bots.discord.DiscordBot;
 import com.mohistmc.ai.bots.gpt.OpenAI;
 import com.mohistmc.ai.bots.qq.MiraiListener;
+import com.mohistmc.ai.live.bilibili.BiliBiliLive;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.console.plugin.jvm.JavaPlugin;
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescriptionBuilder;
@@ -31,5 +32,10 @@ public class MohistAI extends JavaPlugin {
         OpenAI.init();
         GlobalEventChannel.INSTANCE.registerListenerHost(new MiraiListener());
         getLogger().info("Plugin loaded!");
+        new BiliBiliLive().run();
+    }
+
+    public static void sendMsgToGroup(Long g, String msg) {
+        MohistAI.INSTANCE.QQ.getGroup(g).sendMessage(msg);
     }
 }

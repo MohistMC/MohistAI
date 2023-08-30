@@ -148,8 +148,8 @@ public class MohistGitHub {
             }
         }
     }
-    
+
     public static void sendMsgToGroup(final String msg) {
-        MohistAI.INSTANCE.QQ.getGroup(Account.mohistQQGGroup).sendMessage(msg);
+        MohistAI.sendMsgToGroup(Account.mohistQQGGroup, msg);
     }
 }
