@@ -11,4 +11,7 @@ public class Account {
     public static String discordGitHub = "511810108594847774";
     public static String discordAnnonces = "550911071188418571";
     public static String discordJenkins = "986956489061204018";
+
+    // Fish
+    public static Long fish0 = 743486411L;
 }

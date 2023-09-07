@@ -110,7 +110,9 @@ public class MohistConfig {
     public static String discord_proxy_address;
     public static int discord_proxy_port;
     public static boolean live_bilibili;
+    public static boolean live_huya;
     public static boolean live_bilibili_pushqq;
+    public static boolean live_huya_pushqq;
 
     private static void mohist() {
         chatgpt = getBoolean("chatgpt.enable", false);
@@ -121,5 +123,7 @@ public class MohistConfig {
         discord_proxy_port = getInt("discord.proxy.port", 7890);
         live_bilibili = getBoolean("live.bilibili.enable", true);
         live_bilibili_pushqq = getBoolean("live.bilibili.pushqq", false);
+        live_huya = getBoolean("live.huya.enable", true);
+        live_huya_pushqq = getBoolean("live.huya.pushqq", false);
     }
 }

@@ -20,15 +20,15 @@ public class QQPipeline implements Pipeline {
         String title = liveApiData.getRoom_info().getTitle();
 
         if (liveStatus == 1) {
-            String ms = ("""
+            if (MohistAI.INSTANCE.QQ != null && !MohistConfig.live_bilibili_pushqq) {
+                String ms = ("""
                     你关注的主播已开播
                                         
                     直播标题： %s
                     直播地址：https://live.bilibili.com/43087
                     """).formatted(title);
 
-            System.out.println(ms);
-            if (MohistAI.INSTANCE.QQ != null && !MohistConfig.live_bilibili_pushqq) {
+                System.out.println(ms);
                 MohistAI.sendMsgToGroup(Account.mohistQQGGroup, ms);
                 MohistConfig.set("live.bilibili.pushqq", true);
                 System.out.println("已推送至QQ");
