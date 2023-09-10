@@ -10,6 +10,8 @@ import net.mamoe.mirai.console.plugin.jvm.JavaPlugin;
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescriptionBuilder;
 import net.mamoe.mirai.event.GlobalEventChannel;
 
+import java.util.List;
+
 /**
  * @author Mgazul by MohistMC
  * @date 2023/7/14 15:06:30
@@ -47,6 +49,18 @@ public class MohistAI extends JavaPlugin {
         for (Bot bot : Bot.getInstances()) {
             if (bot.getId() == 1947585689L) {
                 bot.getGroup(g).sendMessage(msg);
+            }
+        }
+    }
+
+    public static void sendMsgToFish(List<String> g, String msg) {
+        for (Bot bot : Bot.getInstances()) {
+            if (bot.getId() == 1947585689L) {
+                for (String l : g) {
+                    if (bot.getGroup(Long.parseLong(l)) != null) {
+                        bot.getGroup(Long.parseLong(l)).sendMessage(msg);
+                    }
+                }
             }
         }
     }

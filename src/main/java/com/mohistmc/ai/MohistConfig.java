@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -114,6 +115,8 @@ public class MohistConfig {
     public static boolean live_bilibili_pushqq;
     public static boolean live_huya_pushqq;
 
+    public static List<String> fishQQG;
+
     private static void mohist() {
         chatgpt = getBoolean("chatgpt.enable", false);
         chatgpt_api_key = getString("chatgpt.api_key", "");
@@ -125,5 +128,6 @@ public class MohistConfig {
         live_bilibili_pushqq = getBoolean("live.bilibili.pushqq", false);
         live_huya = getBoolean("live.huya.enable", true);
         live_huya_pushqq = getBoolean("live.huya.pushqq", false);
+        fishQQG = getList("fish.qqg", new ArrayList<>());
     }
 }

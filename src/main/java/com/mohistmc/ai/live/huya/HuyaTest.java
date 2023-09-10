@@ -1,6 +1,7 @@
 package com.mohistmc.ai.live.huya;
 
 import com.mohistmc.ai.IOUtil;
+import com.mohistmc.ai.MohistConfig;
 import mjson.Json;
 
 import java.io.IOException;

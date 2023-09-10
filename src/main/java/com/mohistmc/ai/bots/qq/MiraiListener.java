@@ -33,7 +33,9 @@ public class MiraiListener extends SimpleListenerHost {
     }
     @EventHandler
     public ListeningStatus onMessage(GroupMessageEvent event) throws IOException {
-        if (event.getGroup().getId() == Account.mohistQQGGroup) {
+        Long group = event.getGroup().getId();
+        String message = event.getMessage().contentToString();
+        if (group == Account.mohistQQGGroup) {
             for (SingleMessage s : event.getMessage()) {
                 if (s instanceof FileMessage f) {
                     //获取文件的下载链接
@@ -45,24 +47,56 @@ public class MiraiListener extends SimpleListenerHost {
                 }
             }
         }
-        if (event.getGroup().getId() == Account.fish0) {
-            if (event.getMessage().contentToString().equals("直播检测")) {
-                String jsonText = IOUtil.readContent(IOUtil.getInputStream("https://www.huya.com/pinkfish")).split("TT_ROOM_DATA = ")[1].split("};")[0] + "}";
-                Json json = Json.read(jsonText);
-                String ms = ("""
-                    直播状态: %s
-                    直播标题: %s
-                    直播地址：https://www.huya.com/pinkfish
-                    """).formatted((json.at("state").asString().equals("REPLAY") ? "重播中" : "直播中"), json.at("introduction").asString());
-                MohistAI.sendMsgToFish(Account.fish0, ms);
-            }
-            boolean bb = false;
-            for (SingleMessage s : event.getMessage()) {
-                if (s instanceof At at) {
-                    if (at.getTarget() == 1947585689L) {
-                        if (!bb) {
-                            bb = true;
-                            MohistAI.sendMsgToFish(Account.fish0, "麻麻不让我和陌生人讲话!");
+
+        for (Object s : MohistConfig.fishQQG) {
+            if (String.valueOf(s).contains(String.valueOf(group))) {
+                if (event.getSender().getPermission().getLevel() > 0) {
+                    if (message.equals("直播检测")) {
+                        try {
+                            String jsonText = IOUtil.readContent(IOUtil.getInputStream("https://www.huya.com/pinkfish")).split("TT_ROOM_DATA = ")[1].split("};")[0] + "}";
+                            Json json = Json.read(jsonText);
+                            String ms = ("""
+                                    直播状态: %s
+                                    直播标题: %s
+                                    直播地址：https://www.huya.com/pinkfish
+                                    """).formatted((json.at("state").asString().equals("REPLAY") ? "重播中" : "直播中"), json.at("introduction").asString());
+                            MohistAI.sendMsgToFish(group, ms);
+                        } catch (Exception ignored) {
+                        }
+                    }
+
+                    if (message.equals("开启直播推送")) {
+                        if (!MohistConfig.live_huya) {
+                            MohistConfig.set("live.huya.enable", true);
+                            MohistAI.sendMsgToFish(group, "开启成功!");
+                        } else {
+                            MohistAI.sendMsgToFish(group, "已经开启了哟!");
+                        }
+                    }
+                    if (message.equals("关闭直播推送")) {
+                        if (MohistConfig.live_huya) {
+                            MohistConfig.set("live.huya.enable", false);
+                            MohistAI.sendMsgToFish(group, "关闭成功!");
+                        } else {
+                            MohistAI.sendMsgToFish(group, "已经关闭了哟!");
+                        }
+                    }
+                    if (message.equals("直播推送列表")) {
+                        StringBuilder sb = new StringBuilder();
+                        for (Object l : MohistConfig.fishQQG) {
+                            sb.append(l).append("\n");
+                        }
+                        MohistAI.sendMsgToFish(group, "开启推送的QQ群!\n" + sb);
+                    }
+                }
+                boolean bb = false;
+                for (SingleMessage sm : event.getMessage()) {
+                    if (sm instanceof At at) {
+                        if (at.getTarget() == 1947585689L) {
+                            if (!bb) {
+                                bb = true;
+                                MohistAI.sendMsgToFish(group, "麻麻不让我和陌生人讲话!");
+                            }
                         }
                     }
                 }

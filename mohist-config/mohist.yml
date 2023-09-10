@@ -1,0 +1,27 @@
+# This is the main configuration file for MohistAI.
+# https://wiki.mohistmc.com/
+#
+# Discord: https://discord.gg/mohistmc
+# Forums: https://mohistmc.com/
+# Forums (CN): https://mohistmc.cn/
+
+chatgpt:
+  enable: false
+  api_key: ''
+discord:
+  enable: false
+  token: ''
+  proxy:
+    address: 127.0.0.1
+    port: 7890
+live:
+  bilibili:
+    enable: true
+    pushqq: false
+  huya:
+    enable: true
+    pushqq: false
+fish:
+  qqg:
+  - 743486411
+config-version: 1
