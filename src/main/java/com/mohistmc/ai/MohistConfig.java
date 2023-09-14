@@ -117,6 +117,8 @@ public class MohistConfig {
 
     public static List<String> fishQQG;
 
+    public static String dashscope_apikey;
+
     private static void mohist() {
         chatgpt = getBoolean("chatgpt.enable", false);
         chatgpt_api_key = getString("chatgpt.api_key", "");
@@ -129,5 +131,6 @@ public class MohistConfig {
         live_huya = getBoolean("live.huya.enable", true);
         live_huya_pushqq = getBoolean("live.huya.pushqq", false);
         fishQQG = getList("fish.qqg", new ArrayList<>());
+        dashscope_apikey = getString("dashscope.apikey", "");
     }
 }

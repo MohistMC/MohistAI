@@ -1,10 +1,13 @@
 package com.mohistmc.ai.bots.qq;
 
+import com.alibaba.dashscope.exception.InputRequiredException;
+import com.alibaba.dashscope.exception.NoApiKeyException;
 import com.mohistmc.ai.Account;
 import com.mohistmc.ai.HasteUtils;
 import com.mohistmc.ai.IOUtil;
 import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.MohistConfig;
+import com.mohistmc.ai.dashscope.QianWen;
 import mjson.Json;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.ListeningStatus;
@@ -87,6 +90,15 @@ public class MiraiListener extends SimpleListenerHost {
                             sb.append(l).append("\n");
                         }
                         MohistAI.sendMsgToFish(group, "开启推送的QQ群!\n" + sb);
+                    }
+
+                    if (message.startsWith("鱼酱")) {
+                        String messageStr = message.substring(2);
+                        try {
+                            MohistAI.sendMsgToFish(group, QianWen.callWithMessage(messageStr));
+                        } catch (NoApiKeyException | InputRequiredException e) {
+                            MohistAI.sendMsgToFish(group, "暂时无法回答!");
+                        }
                     }
                 }
                 boolean bb = false;

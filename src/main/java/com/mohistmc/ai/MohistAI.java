@@ -1,5 +1,6 @@
 package com.mohistmc.ai;
 
+import com.alibaba.dashscope.utils.Constants;
 import com.mohistmc.ai.bots.discord.DiscordBot;
 import com.mohistmc.ai.bots.gpt.OpenAI;
 import com.mohistmc.ai.bots.qq.MiraiListener;
@@ -33,6 +34,7 @@ public class MohistAI extends JavaPlugin {
         MohistConfig.init();
         DiscordBot.init();
         OpenAI.init();
+        Constants.apiKey = MohistConfig.dashscope_apikey;
         GlobalEventChannel.INSTANCE.registerListenerHost(new MiraiListener());
         getLogger().info("Plugin loaded!");
         new BiliBiliLive().run();
