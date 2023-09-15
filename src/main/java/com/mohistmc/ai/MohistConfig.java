@@ -118,6 +118,9 @@ public class MohistConfig {
     public static List<String> fishQQG;
 
     public static String dashscope_apikey;
+    public static String baidu_apikey;
+    public static String baidu_secretkey;
+
 
     private static void mohist() {
         chatgpt = getBoolean("chatgpt.enable", false);
@@ -132,5 +135,7 @@ public class MohistConfig {
         live_huya_pushqq = getBoolean("live.huya.pushqq", false);
         fishQQG = getList("fish.qqg", new ArrayList<>());
         dashscope_apikey = getString("dashscope.apikey", "");
+        baidu_apikey = getString("baidu.apikey", "");
+        baidu_secretkey = getString("baidu.secretkey", "");
     }
 }

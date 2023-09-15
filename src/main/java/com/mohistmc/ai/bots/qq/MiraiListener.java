@@ -7,6 +7,7 @@ import com.mohistmc.ai.HasteUtils;
 import com.mohistmc.ai.IOUtil;
 import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.MohistConfig;
+import com.mohistmc.ai.dashscope.ChatAPI;
 import com.mohistmc.ai.dashscope.QianWen;
 import mjson.Json;
 import net.mamoe.mirai.event.EventHandler;
@@ -115,7 +116,7 @@ public class MiraiListener extends SimpleListenerHost {
             } else if (message.startsWith("鱼酱") || message.startsWith("小小墨")) {
                 if (message.length() > 2) {
                     String messageStr = message.substring(2);
-                    String m = QianWen.callWithMessage(messageStr);
+                    String m = ChatAPI.send(messageStr);
                     if (m != null) {
                         event.getGroup().sendMessage(m);
                     }
@@ -159,9 +160,9 @@ public class MiraiListener extends SimpleListenerHost {
                 System.out.println("这是一个语音");
                 return ListeningStatus.STOPPED;
             } else if (!commands.contains(message) && !message.equals("[动画表情]") && !message.equals("[图片]")) {
-                String m = QianWen.callWithMessage(message);
+                String m = ChatAPI.send(message);
                 if (m != null) {
-                    event.getGroup().sendMessage(QianWen.callWithMessage(message));
+                    event.getGroup().sendMessage(m);
                 }
             }
         }

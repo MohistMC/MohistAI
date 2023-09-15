@@ -33,7 +33,7 @@ import java.nio.ByteBuffer;
  */
 public class QianWen {
 
-    public static String callWithMessage(String message){
+    public static String sendText(String message){
         try {
             Generation gen = new Generation();
             MessageManager msgManager = new MessageManager(10);
