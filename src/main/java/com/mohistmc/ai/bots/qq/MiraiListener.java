@@ -15,6 +15,7 @@ import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.event.events.BotOnlineEvent;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
 import net.mamoe.mirai.message.data.At;
+import net.mamoe.mirai.message.data.Audio;
 import net.mamoe.mirai.message.data.FileMessage;
 import net.mamoe.mirai.message.data.Image;
 import net.mamoe.mirai.message.data.MessageContent;
@@ -120,6 +121,14 @@ public class MiraiListener extends SimpleListenerHost {
                         } catch (IOException e) {
                             MohistAI.sendMsgToFish(group, "暂时无法回答!");
                         }
+                    }else if (message.startsWith("画")) {
+                        String messageStr = message.substring(1);
+                        try (ExternalResource externalResource = ExternalResource.create(QianWen.basicCall(messageStr).openStream())) {
+                            Image offlineAudio = event.getGroup().uploadImage(externalResource);
+                            event.getGroup().sendMessage(offlineAudio);
+                        } catch (IOException | NoApiKeyException e) {
+                            MohistAI.sendMsgToFish(group, "暂时无法回答!");
+                        }
                     }else if (message.equals("开启自由对话")) {
                         ziyou = true;
                         MohistAI.sendMsgToFish(group, "开启成功!");
@@ -128,7 +137,7 @@ public class MiraiListener extends SimpleListenerHost {
                         MohistAI.sendMsgToFish(group, "关闭成功!");
                     } else {
                         if (ziyou) {
-                            if (event.getMessage() instanceof MessageContent m && m instanceof PlainText) {
+                            if (!(event.getMessage() instanceof MessageContent) || !(event.getMessage() instanceof Image) || !(event.getMessage() instanceof Audio)) {
                                 try {
                                     MohistAI.sendMsgToFish(group, QianWen.callWithMessage(message));
                                 } catch (NoApiKeyException | InputRequiredException e) {

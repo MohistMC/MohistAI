@@ -3,6 +3,10 @@ package com.mohistmc.ai.dashscope;
 import com.alibaba.dashscope.aigc.generation.Generation;
 import com.alibaba.dashscope.aigc.generation.GenerationResult;
 import com.alibaba.dashscope.aigc.generation.models.QwenParam;
+import com.alibaba.dashscope.aigc.imagesynthesis.ImageSynthesis;
+import com.alibaba.dashscope.aigc.imagesynthesis.ImageSynthesisListResult;
+import com.alibaba.dashscope.aigc.imagesynthesis.ImageSynthesisParam;
+import com.alibaba.dashscope.aigc.imagesynthesis.ImageSynthesisResult;
 import com.alibaba.dashscope.audio.tts.SpeechSynthesisAudioFormat;
 import com.alibaba.dashscope.audio.tts.SpeechSynthesisParam;
 import com.alibaba.dashscope.audio.tts.SpeechSynthesizer;
@@ -12,12 +16,15 @@ import com.alibaba.dashscope.common.Role;
 import com.alibaba.dashscope.exception.ApiException;
 import com.alibaba.dashscope.exception.InputRequiredException;
 import com.alibaba.dashscope.exception.NoApiKeyException;
+import com.alibaba.dashscope.task.AsyncTaskListParam;
 import com.alibaba.dashscope.utils.Constants;
 import com.mohistmc.ai.MohistConfig;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.ByteBuffer;
 
 /**
@@ -60,5 +67,19 @@ public class QianWen {
             throw new RuntimeException(e);
         }
         return file;
+    }
+
+    public static URL basicCall(String message) throws ApiException, NoApiKeyException, MalformedURLException {
+        ImageSynthesis is = new ImageSynthesis();
+        ImageSynthesisParam param =
+                ImageSynthesisParam.builder()
+                        .model(ImageSynthesis.Models.WANX_V1)
+                        .n(1)
+                        .size("1024*1024")
+                        .prompt(message)
+                        .build();
+
+        ImageSynthesisResult result = is.call(param);
+        return new URL(result.getOutput().getResults().get(0).get("url"));
     }
 }
