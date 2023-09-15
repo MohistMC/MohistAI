@@ -33,19 +33,23 @@ import java.nio.ByteBuffer;
  */
 public class QianWen {
 
-    public static String callWithMessage(String message) throws NoApiKeyException, ApiException, InputRequiredException {
-        Generation gen = new Generation();
-        MessageManager msgManager = new MessageManager(10);
-        Message userMsg = Message.builder().role(Role.USER.getValue()).content(message).build();
-        msgManager.add(userMsg);
-        QwenParam param =
-                QwenParam.builder().model(Generation.Models.QWEN_TURBO).messages(msgManager.get())
-                        .resultFormat(QwenParam.ResultFormat.MESSAGE)
-                        .topP(0.8)
-                        .enableSearch(true)
-                        .build();
-        GenerationResult result = gen.call(param);
-        return result.getOutput().getChoices().get(0).getMessage().getContent();
+    public static String callWithMessage(String message){
+        try {
+            Generation gen = new Generation();
+            MessageManager msgManager = new MessageManager(10);
+            Message userMsg = Message.builder().role(Role.USER.getValue()).content(message).build();
+            msgManager.add(userMsg);
+            QwenParam param =
+                    QwenParam.builder().model(Generation.Models.QWEN_TURBO).messages(msgManager.get())
+                            .resultFormat(QwenParam.ResultFormat.MESSAGE)
+                            .topP(0.8)
+                            .enableSearch(true)
+                            .build();
+            GenerationResult result = gen.call(param);
+            return result.getOutput().getChoices().get(0).getMessage().getContent();
+        } catch (NoApiKeyException | InputRequiredException e) {
+           return null;
+        }
     }
 
     public static File SyncAudioDataToFile(Long id, String msg) {
