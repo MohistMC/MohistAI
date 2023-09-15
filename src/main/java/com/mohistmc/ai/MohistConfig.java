@@ -1,6 +1,7 @@
 package com.mohistmc.ai;
 
 import com.google.common.base.Throwables;
+import com.mohistmc.ai.dashscope.ChatApiType;
 import com.mohistmc.yaml.InvalidConfigurationException;
 import com.mohistmc.yaml.file.YamlConfiguration;
 
@@ -120,6 +121,7 @@ public class MohistConfig {
     public static String dashscope_apikey;
     public static String baidu_apikey;
     public static String baidu_secretkey;
+    public static ChatApiType ai_type;
 
 
     private static void mohist() {
@@ -137,5 +139,6 @@ public class MohistConfig {
         dashscope_apikey = getString("dashscope.apikey", "");
         baidu_apikey = getString("baidu.apikey", "");
         baidu_secretkey = getString("baidu.secretkey", "");
+        ai_type = ChatApiType.valueOf(getString("ai_type", ChatApiType.ALIBABA.name()));
     }
 }

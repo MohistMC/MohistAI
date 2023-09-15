@@ -1,6 +1,5 @@
 package com.mohistmc.ai.bots.qq;
 
-import com.alibaba.dashscope.exception.InputRequiredException;
 import com.alibaba.dashscope.exception.NoApiKeyException;
 import com.mohistmc.ai.Account;
 import com.mohistmc.ai.HasteUtils;
@@ -8,6 +7,7 @@ import com.mohistmc.ai.IOUtil;
 import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.MohistConfig;
 import com.mohistmc.ai.dashscope.ChatAPI;
+import com.mohistmc.ai.dashscope.ChatApiType;
 import com.mohistmc.ai.dashscope.QianWen;
 import mjson.Json;
 import net.mamoe.mirai.event.EventHandler;
@@ -16,12 +16,9 @@ import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.event.events.BotOnlineEvent;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
 import net.mamoe.mirai.message.data.At;
-import net.mamoe.mirai.message.data.Audio;
 import net.mamoe.mirai.message.data.FileMessage;
 import net.mamoe.mirai.message.data.Image;
-import net.mamoe.mirai.message.data.MessageContent;
 import net.mamoe.mirai.message.data.OfflineAudio;
-import net.mamoe.mirai.message.data.PlainText;
 import net.mamoe.mirai.message.data.SingleMessage;
 import net.mamoe.mirai.utils.ExternalResource;
 
@@ -36,8 +33,6 @@ import java.util.List;
 public class MiraiListener extends SimpleListenerHost {
 
     public static List<Long> ziyou = new ArrayList<>();
-    public static List<String> commands = List.of("鱼酱帮助列表", "直播检测", "开启直播推送", "关闭直播推送", "开启自由对话", "关闭自由对话");
-    public static List<String> sss = List.of("鱼酱", "语音", "画");
 
     @EventHandler
     public ListeningStatus onMessage(BotOnlineEvent event) {
@@ -52,6 +47,8 @@ public class MiraiListener extends SimpleListenerHost {
     public ListeningStatus onMessage(GroupMessageEvent event) throws IOException {
         Long group = event.getGroup().getId();
         String message = event.getMessage().contentToString();
+        int permission = event.getSender().getPermission().getLevel();
+
         if (event.getSender().getId() == 1947585689L) {
             return ListeningStatus.STOPPED;
         }
@@ -68,101 +65,109 @@ public class MiraiListener extends SimpleListenerHost {
             }
         }
 
-        if (event.getSender().getPermission().getLevel() > 0) {
-            if (message.equals("鱼酱帮助列表")) {
-                String sb = """
-                        ====== 口令 ======
-                        直播检测
-                        开启直播推送
-                        关闭直播推送
-                        直播推送列表
-                        开启自由对话
-                        关闭自由对话
-                        鱼酱 + <内容>""";
-                event.getGroup().sendMessage(sb);
+        boolean bb = false;
+        for (SingleMessage sm : event.getMessage()) {
+            if (sm instanceof At at) {
+                if (at.getTarget() == event.getBot().getId()) {
+                    if (!bb) {
+                        bb = true;
+                        String atMessage = message.replace("@" + at.getTarget(), "").trim();
 
-            } else if (message.equals("直播检测")) {
-                try {
-                    String jsonText = IOUtil.readContent(IOUtil.getInputStream("https://www.huya.com/pinkfish")).split("TT_ROOM_DATA = ")[1].split("};")[0] + "}";
-                    Json json = Json.read(jsonText);
-                    String ms = ("""
-                            直播状态: %s
-                            直播标题: %s
-                            直播地址：https://www.huya.com/pinkfish
-                            """).formatted((json.at("state").asString().equals("REPLAY") ? "重播中" : "直播中"), json.at("introduction").asString());
-                    event.getGroup().sendMessage(ms);
-                } catch (Exception ignored) {
-                }
-            } else if (message.equals("开启直播推送")) {
-                if (!MohistConfig.live_huya) {
-                    MohistConfig.set("live.huya.enable", true);
-                    event.getGroup().sendMessage("开启成功!");
-                } else {
-                    event.getGroup().sendMessage("已经开启了哟!");
-                }
-            } else if (message.equals("关闭直播推送")) {
-                if (MohistConfig.live_huya) {
-                    MohistConfig.set("live.huya.enable", false);
-                    event.getGroup().sendMessage("关闭成功!");
-                } else {
-                    event.getGroup().sendMessage("已经关闭了哟!");
-                }
-            } else if (message.equals("直播推送列表")) {
-                StringBuilder sb = new StringBuilder();
-                for (Object l : MohistConfig.fishQQG) {
-                    sb.append(l).append("\n");
-                }
-                event.getGroup().sendMessage("开启推送的QQ群!\n" + sb);
-            } else if (message.startsWith("鱼酱") || message.startsWith("小小墨")) {
-                if (message.length() > 2) {
-                    String messageStr = message.substring(2);
-                    String m = ChatAPI.send(messageStr);
-                    if (m != null) {
-                        event.getGroup().sendMessage(m);
+                        if (atMessage.equals("帮助")) {
+                            if (permission > 0) {
+                                String sb = """
+                                        ====== 口令 ======
+                                        开启直播推送
+                                        关闭直播推送
+                                        直播推送列表
+                                        开启自由对话
+                                        关闭自由对话
+                                        更改对话模型
+                                        艾特机器人""";
+                                event.getGroup().sendMessage(sb);
+                            }
+
+                        } else if (atMessage.equals("开启直播推送")) {
+                            if (permission > 0) {
+                                if (!MohistConfig.live_huya) {
+                                    MohistConfig.set("live.huya.enable", true);
+                                    event.getGroup().sendMessage("开启成功!");
+                                } else {
+                                    event.getGroup().sendMessage("已经开启了哟!");
+                                }
+                            }
+                        } else if (atMessage.equals("关闭直播推送")) {
+                            if (permission > 0) {
+                                if (MohistConfig.live_huya) {
+                                    MohistConfig.set("live.huya.enable", false);
+                                    event.getGroup().sendMessage("关闭成功!");
+                                } else {
+                                    event.getGroup().sendMessage("已经关闭了哟!");
+                                }
+                            }
+                        } else if (atMessage.equals("直播推送列表")) {
+                            if (permission > 0) {
+                                StringBuilder sb = new StringBuilder();
+                                for (Object l : MohistConfig.fishQQG) {
+                                    sb.append(l).append("\n");
+                                }
+                                event.getGroup().sendMessage("开启推送的QQ群!\n" + sb);
+                            }
+                        } else if (atMessage.startsWith("语音")) {
+                            if (permission > 0) {
+                                if (atMessage.length() > 2) {
+                                    String messageStr = atMessage.substring(2);
+                                    try (ExternalResource externalResource = ExternalResource.create(QianWen.SyncAudioDataToFile(event.getSender().getId(), messageStr))) {
+                                        OfflineAudio offlineAudio = event.getGroup().uploadAudio(externalResource);
+                                        event.getGroup().sendMessage(offlineAudio);
+                                    } catch (IOException e) {
+                                        event.getGroup().sendMessage("暂时无法回答!");
+                                    }
+                                }
+                            }
+                        } else if (atMessage.startsWith("画")) {
+                            if (permission > 0) {
+                                if (atMessage.length() > 1) {
+                                    String messageStr = atMessage.substring(1);
+                                    try (ExternalResource externalResource = ExternalResource.create(QianWen.basicCall(messageStr).openStream())) {
+                                        Image offlineAudio = event.getGroup().uploadImage(externalResource);
+                                        event.getGroup().sendMessage(offlineAudio);
+                                    } catch (IOException | NoApiKeyException e) {
+                                        event.getGroup().sendMessage("暂时无法回答!");
+                                    }
+                                }
+                            }
+                        } else if (atMessage.equals("开启自由对话")) {
+                            if (permission > 0) {
+                                ziyou.add(group);
+                                event.getGroup().sendMessage("开启成功!");
+                            }
+                        } else if (atMessage.equals("关闭自由对话")) {
+                            if (permission > 0) {
+                                ziyou.remove(group);
+                                event.getGroup().sendMessage("关闭成功!");
+                            }
+                        } else if (atMessage.equals("更改对话模型")) {
+                            if (permission > 0) {
+                                if (MohistConfig.ai_type == ChatApiType.ALIBABA) {
+                                    MohistConfig.set("ai_type", ChatApiType.BAIDU.name());
+                                } else {
+                                    MohistConfig.set("ai_type", ChatApiType.ALIBABA.name());
+                                }
+                                event.getGroup().sendMessage("已更改为: " + MohistConfig.ai_type.asName());
+                            }
+                        } else {
+                            if (permission > 0 || ziyou.contains(group)) {
+                                if (!atMessage.equals("[动画表情]") && !atMessage.equals("[图片]") && !atMessage.equals("[表情]") && !atMessage.isEmpty()) {
+                                    String m = ChatAPI.send(atMessage);
+                                    if (m != null) {
+                                        event.getGroup().sendMessage(m);
+                                    }
+                                }
+                            }
+                        }
+
                     }
-                }
-            } else if (message.startsWith("语音")) {
-                if (message.length() > 2) {
-                    String messageStr = message.substring(2);
-                    try (ExternalResource externalResource = ExternalResource.create(QianWen.SyncAudioDataToFile(event.getSender().getId(), messageStr))) {
-                        OfflineAudio offlineAudio = event.getGroup().uploadAudio(externalResource);
-                        event.getGroup().sendMessage(offlineAudio);
-                    } catch (IOException e) {
-                        event.getGroup().sendMessage("暂时无法回答!");
-                    }
-                }
-            } else if (message.startsWith("画")) {
-                if (message.length() > 1) {
-                    String messageStr = message.substring(1);
-                    try (ExternalResource externalResource = ExternalResource.create(QianWen.basicCall(messageStr).openStream())) {
-                        Image offlineAudio = event.getGroup().uploadImage(externalResource);
-                        event.getGroup().sendMessage(offlineAudio);
-                    } catch (IOException | NoApiKeyException e) {
-                        event.getGroup().sendMessage("暂时无法回答!");
-                    }
-                }
-            } else if (message.equals("开启自由对话")) {
-                ziyou.add(group);
-                event.getGroup().sendMessage("开启成功!");
-            } else if (message.equals("关闭自由对话")) {
-                ziyou.remove(group);
-                event.getGroup().sendMessage("关闭成功!");
-            }
-        }
-        if (ziyou.contains(group)) {
-            if (event.getMessage() instanceof FileMessage) {
-                System.out.println("这是一个文件");
-                return ListeningStatus.STOPPED;
-            } else if (event.getMessage() instanceof Image) {
-                System.out.println("这是一个图片");
-                return ListeningStatus.STOPPED;
-            } else if (event.getMessage() instanceof Audio) {
-                System.out.println("这是一个语音");
-                return ListeningStatus.STOPPED;
-            } else if (!commands.contains(message) && !message.equals("[动画表情]") && !message.equals("[图片]")) {
-                String m = ChatAPI.send(message);
-                if (m != null) {
-                    event.getGroup().sendMessage(m);
                 }
             }
         }

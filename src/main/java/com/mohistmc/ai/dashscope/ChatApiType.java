@@ -6,6 +6,17 @@ package com.mohistmc.ai.dashscope;
  */
 public enum ChatApiType {
 
-    BAIDU,
-    ALIBABA
+    BAIDU("文心一言"),
+    ALIBABA("通义千问");
+
+    String name;
+
+    ChatApiType(String name) {
+        this.name = name;
+    }
+
+    public String asName() {
+        return name;
+    }
+
 }

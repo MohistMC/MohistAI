@@ -2,9 +2,13 @@ package com.mohistmc.ai.dashscope;
 
 import com.mohistmc.ai.MohistConfig;
 import mjson.Json;
-import okhttp3.*;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
-import java.io.*;
+import java.io.IOException;
 
 /**
  * @author Mgazul by MohistMC

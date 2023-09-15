@@ -1,10 +1,7 @@
 package com.mohistmc.ai.live.huya;
 
-import com.mohistmc.ai.Account;
 import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.MohistConfig;
-import com.mohistmc.ai.live.bilibili.BiliBiliLive;
-import com.mohistmc.ai.live.bilibili.entry.LiveApiData;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
