@@ -16,6 +16,7 @@ import net.mamoe.mirai.event.events.BotOnlineEvent;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
 import net.mamoe.mirai.message.data.At;
 import net.mamoe.mirai.message.data.FileMessage;
+import net.mamoe.mirai.message.data.MessageContent;
 import net.mamoe.mirai.message.data.SingleMessage;
 
 import java.io.IOException;
@@ -25,6 +26,8 @@ import java.io.IOException;
  * @date 2023/7/12 16:00:30
  */
 public class MiraiListener extends SimpleListenerHost {
+
+    public static boolean ziyou = false;
 
     @EventHandler
     public ListeningStatus onMessage(BotOnlineEvent event) {
@@ -66,38 +69,46 @@ public class MiraiListener extends SimpleListenerHost {
                             MohistAI.sendMsgToFish(group, ms);
                         } catch (Exception ignored) {
                         }
-                    }
-
-                    if (message.equals("开启直播推送")) {
+                    } else if (message.equals("开启直播推送")) {
                         if (!MohistConfig.live_huya) {
                             MohistConfig.set("live.huya.enable", true);
                             MohistAI.sendMsgToFish(group, "开启成功!");
                         } else {
                             MohistAI.sendMsgToFish(group, "已经开启了哟!");
                         }
-                    }
-                    if (message.equals("关闭直播推送")) {
+                    } else if (message.equals("关闭直播推送")) {
                         if (MohistConfig.live_huya) {
                             MohistConfig.set("live.huya.enable", false);
                             MohistAI.sendMsgToFish(group, "关闭成功!");
                         } else {
                             MohistAI.sendMsgToFish(group, "已经关闭了哟!");
                         }
-                    }
-                    if (message.equals("直播推送列表")) {
+                    } else if (message.equals("直播推送列表")) {
                         StringBuilder sb = new StringBuilder();
                         for (Object l : MohistConfig.fishQQG) {
                             sb.append(l).append("\n");
                         }
                         MohistAI.sendMsgToFish(group, "开启推送的QQ群!\n" + sb);
-                    }
-
-                    if (message.startsWith("鱼酱")) {
+                    } else if (message.startsWith("鱼酱")) {
                         String messageStr = message.substring(2);
                         try {
                             MohistAI.sendMsgToFish(group, QianWen.callWithMessage(messageStr));
                         } catch (NoApiKeyException | InputRequiredException e) {
                             MohistAI.sendMsgToFish(group, "暂时无法回答!");
+                        }
+                    } else if (message.equals("开启自由对话")) {
+                        ziyou = true;
+                        MohistAI.sendMsgToFish(group, "开启成功!");
+                    } else if (message.equals("关闭自由对话")) {
+                        ziyou = false;
+                        MohistAI.sendMsgToFish(group, "关闭成功!");
+                    } else {
+                        if (ziyou) {
+                            try {
+                                MohistAI.sendMsgToFish(group, QianWen.callWithMessage(message));
+                            } catch (NoApiKeyException | InputRequiredException e) {
+                                MohistAI.sendMsgToFish(group, "暂时无法回答!");
+                            }
                         }
                     }
                 }
