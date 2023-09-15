@@ -10,6 +10,7 @@ import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.console.plugin.jvm.JavaPlugin;
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescriptionBuilder;
 import net.mamoe.mirai.event.GlobalEventChannel;
+import net.mamoe.mirai.message.data.MessageContent;
 
 import java.util.List;
 
@@ -48,6 +49,14 @@ public class MohistAI extends JavaPlugin {
     }
 
     public static void sendMsgToFish(Long g, String msg) {
+        for (Bot bot : Bot.getInstances()) {
+            if (bot.getId() == 1947585689L) {
+                bot.getGroup(g).sendMessage(msg);
+            }
+        }
+    }
+
+    public static void sendMsgToFish(Long g, MessageContent msg) {
         for (Bot bot : Bot.getInstances()) {
             if (bot.getId() == 1947585689L) {
                 bot.getGroup(g).sendMessage(msg);

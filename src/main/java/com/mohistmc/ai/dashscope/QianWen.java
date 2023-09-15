@@ -3,6 +3,9 @@ package com.mohistmc.ai.dashscope;
 import com.alibaba.dashscope.aigc.generation.Generation;
 import com.alibaba.dashscope.aigc.generation.GenerationResult;
 import com.alibaba.dashscope.aigc.generation.models.QwenParam;
+import com.alibaba.dashscope.audio.tts.SpeechSynthesisAudioFormat;
+import com.alibaba.dashscope.audio.tts.SpeechSynthesisParam;
+import com.alibaba.dashscope.audio.tts.SpeechSynthesizer;
 import com.alibaba.dashscope.common.Message;
 import com.alibaba.dashscope.common.MessageManager;
 import com.alibaba.dashscope.common.Role;
@@ -10,8 +13,12 @@ import com.alibaba.dashscope.exception.ApiException;
 import com.alibaba.dashscope.exception.InputRequiredException;
 import com.alibaba.dashscope.exception.NoApiKeyException;
 import com.alibaba.dashscope.utils.Constants;
-import com.alibaba.dashscope.utils.JsonUtils;
-import mjson.Json;
+import com.mohistmc.ai.MohistConfig;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
 
 /**
  * @author Mgazul by MohistMC
@@ -34,13 +41,24 @@ public class QianWen {
         return result.getOutput().getChoices().get(0).getMessage().getContent();
     }
 
+    public static File SyncAudioDataToFile(Long id, String msg) {
+        SpeechSynthesizer synthesizer = new SpeechSynthesizer();
+        SpeechSynthesisParam param = SpeechSynthesisParam.builder()
+                .model("sambert-zhiwei-v1")
+                .text(msg)
+                .sampleRate(16000)
+                .format(SpeechSynthesisAudioFormat.MP3)
+                .apiKey(MohistConfig.dashscope_apikey)
+                .build();
 
-    public static void main(String[] args){
-        Constants.apiKey="";
-        try {
-            System.out.println(callWithMessage("你是谁"));
-        } catch (ApiException | NoApiKeyException | InputRequiredException e) {
-            System.out.println(e.getMessage());
+        File file = new File(id + ".mp3");
+        // 调用call方法，传入param参数，获取合成音频
+        ByteBuffer audio = synthesizer.call(param);
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            fos.write(audio.array());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+        return file;
     }
 }

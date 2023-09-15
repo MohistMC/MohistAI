@@ -16,8 +16,12 @@ import net.mamoe.mirai.event.events.BotOnlineEvent;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
 import net.mamoe.mirai.message.data.At;
 import net.mamoe.mirai.message.data.FileMessage;
+import net.mamoe.mirai.message.data.Image;
 import net.mamoe.mirai.message.data.MessageContent;
+import net.mamoe.mirai.message.data.OfflineAudio;
+import net.mamoe.mirai.message.data.PlainText;
 import net.mamoe.mirai.message.data.SingleMessage;
+import net.mamoe.mirai.utils.ExternalResource;
 
 import java.io.IOException;
 
@@ -57,7 +61,19 @@ public class MiraiListener extends SimpleListenerHost {
         for (Object s : MohistConfig.fishQQG) {
             if (String.valueOf(s).contains(String.valueOf(group))) {
                 if (event.getSender().getPermission().getLevel() > 0) {
-                    if (message.equals("直播检测")) {
+                    if (message.equals("鱼酱帮助列表")) {
+                        String sb = """
+                                ====== 口令 ======
+                                直播检测
+                                开启直播推送
+                                关闭直播推送
+                                直播推送列表
+                                开启自由对话
+                                关闭自由对话
+                                鱼酱 + <内容>""";
+                        MohistAI.sendMsgToFish(group, sb);
+
+                    } else if (message.equals("直播检测")) {
                         try {
                             String jsonText = IOUtil.readContent(IOUtil.getInputStream("https://www.huya.com/pinkfish")).split("TT_ROOM_DATA = ")[1].split("};")[0] + "}";
                             Json json = Json.read(jsonText);
@@ -96,7 +112,15 @@ public class MiraiListener extends SimpleListenerHost {
                         } catch (NoApiKeyException | InputRequiredException e) {
                             MohistAI.sendMsgToFish(group, "暂时无法回答!");
                         }
-                    } else if (message.equals("开启自由对话")) {
+                    } else if (message.startsWith("语音")) {
+                        String messageStr = message.substring(2);
+                        try (ExternalResource externalResource = ExternalResource.create(QianWen.SyncAudioDataToFile(event.getSender().getId(), messageStr))) {
+                            OfflineAudio offlineAudio = event.getGroup().uploadAudio(externalResource);
+                            event.getGroup().sendMessage(offlineAudio);
+                        } catch (IOException e) {
+                            MohistAI.sendMsgToFish(group, "暂时无法回答!");
+                        }
+                    }else if (message.equals("开启自由对话")) {
                         ziyou = true;
                         MohistAI.sendMsgToFish(group, "开启成功!");
                     } else if (message.equals("关闭自由对话")) {
@@ -104,10 +128,12 @@ public class MiraiListener extends SimpleListenerHost {
                         MohistAI.sendMsgToFish(group, "关闭成功!");
                     } else {
                         if (ziyou) {
-                            try {
-                                MohistAI.sendMsgToFish(group, QianWen.callWithMessage(message));
-                            } catch (NoApiKeyException | InputRequiredException e) {
-                                MohistAI.sendMsgToFish(group, "暂时无法回答!");
+                            if (event.getMessage() instanceof MessageContent m && m instanceof PlainText) {
+                                try {
+                                    MohistAI.sendMsgToFish(group, QianWen.callWithMessage(message));
+                                } catch (NoApiKeyException | InputRequiredException e) {
+                                    MohistAI.sendMsgToFish(group, "暂时无法回答!");
+                                }
                             }
                         }
                     }
