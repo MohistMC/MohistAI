@@ -24,7 +24,7 @@ public class HuyaToQQPipeline implements Pipeline {
                     """).formatted(HuyaLive.json.at("introduction").asString());
 
             System.out.println(ms);
-            MohistAI.sendMsgToFish(MohistConfig.fishQQG, ms);
+            MohistAI.sendMsgToFish(ms);
             MohistConfig.set("live.huya.pushqq", true);
             System.out.println("已推送至QQ");
         }

@@ -116,8 +116,6 @@ public class MohistConfig {
     public static boolean live_bilibili_pushqq;
     public static boolean live_huya_pushqq;
 
-    public static List<String> fishQQG;
-
     public static String dashscope_apikey;
     public static String baidu_apikey;
     public static String baidu_secretkey;
@@ -135,7 +133,6 @@ public class MohistConfig {
         live_bilibili_pushqq = getBoolean("live.bilibili.pushqq", false);
         live_huya = getBoolean("live.huya.enable", true);
         live_huya_pushqq = getBoolean("live.huya.pushqq", false);
-        fishQQG = getList("fish.qqg", new ArrayList<>());
         dashscope_apikey = getString("dashscope.apikey", "");
         baidu_apikey = getString("baidu.apikey", "");
         baidu_secretkey = getString("baidu.secretkey", "");

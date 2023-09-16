@@ -44,7 +44,7 @@ public class QianWen {
                             .build();
             GenerationResult result = gen.call(param);
             return result.getOutput().getChoices().get(0).getMessage().getContent();
-        } catch (NoApiKeyException | InputRequiredException e) {
+        } catch (Exception e) {
            return null;
         }
     }

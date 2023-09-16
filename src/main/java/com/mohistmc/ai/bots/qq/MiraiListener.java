@@ -9,6 +9,8 @@ import com.mohistmc.ai.MohistConfig;
 import com.mohistmc.ai.dashscope.ChatAPI;
 import com.mohistmc.ai.dashscope.ChatApiType;
 import com.mohistmc.ai.dashscope.QianWen;
+import com.mohistmc.ai.live.bilibili.BiliBiliLive;
+import com.mohistmc.ai.live.huya.HuyaLive;
 import mjson.Json;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.ListeningStatus;
@@ -65,108 +67,99 @@ public class MiraiListener extends SimpleListenerHost {
             }
         }
 
-        boolean bb = false;
         for (SingleMessage sm : event.getMessage()) {
             if (sm instanceof At at) {
                 if (at.getTarget() == event.getBot().getId()) {
-                    if (!bb) {
-                        bb = true;
-                        String atMessage = message.replace("@" + at.getTarget(), "").trim();
+                    String atMessage = message.replace("@" + at.getTarget(), "").trim();
 
-                        if (atMessage.equals("帮助")) {
-                            if (permission > 0) {
-                                String sb = """
-                                        ====== 口令 ======
-                                        开启直播推送
-                                        关闭直播推送
-                                        直播推送列表
-                                        开启自由对话
-                                        关闭自由对话
-                                        更改对话模型
-                                        艾特机器人""";
-                                event.getGroup().sendMessage(sb);
-                            }
+                    if (atMessage.equals("帮助")) {
+                        if (permission > 0) {
+                            String sb = """
+                                    ====== 口令 ======
+                                    开启直播推送
+                                    关闭直播推送
+                                    直播推送列表
+                                    开启自由对话
+                                    关闭自由对话
+                                    更改对话模型
+                                    艾特机器人""";
+                            event.getGroup().sendMessage(sb);
+                        }
 
-                        } else if (atMessage.equals("开启直播推送")) {
-                            if (permission > 0) {
-                                if (!MohistConfig.live_huya) {
-                                    MohistConfig.set("live.huya.enable", true);
-                                    event.getGroup().sendMessage("开启成功!");
-                                } else {
-                                    event.getGroup().sendMessage("已经开启了哟!");
-                                }
-                            }
-                        } else if (atMessage.equals("关闭直播推送")) {
-                            if (permission > 0) {
-                                if (MohistConfig.live_huya) {
-                                    MohistConfig.set("live.huya.enable", false);
-                                    event.getGroup().sendMessage("关闭成功!");
-                                } else {
-                                    event.getGroup().sendMessage("已经关闭了哟!");
-                                }
-                            }
-                        } else if (atMessage.equals("直播推送列表")) {
-                            if (permission > 0) {
-                                StringBuilder sb = new StringBuilder();
-                                for (Object l : MohistConfig.fishQQG) {
-                                    sb.append(l).append("\n");
-                                }
-                                event.getGroup().sendMessage("开启推送的QQ群!\n" + sb);
-                            }
-                        } else if (atMessage.startsWith("语音")) {
-                            if (permission > 0) {
-                                if (atMessage.length() > 2) {
-                                    String messageStr = atMessage.substring(2);
-                                    try (ExternalResource externalResource = ExternalResource.create(QianWen.SyncAudioDataToFile(event.getSender().getId(), messageStr))) {
-                                        OfflineAudio offlineAudio = event.getGroup().uploadAudio(externalResource);
-                                        event.getGroup().sendMessage(offlineAudio);
-                                    } catch (IOException e) {
-                                        event.getGroup().sendMessage("暂时无法回答!");
-                                    }
-                                }
-                            }
-                        } else if (atMessage.startsWith("画")) {
-                            if (permission > 0) {
-                                if (atMessage.length() > 1) {
-                                    String messageStr = atMessage.substring(1);
-                                    try (ExternalResource externalResource = ExternalResource.create(QianWen.basicCall(messageStr).openStream())) {
-                                        Image offlineAudio = event.getGroup().uploadImage(externalResource);
-                                        event.getGroup().sendMessage(offlineAudio);
-                                    } catch (IOException | NoApiKeyException e) {
-                                        event.getGroup().sendMessage("暂时无法回答!");
-                                    }
-                                }
-                            }
-                        } else if (atMessage.equals("开启自由对话")) {
-                            if (permission > 0) {
-                                ziyou.add(group);
+                    } else if (atMessage.equals("开启直播推送")) {
+                        if (permission > 0) {
+                            if (!MohistConfig.live_huya) {
+                                MohistConfig.set("live.huya.enable", true);
                                 event.getGroup().sendMessage("开启成功!");
+                            } else {
+                                event.getGroup().sendMessage("已经开启了哟!");
                             }
-                        } else if (atMessage.equals("关闭自由对话")) {
-                            if (permission > 0) {
-                                ziyou.remove(group);
+                        }
+                    } else if (atMessage.equals("关闭直播推送")) {
+                        if (permission > 0) {
+                            if (MohistConfig.live_huya) {
+                                MohistConfig.set("live.huya.enable", false);
                                 event.getGroup().sendMessage("关闭成功!");
+                            } else {
+                                event.getGroup().sendMessage("已经关闭了哟!");
                             }
-                        } else if (atMessage.equals("更改对话模型")) {
-                            if (permission > 0) {
-                                if (MohistConfig.ai_type == ChatApiType.ALIBABA) {
-                                    MohistConfig.set("ai_type", ChatApiType.BAIDU.name());
-                                } else {
-                                    MohistConfig.set("ai_type", ChatApiType.ALIBABA.name());
-                                }
-                                event.getGroup().sendMessage("已更改为: " + MohistConfig.ai_type.asName());
-                            }
-                        } else {
-                            if (permission > 0 || ziyou.contains(group)) {
-                                if (!atMessage.equals("[动画表情]") && !atMessage.equals("[图片]") && !atMessage.equals("[表情]") && !atMessage.isEmpty()) {
-                                    String m = ChatAPI.send(atMessage);
-                                    if (m != null) {
-                                        event.getGroup().sendMessage(m);
-                                    }
+                        }
+                    } else if (atMessage.startsWith("语音")) {
+                        if (permission > 0) {
+                            if (atMessage.length() > 2) {
+                                String messageStr = atMessage.substring(2);
+                                try (ExternalResource externalResource = ExternalResource.create(QianWen.SyncAudioDataToFile(event.getSender().getId(), messageStr))) {
+                                    OfflineAudio offlineAudio = event.getGroup().uploadAudio(externalResource);
+                                    event.getGroup().sendMessage(offlineAudio);
+                                } catch (IOException e) {
+                                    event.getGroup().sendMessage("暂时无法回答!");
                                 }
                             }
                         }
-
+                    } else if (atMessage.startsWith("画")) {
+                        if (permission > 0) {
+                            if (atMessage.length() > 1) {
+                                String messageStr = atMessage.substring(1);
+                                try (ExternalResource externalResource = ExternalResource.create(QianWen.basicCall(messageStr).openStream())) {
+                                    Image offlineAudio = event.getGroup().uploadImage(externalResource);
+                                    event.getGroup().sendMessage(offlineAudio);
+                                } catch (IOException | NoApiKeyException e) {
+                                    event.getGroup().sendMessage("暂时无法回答!");
+                                }
+                            }
+                        }
+                    } else if (atMessage.equals("开启自由对话")) {
+                        if (permission > 0) {
+                            ziyou.add(group);
+                            event.getGroup().sendMessage("开启成功!");
+                        }
+                    } else if (atMessage.equals("关闭自由对话")) {
+                        if (permission > 0) {
+                            ziyou.remove(group);
+                            event.getGroup().sendMessage("关闭成功!");
+                        }
+                    } else if (atMessage.equals("更改对话模型")) {
+                        if (permission > 0) {
+                            if (MohistConfig.ai_type == ChatApiType.ALIBABA) {
+                                MohistConfig.set("ai_type", ChatApiType.BAIDU.name());
+                            } else {
+                                MohistConfig.set("ai_type", ChatApiType.ALIBABA.name());
+                            }
+                            event.getGroup().sendMessage("已更改为: " + MohistConfig.ai_type.asName());
+                        }
+                    } else {
+                        System.out.println(atMessage);
+                        if (permission > 0 || ziyou.contains(group)) {
+                            System.out.println(atMessage);
+                            if (!atMessage.equals("[动画表情]") && !atMessage.equals("[图片]") && !atMessage.equals("[表情]") && !atMessage.isEmpty()) {
+                                String m = ChatAPI.send(atMessage);
+                                if (m != null) {
+                                    event.getGroup().sendMessage(m);
+                                } else {
+                                    System.out.println("AI对话null");
+                                }
+                            }
+                        }
                     }
                 }
             }

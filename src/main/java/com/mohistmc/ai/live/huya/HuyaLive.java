@@ -48,6 +48,10 @@ public class HuyaLive implements PageProcessor {
         LIVE.scheduleAtFixedRate(this::run0, 1000, 1000 * 5, TimeUnit.MILLISECONDS);
     }
 
+    public void shutdown() {
+        LIVE.shutdown();
+    }
+
     private void run0() {
         Spider.create(new HuyaLive())
                 .addUrl("https://www.huya.com/pinkfish")
