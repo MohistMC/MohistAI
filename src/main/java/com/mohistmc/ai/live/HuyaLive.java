@@ -39,6 +39,7 @@ public class HuyaLive {
         boolean liveStatus = json.at("isOn").asBoolean();
         var title = json.at("introduction").asString();
 
+        // TODO 添加艾特所有人的功能
         if (liveStatus && !MohistConfig.live_huya_pushqq) {
             String ms = ("""
                     你关注的主播已开播
@@ -48,7 +49,7 @@ public class HuyaLive {
                     """).formatted(title);
 
             System.out.println(ms);
-            MohistAI.sendMsgToFish(ms);
+            MohistAI.sendAll(ms);
             MohistConfig.set("live.huya.pushqq", true);
             System.out.println("已推送至QQ");
         } else {

@@ -6,6 +6,7 @@ import com.mohistmc.ai.bots.gpt.OpenAI;
 import com.mohistmc.ai.bots.qq.MiraiListener;
 import com.mohistmc.ai.live.BiliBiliLive;
 import com.mohistmc.ai.live.HuyaLive;
+import com.mohistmc.ai.minecraft.VersionsCheck;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.console.plugin.jvm.JavaPlugin;
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescriptionBuilder;
@@ -38,6 +39,7 @@ public class MohistAI extends JavaPlugin {
         getLogger().info("Plugin loaded!");
         BiliBiliLive.INSTANCE.run();
         HuyaLive.INSTANCE.run();
+        VersionsCheck.INSTANCE.run();
     }
 
     public static void sendMsgToGroup(Long g, String msg) {
@@ -46,7 +48,7 @@ public class MohistAI extends JavaPlugin {
         }
     }
 
-    public static void sendMsgToFish(String msg) {
+    public static void sendAll(String msg) {
         for (Bot bot : Bot.getInstances()) {
             for (Group group : bot.getGroups()) {
                 group.sendMessage(msg);

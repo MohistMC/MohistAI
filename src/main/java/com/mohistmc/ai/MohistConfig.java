@@ -120,6 +120,10 @@ public class MohistConfig {
     public static String baidu_secretkey;
     public static ChatApiType ai_type;
 
+    // minecraft
+    public static String minecraft_release;
+    public static String minecraft_snapshot;
+
 
     private static void mohist() {
         chatgpt = getBoolean("chatgpt.enable", false);
@@ -136,5 +140,8 @@ public class MohistConfig {
         baidu_apikey = getString("baidu.apikey", "");
         baidu_secretkey = getString("baidu.secretkey", "");
         ai_type = ChatApiType.valueOf(getString("ai_type", ChatApiType.ALIBABA.name()));
+
+        minecraft_release = getString("minecraft.release", "");
+        minecraft_snapshot = getString("minecraft.snapshot", "");
     }
 }
