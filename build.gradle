@@ -1,15 +1,21 @@
 plugins {
     id 'java'
     id 'idea'
+    id 'org.jetbrains.kotlin.jvm' version '1.9.20-Beta2'
+    id 'net.mamoe.mirai-console' version '2.15.0'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group = 'com.mohistmc.miraimbot'
 version = project.version
 archivesBaseName = project.name.toLowerCase()
 
+def enablePreview = '--enable-preview'
+
 tasks.withType(JavaCompile).configureEach {
     options.warnings = false
     options.encoding = 'UTF-8'
+    options.compilerArgs += [enablePreview]
 }
 
 
@@ -50,4 +56,8 @@ dependencies {
 
     implementation 'com.alibaba:dashscope-sdk-java:2.5.0'
 
+}
+
+mirai {
+    jvmTarget JavaVersion.VERSION_20
 }
