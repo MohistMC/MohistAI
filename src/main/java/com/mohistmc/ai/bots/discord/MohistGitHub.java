@@ -17,8 +17,9 @@ import java.util.Optional;
 public class MohistGitHub {
 
     public static void onMessage(MessageCreateEvent event) {
+        String message = event.getMessageContent();
         if (String.valueOf(event.getChannel().getId()).equals(Account.discordAnnonces)) {
-            String sendMsg = "===有新的公告-来自Discord===" + "\n" + event.getMessage().getContent();
+            String sendMsg = "===有新的公告-来自Discord===" + "\n" + message;
             MohistAI.INSTANCE.QQ.getGroup(Account.mohistQQGGroup).sendMessage(sendMsg);
         }
 
