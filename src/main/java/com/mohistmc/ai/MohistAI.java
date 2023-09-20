@@ -4,16 +4,13 @@ import com.alibaba.dashscope.utils.Constants;
 import com.mohistmc.ai.bots.discord.DiscordBot;
 import com.mohistmc.ai.bots.gpt.OpenAI;
 import com.mohistmc.ai.bots.qq.MiraiListener;
-import com.mohistmc.ai.live.bilibili.BiliBiliLive;
-import com.mohistmc.ai.live.huya.HuyaLive;
+import com.mohistmc.ai.live.BiliBiliLive;
+import com.mohistmc.ai.live.HuyaLive;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.console.plugin.jvm.JavaPlugin;
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescriptionBuilder;
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.event.GlobalEventChannel;
-import net.mamoe.mirai.message.data.MessageContent;
-
-import java.util.List;
 
 /**
  * @author Mgazul by MohistMC
@@ -39,8 +36,8 @@ public class MohistAI extends JavaPlugin {
         Constants.apiKey = MohistConfig.dashscope_apikey;
         GlobalEventChannel.INSTANCE.registerListenerHost(new MiraiListener());
         getLogger().info("Plugin loaded!");
-        new BiliBiliLive().run();
-        new HuyaLive().run();
+        BiliBiliLive.INSTANCE.run();
+        HuyaLive.INSTANCE.run();
     }
 
     public static void sendMsgToGroup(Long g, String msg) {
