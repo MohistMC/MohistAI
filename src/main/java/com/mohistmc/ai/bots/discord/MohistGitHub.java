@@ -31,7 +31,7 @@ public class MohistGitHub {
                     if (Otitle.isPresent() && Odes.isPresent()) {
                         String title = Otitle.get();
                         String des = Odes.get();
-                        if (!des.contains("failure") && !title.contains("started")) {
+                        if (!des.contains("No changes") &&!des.contains("failure") && !title.contains("started")) {
                             String[] titles = title.split(" ");
                             String sendMsg = ("""
                                     ======Jenkins构建推送======
