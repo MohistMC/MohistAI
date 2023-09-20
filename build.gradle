@@ -1,8 +1,6 @@
 plugins {
     id 'java'
     id 'idea'
-    id 'org.jetbrains.kotlin.jvm' version '1.9.0-Beta'
-    id 'net.mamoe.mirai-console' version '2.15.0'
 }
 
 group = 'com.mohistmc.miraimbot'
@@ -52,8 +50,4 @@ dependencies {
 
     implementation 'com.alibaba:dashscope-sdk-java:2.5.0'
 
-}
-
-mirai {
-    jvmTarget JavaVersion.VERSION_17
 }

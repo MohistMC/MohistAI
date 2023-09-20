@@ -8,8 +8,6 @@ import com.mohistmc.ai.MohistConfig;
  */
 public class ChatAPI {
 
-
-
     public static String send(String message, ChatApiType chatApiType) {
         if (chatApiType == ChatApiType.BAIDU) {
             return Baidu.main(message);
