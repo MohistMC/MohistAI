@@ -40,20 +40,24 @@ public class HuyaLive {
         var title = json.asString("introduction");
 
         // TODO 添加艾特所有人的功能
-        if (liveStatus && !MohistConfig.live_huya_pushqq) {
-            String ms = ("""
+        if (liveStatus) {
+            if (!MohistConfig.live_huya_pushqq) {
+                String ms = ("""
                     你关注的主播已开播
                                         
                     直播标题： %s
                     直播地址：https://www.huya.com/pinkfish
                     """).formatted(title);
 
-            System.out.println(ms);
-            MohistAI.sendAll(ms);
-            MohistConfig.set("live.huya.pushqq", true);
-            System.out.println("已推送至QQ");
+                System.out.println(ms);
+                MohistAI.sendAll(ms);
+                MohistConfig.set("live.huya.pushqq", true);
+                System.out.println("已推送至QQ");
+            }
         } else {
-            if (MohistConfig.live_huya_pushqq) MohistConfig.set("live.huya.pushqq", false);
+            if (MohistConfig.live_huya_pushqq) {
+                MohistConfig.set("live.huya.pushqq", false);
+            }
         }
     }
 
