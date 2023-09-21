@@ -29,8 +29,8 @@ public class VersionsCheck {
     @SneakyThrows
     public void run0() {
         Json json = Json.read(URI.create("https://launchermeta.mojang.com/mc/game/version_manifest.json").toURL());
-        var release = json.at("latest").at("release").asString();
-        var snapshot = json.at("latest").at("snapshot").asString();
+        var release = json.at("latest").asString("release");
+        var snapshot = json.at("latest").asString("snapshot");
         List<Json> versions = json.at("versions").asJsonList();
 
         // 初始化版本缓存
@@ -51,14 +51,14 @@ public class VersionsCheck {
 
     private void f(String version, List<Json> versions) {
         for (Json f : versions) {
-            var id = f.at("id").asString();
+            var id = f.asString("id");
             if (id.equals(version)) {
-                var type = f.at("type").asString();
+                var type = f.asString("type");
                 String sendMsg = ("""
                 ======MC新版本推送======
                 类型: %s
                 版本号: %s
-                发布时间: %s""").formatted(type, id, f.at("releaseTime").asString());
+                发布时间: %s""").formatted(type, id, f.asString("releaseTime"));
                 System.out.println(sendMsg);
                 MohistConfig.set("minecraft." + type, version);
                 MohistAI.sendAll(sendMsg);

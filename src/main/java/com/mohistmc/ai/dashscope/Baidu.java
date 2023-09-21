@@ -32,7 +32,7 @@ public class Baidu {
                     .build();
             Response response = HTTP_CLIENT.newCall(request).execute();
             Json json = Json.read(response.body().string());
-            return json.at("result").asString();
+            return json.asString("result");
         } catch (IOException e) {
             return null;
         }
@@ -55,6 +55,6 @@ public class Baidu {
                 .addHeader("Content-Type", "application/x-www-form-urlencoded")
                 .build();
         Response response = HTTP_CLIENT.newCall(request).execute();
-        return Json.read(response.body().string()).at("access_token").asString();
+        return Json.read(response.body().string()).asString("access_token");
     }
 }

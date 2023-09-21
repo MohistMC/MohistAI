@@ -36,8 +36,8 @@ public class HuyaLive {
     private void run0() {
         String jsonText = IOUtil.readContent(IOUtil.getInputStream("https://www.huya.com/pinkfish")).split("TT_ROOM_DATA = ")[1].split("};")[0] + "}";
         Json json = Json.read(jsonText);
-        boolean liveStatus = json.at("isOn").asBoolean();
-        var title = json.at("introduction").asString();
+        boolean liveStatus = json.asBoolean("isOn");
+        var title = json.asString("introduction");
 
         // TODO 添加艾特所有人的功能
         if (liveStatus && !MohistConfig.live_huya_pushqq) {
@@ -62,9 +62,9 @@ public class HuyaLive {
         Json json = Json.read(jsonText);
         System.out.println(jsonText);
         System.out.println("直播间: " + "https://www.huya.com/pinkfish");
-        System.out.println("直播状态: " + (json.at("state").asString().equals("REPLAY") ? "重播中" : "直播中"));
-        System.out.println("直播提醒: " + (json.at("isOn").asBoolean() ? "直播中" : "未开播"));
-        System.out.println("标题: " + json.at("introduction").asString());
+        System.out.println("直播状态: " + (json.asString("state").equals("REPLAY") ? "重播中" : "直播中"));
+        System.out.println("直播提醒: " + (json.asBoolean("isOn") ? "直播中" : "未开播"));
+        System.out.println("标题: " + json.asString("introduction"));
         new HuyaLive().run();
     }
 }

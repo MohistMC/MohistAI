@@ -28,8 +28,8 @@ public class BiliBiliLive{
     @SneakyThrows
     private void run0() {
         Json json = Json.read(URI.create("https://api.live.bilibili.com/xlive/web-room/v1/index/getInfoByRoom?room_id=43087").toURL());
-        var liveStatus = json.at("data").at("room_info").at("live_status").asInteger();
-        var title = json.at("data").at("room_info").at("title").asInteger();
+        var liveStatus = json.at("data").at("room_info").asInteger("live_status");
+        var title = json.at("data").at("room_info").asString("title");
 
         if (liveStatus == 1) {
             // TODO 添加可配置Bot识别
