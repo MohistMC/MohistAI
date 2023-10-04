@@ -121,6 +121,7 @@ public class MohistConfig {
     public static ChatApiType ai_type;
 
     // minecraft
+    public static boolean minecraft_versionscheck;
     public static String minecraft_release;
     public static String minecraft_snapshot;
 
@@ -141,6 +142,7 @@ public class MohistConfig {
         baidu_secretkey = getString("baidu.secretkey", "");
         ai_type = ChatApiType.valueOf(getString("ai_type", ChatApiType.ALIBABA.name()));
 
+        minecraft_versionscheck = getBoolean("minecraft.versions-check", false);
         minecraft_release = getString("minecraft.release", "");
         minecraft_snapshot = getString("minecraft.snapshot", "");
     }

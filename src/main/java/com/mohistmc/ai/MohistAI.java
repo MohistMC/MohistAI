@@ -12,6 +12,11 @@ import net.mamoe.mirai.console.plugin.jvm.JavaPlugin;
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescriptionBuilder;
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.event.GlobalEventChannel;
+import net.mamoe.mirai.message.data.AtAll;
+import net.mamoe.mirai.message.data.Image;
+import net.mamoe.mirai.message.data.MessageChainBuilder;
+import net.mamoe.mirai.message.data.MessageUtils;
+import net.mamoe.mirai.message.data.PlainText;
 
 /**
  * @author Mgazul by MohistMC
@@ -19,7 +24,7 @@ import net.mamoe.mirai.event.GlobalEventChannel;
  */
 public class MohistAI extends JavaPlugin {
     public static final MohistAI INSTANCE = new MohistAI();
-    public Bot QQ ;
+    public Bot QQ;
 
     private MohistAI() {
         super(new JvmPluginDescriptionBuilder("com.example.demo1", "0.1.0")
@@ -38,7 +43,6 @@ public class MohistAI extends JavaPlugin {
         GlobalEventChannel.INSTANCE.registerListenerHost(new MiraiListener());
         getLogger().info("Plugin loaded!");
         BiliBiliLive.INSTANCE.run();
-        HuyaLive.INSTANCE.run();
         VersionsCheck.INSTANCE.run();
     }
 
@@ -52,6 +56,14 @@ public class MohistAI extends JavaPlugin {
         for (Bot bot : Bot.getInstances()) {
             for (Group group : bot.getGroups()) {
                 group.sendMessage(msg);
+            }
+        }
+    }
+
+    public static void sendAllAt(String msg) {
+        for (Bot bot : Bot.getInstances()) {
+            for (Group group : bot.getGroups()) {
+                group.sendMessage(MessageUtils.newChain(new PlainText(msg), AtAll.INSTANCE));
             }
         }
     }

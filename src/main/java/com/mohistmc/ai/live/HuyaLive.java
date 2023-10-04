@@ -50,12 +50,13 @@ public class HuyaLive {
                     """).formatted(title);
 
                 System.out.println(ms);
-                MohistAI.sendAll(ms);
+                MohistAI.sendAllAt(ms);
                 MohistConfig.set("live.huya.pushqq", true);
                 System.out.println("已推送至QQ");
             }
         } else {
             if (MohistConfig.live_huya_pushqq) {
+                System.out.println("已初始化推送(HuYa)");
                 MohistConfig.set("live.huya.pushqq", false);
             }
         }

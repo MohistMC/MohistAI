@@ -9,6 +9,7 @@ import com.mohistmc.ai.MohistConfig;
 import com.mohistmc.ai.dashscope.ChatAPI;
 import com.mohistmc.ai.dashscope.ChatApiType;
 import com.mohistmc.ai.dashscope.QianWen;
+import com.mohistmc.ai.live.HuyaLive;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.ListeningStatus;
 import net.mamoe.mirai.event.SimpleListenerHost;
@@ -38,7 +39,7 @@ public class MiraiListener extends SimpleListenerHost {
         if (event.getBot().getId() == 2703566153L) {
             MohistAI.INSTANCE.QQ = event.getBot();
         }
-
+        HuyaLive.INSTANCE.run();
         return ListeningStatus.LISTENING; // 表示继续监听事件
     }
 

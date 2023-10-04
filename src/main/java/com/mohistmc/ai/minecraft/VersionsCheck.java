@@ -23,6 +23,8 @@ public class VersionsCheck {
     public static final ScheduledExecutorService LIVE = new ScheduledThreadPoolExecutor(1, new NamedThreadFactory("Minecraft - versions check"));
 
     public void run() {
+        if (!MohistConfig.minecraft_versionscheck) return;
+        System.out.println("MC新版本推送服务已启用");
         LIVE.scheduleAtFixedRate(this::run0, 1000 * 10, 1000 * 20, TimeUnit.MILLISECONDS);
     }
 
