@@ -4,19 +4,17 @@ import com.mohistmc.ai.Account;
 import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.MohistConfig;
 import com.mohistmc.ai.utils.NamedThreadFactory;
-import lombok.SneakyThrows;
-import mjson.Json;
-
 import java.net.URI;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import lombok.SneakyThrows;
+import mjson.Json;
 
-public class BiliBiliLive{
-
-    public static BiliBiliLive INSTANCE = new BiliBiliLive();
+public class BiliBiliLive {
 
     public static final ScheduledExecutorService LIVE = new ScheduledThreadPoolExecutor(1, new NamedThreadFactory("BiliBili - Live"));
+    public static BiliBiliLive INSTANCE = new BiliBiliLive();
 
     public void run() {
         if (!MohistConfig.live_bilibili) return;
@@ -35,11 +33,11 @@ public class BiliBiliLive{
             // TODO 添加可配置Bot识别
             if (MohistAI.INSTANCE.QQ != null && !MohistConfig.live_bilibili_pushqq) {
                 String ms = ("""
-                    你关注的主播已开播
-                                        
-                    直播标题： %s
-                    直播地址：https://live.bilibili.com/43087
-                    """).formatted(title);
+                        你关注的主播已开播
+                                            
+                        直播标题： %s
+                        直播地址：https://live.bilibili.com/43087
+                        """).formatted(title);
 
                 System.out.println(ms);
                 MohistAI.sendMsgToGroup(Account.mohistQQGGroup, ms);

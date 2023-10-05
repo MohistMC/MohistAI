@@ -7,7 +7,6 @@ import com.google.common.cache.RemovalListener;
 import com.mohistmc.ai.MohistConfig;
 import com.theokanning.openai.completion.CompletionRequest;
 import com.theokanning.openai.service.OpenAiService;
-
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
@@ -15,8 +14,8 @@ import java.util.concurrent.TimeUnit;
 
 public class OpenAI {
 
-    private static OpenAiService service;
     public static Cache<Long, StringBuilder> CACHE;
+    private static OpenAiService service;
 
     public static void init() {
         if (!MohistConfig.chatgpt) return;

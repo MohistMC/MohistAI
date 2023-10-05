@@ -20,7 +20,7 @@ public class BaiChuan {
                     .build();
             GenerationResult result = gen.call(param);
             return result.getOutput().getText();
-        }catch (Exception e) {
+        } catch (Exception e) {
             return null;
         }
     }

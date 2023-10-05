@@ -3,14 +3,13 @@ package com.mohistmc.ai.minecraft;
 import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.MohistConfig;
 import com.mohistmc.ai.utils.NamedThreadFactory;
-import lombok.SneakyThrows;
-import mjson.Json;
-
 import java.net.URI;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import lombok.SneakyThrows;
+import mjson.Json;
 
 /**
  * @author Mgazul by MohistMC
@@ -18,9 +17,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class VersionsCheck {
 
-    public static VersionsCheck INSTANCE = new VersionsCheck();
-
     public static final ScheduledExecutorService LIVE = new ScheduledThreadPoolExecutor(1, new NamedThreadFactory("Minecraft - versions check"));
+    public static VersionsCheck INSTANCE = new VersionsCheck();
 
     public void run() {
         if (!MohistConfig.minecraft_versionscheck) return;
@@ -57,10 +55,10 @@ public class VersionsCheck {
             if (id.equals(version)) {
                 var type = f.asString("type");
                 String sendMsg = ("""
-                ======MC新版本推送======
-                类型: %s
-                版本号: %s
-                发布时间: %s""").formatted(type, id, f.asString("releaseTime"));
+                        ======MC新版本推送======
+                        类型: %s
+                        版本号: %s
+                        发布时间: %s""").formatted(type, id, f.asString("releaseTime"));
                 System.out.println(sendMsg);
                 MohistConfig.set("minecraft." + type, version);
                 MohistAI.sendAll(sendMsg);

@@ -1,8 +1,7 @@
 package com.mohistmc.ai.utils;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.concurrent.ThreadFactory;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @Author Mgazul
@@ -19,15 +18,5 @@ public class NamedThreadFactory implements ThreadFactory {
     @Override
     public Thread newThread(@NotNull Runnable r) {
         return Thread.ofVirtual().name(name + " - " + (++id)).unstarted(r);
-    }
-
-    public static class AssignableThread extends Thread {
-        public AssignableThread(Runnable run) {
-            super(run);
-        }
-
-        public AssignableThread() {
-            super();
-        }
     }
 }

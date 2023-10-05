@@ -1,12 +1,11 @@
 package com.mohistmc.ai.bots.discord;
 
 import com.mohistmc.ai.MohistConfig;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.intent.Intent;
-
-import java.net.InetSocketAddress;
-import java.net.Proxy;
 
 /**
  * @author Mgazul by MohistMC

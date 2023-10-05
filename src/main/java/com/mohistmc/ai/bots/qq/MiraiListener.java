@@ -10,6 +10,9 @@ import com.mohistmc.ai.dashscope.ChatAPI;
 import com.mohistmc.ai.dashscope.ChatApiType;
 import com.mohistmc.ai.dashscope.QianWen;
 import com.mohistmc.ai.live.HuyaLive;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.ListeningStatus;
 import net.mamoe.mirai.event.SimpleListenerHost;
@@ -21,10 +24,6 @@ import net.mamoe.mirai.message.data.Image;
 import net.mamoe.mirai.message.data.OfflineAudio;
 import net.mamoe.mirai.message.data.SingleMessage;
 import net.mamoe.mirai.utils.ExternalResource;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Mgazul by MohistMC

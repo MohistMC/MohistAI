@@ -2,13 +2,12 @@ package com.mohistmc.ai.bots.discord;
 
 import com.mohistmc.ai.Account;
 import com.mohistmc.ai.MohistAI;
-import org.javacord.api.entity.message.embed.Embed;
-import org.javacord.api.entity.message.embed.EmbedAuthor;
-import org.javacord.api.event.message.MessageCreateEvent;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
+import org.javacord.api.entity.message.embed.Embed;
+import org.javacord.api.entity.message.embed.EmbedAuthor;
+import org.javacord.api.event.message.MessageCreateEvent;
 
 /**
  * @author Mgazul by MohistMC
@@ -31,7 +30,7 @@ public class MohistGitHub {
                     if (Otitle.isPresent() && Odes.isPresent()) {
                         String title = Otitle.get();
                         String des = Odes.get();
-                        if (!des.contains("No changes") &&!des.contains("failure") && !title.contains("started")) {
+                        if (!des.contains("No changes") && !des.contains("failure") && !title.contains("started")) {
                             String[] titles = title.split(" ");
                             String sendMsg = ("""
                                     ======Jenkins构建推送======

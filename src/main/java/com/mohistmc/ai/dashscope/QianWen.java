@@ -15,7 +15,6 @@ import com.alibaba.dashscope.common.Role;
 import com.alibaba.dashscope.exception.ApiException;
 import com.alibaba.dashscope.exception.NoApiKeyException;
 import com.mohistmc.ai.MohistConfig;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -29,7 +28,7 @@ import java.nio.ByteBuffer;
  */
 public class QianWen {
 
-    public static String sendText(String message){
+    public static String sendText(String message) {
         try {
             Generation gen = new Generation();
             MessageManager msgManager = new MessageManager(10);
@@ -44,7 +43,7 @@ public class QianWen {
             GenerationResult result = gen.call(param);
             return result.getOutput().getChoices().get(0).getMessage().getContent();
         } catch (Exception e) {
-           return null;
+            return null;
         }
     }
 

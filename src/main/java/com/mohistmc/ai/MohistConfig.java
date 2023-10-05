@@ -4,7 +4,6 @@ import com.google.common.base.Throwables;
 import com.mohistmc.ai.dashscope.ChatApiType;
 import com.mohistmc.yaml.InvalidConfigurationException;
 import com.mohistmc.yaml.file.YamlConfiguration;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -26,15 +25,33 @@ public class MohistConfig {
             """.split("\\n"));
     /*========================================================================*/
     public static YamlConfiguration config;
+    public static boolean chatgpt;
+    public static String chatgpt_api_key;
+    public static boolean discord;
+    public static String discord_token;
+    public static String discord_proxy_address;
+    public static int discord_proxy_port;
+    public static boolean live_bilibili;
+    public static boolean live_huya;
+    public static boolean live_bilibili_pushqq;
+    public static boolean live_huya_pushqq;
+    public static String dashscope_apikey;
+    public static String baidu_apikey;
+    public static String baidu_secretkey;
+    public static ChatApiType ai_type;
+    // minecraft
+    public static boolean minecraft_versionscheck;
+    public static String minecraft_release;
+    public static String minecraft_snapshot;
     static int version;
-    private static File CONFIG_FILE = new File("mohist-config", "mohist.yml");
+    private static final File CONFIG_FILE = new File("mohist-config", "mohist.yml");
 
     public static void init() {
         config = new YamlConfiguration();
         try {
             config.load(CONFIG_FILE);
         } catch (IOException | InvalidConfigurationException ex) {
-           System.out.println("Could not load mohist.yml, please correct your syntax errors");
+            System.out.println("Could not load mohist.yml, please correct your syntax errors");
             Throwables.throwIfUnchecked(ex);
         }
 
@@ -102,29 +119,6 @@ public class MohistConfig {
         config.addDefault(path, def);
         return config.getDouble(path, config.getDouble(path));
     }
-
-    public static boolean chatgpt;
-    public static String chatgpt_api_key;
-
-    public static boolean discord;
-    public static String discord_token;
-    public static String discord_proxy_address;
-    public static int discord_proxy_port;
-    public static boolean live_bilibili;
-    public static boolean live_huya;
-    public static boolean live_bilibili_pushqq;
-    public static boolean live_huya_pushqq;
-
-    public static String dashscope_apikey;
-    public static String baidu_apikey;
-    public static String baidu_secretkey;
-    public static ChatApiType ai_type;
-
-    // minecraft
-    public static boolean minecraft_versionscheck;
-    public static String minecraft_release;
-    public static String minecraft_snapshot;
-
 
     private static void mohist() {
         chatgpt = getBoolean("chatgpt.enable", false);

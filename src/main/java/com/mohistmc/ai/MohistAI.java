@@ -5,7 +5,6 @@ import com.mohistmc.ai.bots.discord.DiscordBot;
 import com.mohistmc.ai.bots.gpt.OpenAI;
 import com.mohistmc.ai.bots.qq.MiraiListener;
 import com.mohistmc.ai.live.BiliBiliLive;
-import com.mohistmc.ai.live.HuyaLive;
 import com.mohistmc.ai.minecraft.VersionsCheck;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.console.plugin.jvm.JavaPlugin;
@@ -13,8 +12,6 @@ import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescriptionBuilder;
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.event.GlobalEventChannel;
 import net.mamoe.mirai.message.data.AtAll;
-import net.mamoe.mirai.message.data.Image;
-import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.MessageUtils;
 import net.mamoe.mirai.message.data.PlainText;
 
@@ -27,23 +24,7 @@ public class MohistAI extends JavaPlugin {
     public Bot QQ;
 
     private MohistAI() {
-        super(new JvmPluginDescriptionBuilder("com.example.demo1", "0.1.0")
-                .name("Demo1")
-                .author("admin")
-
-                .build());
-    }
-
-    @Override
-    public void onEnable() {
-        MohistConfig.init();
-        DiscordBot.init();
-        OpenAI.init();
-        Constants.apiKey = MohistConfig.dashscope_apikey;
-        GlobalEventChannel.INSTANCE.registerListenerHost(new MiraiListener());
-        getLogger().info("Plugin loaded!");
-        BiliBiliLive.INSTANCE.run();
-        VersionsCheck.INSTANCE.run();
+        super(new JvmPluginDescriptionBuilder("com.example.demo1", "0.1.0").name("Demo1").author("admin").build());
     }
 
     public static void sendMsgToGroup(Long g, String msg) {
@@ -66,5 +47,17 @@ public class MohistAI extends JavaPlugin {
                 group.sendMessage(MessageUtils.newChain(new PlainText(msg), AtAll.INSTANCE));
             }
         }
+    }
+
+    @Override
+    public void onEnable() {
+        MohistConfig.init();
+        DiscordBot.init();
+        OpenAI.init();
+        Constants.apiKey = MohistConfig.dashscope_apikey;
+        GlobalEventChannel.INSTANCE.registerListenerHost(new MiraiListener());
+        getLogger().info("Plugin loaded!");
+        BiliBiliLive.INSTANCE.run();
+        VersionsCheck.INSTANCE.run();
     }
 }

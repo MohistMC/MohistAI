@@ -4,13 +4,12 @@ import com.mohistmc.ai.IOUtil;
 import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.MohistConfig;
 import com.mohistmc.ai.utils.NamedThreadFactory;
-import lombok.SneakyThrows;
-import mjson.Json;
-
 import java.io.IOException;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import lombok.SneakyThrows;
+import mjson.Json;
 
 /**
  * @author Mgazul by MohistMC
@@ -18,9 +17,19 @@ import java.util.concurrent.TimeUnit;
  */
 public class HuyaLive {
 
+    public static final ScheduledExecutorService LIVE = new ScheduledThreadPoolExecutor(1, new NamedThreadFactory("Huya - Live"));
     public static HuyaLive INSTANCE = new HuyaLive();
 
-    public static final ScheduledExecutorService LIVE = new ScheduledThreadPoolExecutor(1, new NamedThreadFactory("Huya - Live"));
+    public static void main(String[] args) throws IOException {
+        String jsonText = IOUtil.readContent(IOUtil.getInputStream("https://www.huya.com/pinkfish")).split("TT_ROOM_DATA = ")[1].split("};")[0] + "}";
+        Json json = Json.read(jsonText);
+        System.out.println(jsonText);
+        System.out.println("直播间: " + "https://www.huya.com/pinkfish");
+        System.out.println("直播状态: " + (json.asString("state").equals("REPLAY") ? "重播中" : "直播中"));
+        System.out.println("直播提醒: " + (json.asBoolean("isOn") ? "直播中" : "未开播"));
+        System.out.println("标题: " + json.asString("introduction"));
+        new HuyaLive().run();
+    }
 
     public void run() {
         if (!MohistConfig.live_huya) return;
@@ -43,11 +52,11 @@ public class HuyaLive {
         if (liveStatus) {
             if (!MohistConfig.live_huya_pushqq) {
                 String ms = ("""
-                    你关注的主播已开播
-                                        
-                    直播标题： %s
-                    直播地址：https://www.huya.com/pinkfish
-                    """).formatted(title);
+                        你关注的主播已开播
+                                            
+                        直播标题： %s
+                        直播地址：https://www.huya.com/pinkfish
+                        """).formatted(title);
 
                 System.out.println(ms);
                 MohistAI.sendAllAt(ms);
@@ -60,16 +69,5 @@ public class HuyaLive {
                 MohistConfig.set("live.huya.pushqq", false);
             }
         }
-    }
-
-    public static void main(String[] args) throws IOException {
-        String jsonText = IOUtil.readContent(IOUtil.getInputStream("https://www.huya.com/pinkfish")).split("TT_ROOM_DATA = ")[1].split("};")[0] + "}";
-        Json json = Json.read(jsonText);
-        System.out.println(jsonText);
-        System.out.println("直播间: " + "https://www.huya.com/pinkfish");
-        System.out.println("直播状态: " + (json.asString("state").equals("REPLAY") ? "重播中" : "直播中"));
-        System.out.println("直播提醒: " + (json.asBoolean("isOn") ? "直播中" : "未开播"));
-        System.out.println("标题: " + json.asString("introduction"));
-        new HuyaLive().run();
     }
 }
