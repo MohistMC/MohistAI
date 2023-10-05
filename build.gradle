@@ -31,8 +31,8 @@ repositories {
 
 
 dependencies {
-    compileOnly 'org.projectlombok:lombok:1.18.26'
-    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
     // Discord 机器人
     implementation 'org.javacord:javacord:3.8.0'
@@ -50,5 +50,5 @@ dependencies {
 }
 
 mirai {
-    jvmTarget JavaVersion.VERSION_20
+    jvmTarget JavaVersion.VERSION_21
 }

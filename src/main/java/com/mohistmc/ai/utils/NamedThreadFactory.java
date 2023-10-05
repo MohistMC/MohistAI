@@ -18,10 +18,7 @@ public class NamedThreadFactory implements ThreadFactory {
 
     @Override
     public Thread newThread(@NotNull Runnable r) {
-        Thread thread = new Thread(r);
-        thread.setName(name + " - " + (++id));
-        thread.setPriority(4);
-        return thread;
+        return Thread.ofVirtual().name(name + " - " + (++id)).unstarted(r);
     }
 
     public static class AssignableThread extends Thread {
