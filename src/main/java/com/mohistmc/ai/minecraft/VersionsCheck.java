@@ -2,7 +2,7 @@ package com.mohistmc.ai.minecraft;
 
 import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.MohistConfig;
-import com.mohistmc.ai.utils.NamedThreadFactory;
+import com.mohistmc.tools.NamedThreadFactory;
 import java.net.URI;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;

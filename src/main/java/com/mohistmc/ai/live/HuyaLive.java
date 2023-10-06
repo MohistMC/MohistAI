@@ -1,9 +1,9 @@
 package com.mohistmc.ai.live;
 
-import com.mohistmc.ai.IOUtil;
 import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.MohistConfig;
-import com.mohistmc.ai.utils.NamedThreadFactory;
+import com.mohistmc.tools.IOUtil;
+import com.mohistmc.tools.NamedThreadFactory;
 import java.io.IOException;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;

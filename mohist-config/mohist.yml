@@ -20,7 +20,7 @@ live:
     pushqq: false
   huya:
     enable: true
-    pushqq: false
+    pushqq: true
 fish:
   qqg:
   - 743486411

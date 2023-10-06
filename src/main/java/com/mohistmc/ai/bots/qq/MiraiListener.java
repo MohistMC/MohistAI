@@ -2,14 +2,14 @@ package com.mohistmc.ai.bots.qq;
 
 import com.alibaba.dashscope.exception.NoApiKeyException;
 import com.mohistmc.ai.Account;
-import com.mohistmc.ai.HasteUtils;
-import com.mohistmc.ai.IOUtil;
 import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.MohistConfig;
 import com.mohistmc.ai.dashscope.ChatAPI;
 import com.mohistmc.ai.dashscope.ChatApiType;
 import com.mohistmc.ai.dashscope.QianWen;
 import com.mohistmc.ai.live.HuyaLive;
+import com.mohistmc.tools.HasteUtils;
+import com.mohistmc.tools.IOUtil;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
