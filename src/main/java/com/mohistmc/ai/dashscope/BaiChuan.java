@@ -21,7 +21,7 @@ public class BaiChuan {
             GenerationResult result = gen.call(param);
             return result.getOutput().getText();
         } catch (Exception e) {
-            return null;
+            return "妈, 这题好难^~^";
         }
     }
 }

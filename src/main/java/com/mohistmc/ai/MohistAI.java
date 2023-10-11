@@ -6,6 +6,8 @@ import com.mohistmc.ai.bots.gpt.OpenAI;
 import com.mohistmc.ai.bots.qq.MiraiListener;
 import com.mohistmc.ai.live.BiliBiliLive;
 import com.mohistmc.ai.minecraft.VersionsCheck;
+import com.mohistmc.ai.mysql.MySqlInit;
+import com.mohistmc.ai.pfcraft.config.GameID;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.console.plugin.jvm.JavaPlugin;
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescriptionBuilder;
@@ -52,6 +54,7 @@ public class MohistAI extends JavaPlugin {
     @Override
     public void onEnable() {
         MohistConfig.init();
+        GameID.init();
         DiscordBot.init();
         OpenAI.init();
         Constants.apiKey = MohistConfig.dashscope_apikey;
@@ -59,5 +62,15 @@ public class MohistAI extends JavaPlugin {
         getLogger().info("Plugin loaded!");
         BiliBiliLive.INSTANCE.run();
         VersionsCheck.INSTANCE.run();
+        connectMySql();
+    }
+
+    public void connectMySql() {
+        String host = MohistConfig.config.getString("mysql.host");
+        String user = MohistConfig.config.getString("mysql.username");
+        String database = MohistConfig.config.getString("mysql.database");
+        String password = MohistConfig.config.getString("mysql.password");
+        String port = MohistConfig.config.getString("mysql.port");
+        MySqlInit.connect(host, user, database, password, port);
     }
 }

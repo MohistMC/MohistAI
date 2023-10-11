@@ -1,7 +1,7 @@
-package com.mohistmc.ai;
+package com.mohistmc.ai.pfcraft.config;
 
 import com.google.common.base.Throwables;
-import com.mohistmc.ai.dashscope.ChatApiType;
+import com.mohistmc.ai.MohistConfig;
 import com.mohistmc.yaml.InvalidConfigurationException;
 import com.mohistmc.yaml.file.YamlConfiguration;
 import java.io.File;
@@ -12,7 +12,11 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.List;
 
-public class MohistConfig {
+/**
+ * @author Mgazul by MohistMC
+ * @date 2023/10/12 2:44:57
+ */
+public class GameID {
 
     private static final List<String> HEADER = Arrays.asList("""
             This is the main configuration file for MohistAI.
@@ -25,32 +29,9 @@ public class MohistConfig {
             """.split("\\n"));
     /*========================================================================*/
     public static YamlConfiguration config;
-    public static boolean chatgpt;
-    public static String chatgpt_api_key;
-    public static boolean discord;
-    public static String discord_token;
-    public static String discord_proxy_address;
-    public static int discord_proxy_port;
-    public static boolean live_bilibili;
-    public static boolean live_huya;
-    public static boolean live_bilibili_pushqq;
-    public static boolean live_huya_pushqq;
-    public static String dashscope_apikey;
-    public static String baidu_apikey;
-    public static String baidu_secretkey;
-    public static ChatApiType ai_type;
-    // minecraft
-    public static boolean minecraft_versionscheck;
-    public static String minecraft_release;
-    public static String minecraft_snapshot;
-
-    public static String mysql_host;
-    public static String mysql_username;
-    public static String mysql_database;
-    public static String mysql_password;
-    public static String mysql_port;
+    public static String def;
     static int version;
-    private static final File CONFIG_FILE = new File("mohist-config", "mohist.yml");
+    private static final File CONFIG_FILE = new File("pfcraft", "gameID.yml");
 
     public static void init() {
         config = new YamlConfiguration();
@@ -127,29 +108,6 @@ public class MohistConfig {
     }
 
     private static void mohist() {
-        chatgpt = getBoolean("chatgpt.enable", false);
-        chatgpt_api_key = getString("chatgpt.api_key", "");
-        discord = getBoolean("discord.enable", false);
-        discord_token = getString("discord.token", "");
-        discord_proxy_address = getString("discord.proxy.address", "127.0.0.1");
-        discord_proxy_port = getInt("discord.proxy.port", 7890);
-        live_bilibili = getBoolean("live.bilibili.enable", true);
-        live_bilibili_pushqq = getBoolean("live.bilibili.pushqq", false);
-        live_huya = getBoolean("live.huya.enable", true);
-        live_huya_pushqq = getBoolean("live.huya.pushqq", false);
-        dashscope_apikey = getString("dashscope.apikey", "");
-        baidu_apikey = getString("baidu.apikey", "");
-        baidu_secretkey = getString("baidu.secretkey", "");
-        ai_type = ChatApiType.valueOf(getString("ai_type", ChatApiType.ALIBABA.name()));
-
-        minecraft_versionscheck = getBoolean("minecraft.versions-check", false);
-        minecraft_release = getString("minecraft.release", "");
-        minecraft_snapshot = getString("minecraft.snapshot", "");
-
-        mysql_host = getString("mysql.host", "");
-        mysql_username = getString("mysql.username", "");
-        mysql_database = getString("mysql.database", "");
-        mysql_password = getString("mysql.password", "");
-        mysql_port = getString("mysql.port", "");
+        def = getString("gameID.2634905535", "Mgazul");
     }
 }

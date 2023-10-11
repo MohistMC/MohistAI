@@ -19,7 +19,6 @@ public class ChatAPI {
 
     public static String send(String message) {
         ChatApiType DEFAULT = MohistConfig.ai_type;
-        System.out.println(DEFAULT);
         if (DEFAULT == ChatApiType.BAIDU) {
             return Baidu.main(message);
         } else if (DEFAULT == ChatApiType.ALIBABA) {

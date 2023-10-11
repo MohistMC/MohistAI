@@ -43,7 +43,7 @@ public class QianWen {
             GenerationResult result = gen.call(param);
             return result.getOutput().getChoices().get(0).getMessage().getContent();
         } catch (Exception e) {
-            return null;
+            return "妈, 这题好难^~^";
         }
     }
 
@@ -53,11 +53,11 @@ public class QianWen {
                 .model("sambert-zhiwei-v1")
                 .text(msg)
                 .sampleRate(16000)
-                .format(SpeechSynthesisAudioFormat.MP3)
+                .format(SpeechSynthesisAudioFormat.WAV)
                 .apiKey(MohistConfig.dashscope_apikey)
                 .build();
 
-        File file = new File(id + ".mp3");
+        File file = new File(id + ".wav");
         // 调用call方法，传入param参数，获取合成音频
         ByteBuffer audio = synthesizer.call(param);
         try (FileOutputStream fos = new FileOutputStream(file)) {

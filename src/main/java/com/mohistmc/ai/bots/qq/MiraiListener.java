@@ -8,6 +8,8 @@ import com.mohistmc.ai.dashscope.ChatAPI;
 import com.mohistmc.ai.dashscope.ChatApiType;
 import com.mohistmc.ai.dashscope.QianWen;
 import com.mohistmc.ai.live.HuyaLive;
+import com.mohistmc.ai.pfcraft.ScInsiderAPI;
+import com.mohistmc.ai.pfcraft.config.GameID;
 import com.mohistmc.tools.HasteUtils;
 import com.mohistmc.tools.IOUtil;
 import java.io.IOException;
@@ -21,7 +23,9 @@ import net.mamoe.mirai.event.events.GroupMessageEvent;
 import net.mamoe.mirai.message.data.At;
 import net.mamoe.mirai.message.data.FileMessage;
 import net.mamoe.mirai.message.data.Image;
+import net.mamoe.mirai.message.data.MessageUtils;
 import net.mamoe.mirai.message.data.OfflineAudio;
+import net.mamoe.mirai.message.data.PlainText;
 import net.mamoe.mirai.message.data.SingleMessage;
 import net.mamoe.mirai.utils.ExternalResource;
 
@@ -144,17 +148,39 @@ public class MiraiListener extends SimpleListenerHost {
                             }
                             event.getGroup().sendMessage("已更改为: " + MohistConfig.ai_type.asName());
                         }
+                    } else if (atMessage.startsWith("绑定江湖ID")) {
+                        if (atMessage.contains(" ")) {
+                            String[] a = atMessage.split(" ");
+                            if (a.length == 2) {
+                                String id = a[1];
+                                String qq = String.valueOf(event.getSender().getId());
+                                if (GameID.config.get("gameID." + qq) == null) {
+                                    GameID.set("gameID." + qq, id);
+                                    event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender().getId()), new PlainText(" 成功绑定江湖ID: " + id)));
+                                } else {
+                                    event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender().getId()), new PlainText(" 你已经绑定过江湖ID: " + id)));
+                                }
+                            }
+                        }
+                    } else if (atMessage.equals("我想进生存服")) {
+                        String qq = String.valueOf(event.getSender().getId());
+                        if (GameID.config.get("gameID." + qq) == null) {
+                            event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender().getId()), new PlainText(" 请先绑定江湖ID")));
+                        } else {
+                            String gameID = GameID.config.getString("gameID." + qq);
+                            if (!ScInsiderAPI.get(gameID)) {
+                                ScInsiderAPI.set(gameID, true, false);
+                                event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender().getId()), new PlainText(" 好的, 你现在可以进去了!")));
+                            } else {
+                                event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender().getId()), new PlainText(" 江湖, 启动!")));
+                            }
+                        }
                     } else {
                         System.out.println(atMessage);
                         if (permission > 0 || ziyou.contains(group)) {
-                            System.out.println(atMessage);
                             if (!atMessage.equals("[动画表情]") && !atMessage.equals("[图片]") && !atMessage.equals("[表情]") && !atMessage.isEmpty()) {
                                 String m = ChatAPI.send(atMessage);
-                                if (m != null) {
-                                    event.getGroup().sendMessage(m);
-                                } else {
-                                    System.out.println("AI对话null");
-                                }
+                                event.getGroup().sendMessage(m);
                             }
                         }
                     }
