@@ -8,6 +8,7 @@ import com.mohistmc.ai.dashscope.ChatAPI;
 import com.mohistmc.ai.dashscope.ChatApiType;
 import com.mohistmc.ai.dashscope.QianWen;
 import com.mohistmc.ai.live.HuyaLive;
+import com.mohistmc.ai.pfcraft.RpgInsiderAPI;
 import com.mohistmc.ai.pfcraft.ScInsiderAPI;
 import com.mohistmc.ai.pfcraft.config.GameID;
 import com.mohistmc.tools.HasteUtils;
@@ -123,7 +124,7 @@ public class MiraiListener extends SimpleListenerHost {
                                 String messageStr = atMessage.substring(1);
                                 try (ExternalResource externalResource = ExternalResource.create(QianWen.basicCall(messageStr).openStream())) {
                                     Image offlineAudio = event.getGroup().uploadImage(externalResource);
-                                    event.getGroup().sendMessage(offlineAudio);
+                                    event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender().getId()), offlineAudio));
                                 } catch (IOException | NoApiKeyException e) {
                                     event.getGroup().sendMessage("暂时无法回答!");
                                 }
@@ -175,12 +176,39 @@ public class MiraiListener extends SimpleListenerHost {
                                 event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender().getId()), new PlainText(" 江湖, 启动!")));
                             }
                         }
+                    } else if (atMessage.equals("我想进RPG服")) {
+                        String qq = String.valueOf(event.getSender().getId());
+                        if (group == Account.pfcraftQQGGroup) {
+                            if (GameID.config.get("gameID." + qq) == null) {
+                                event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender().getId()), new PlainText(" 请先绑定江湖ID")));
+                            } else {
+                                String gameID = GameID.config.getString("gameID." + qq);
+                                if (!RpgInsiderAPI.get(gameID)) {
+                                    ScInsiderAPI.set(gameID, true, true);
+                                    event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender().getId()), new PlainText(" 好的, 你现在可以进去了!")));
+                                } else {
+                                    event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender().getId()), new PlainText(" 江湖, 启动!")));
+                                }
+                            }
+                        } else {
+                            if (GameID.config.get("gameID." + qq) == null) {
+                                event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender().getId()), new PlainText(" 请先绑定江湖ID")));
+                            } else {
+                                String gameID = GameID.config.getString("gameID." + qq);
+                                if (!RpgInsiderAPI.get(gameID)) {
+                                    event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender().getId()), new PlainText(" 待内测开放后, 再来探索吧!")));
+                                } else {
+                                    event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender().getId()), new PlainText(" 江湖, 启动!")));
+                                }
+                            }
+                        }
                     } else {
                         System.out.println(atMessage);
                         if (permission > 0 || ziyou.contains(group)) {
                             if (!atMessage.equals("[动画表情]") && !atMessage.equals("[图片]") && !atMessage.equals("[表情]") && !atMessage.isEmpty()) {
                                 String m = ChatAPI.send(atMessage);
-                                event.getGroup().sendMessage(m);
+                                // event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender().getId()), new PlainText(" " + m)));
+                                event.getGroup().sendMessage(MessageUtils.newChain(new PlainText(" " + m)));
                             }
                         }
                     }
