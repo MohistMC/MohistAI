@@ -33,36 +33,6 @@ public class MySqlInit {
         createTable();
     }
 
-    public static void disconnect() {
-        try {
-            if (!MySqlInit.con.isClosed() && MySqlInit.con != null) {
-                MySqlInit.con.close();
-                timer.cancel();
-                System.out.println("[MohistAI] MySQL 断开连接!");
-            }
-        } catch (SQLException e) {
-            System.out.println("[MohistAI] MySQL 断开失败!" + e.getMessage());
-        }
-
-    }
-
-    private static void onReconnect() {
-        if (MySqlInit.con != null) {
-            try {
-                MySqlInit.con.close();
-                System.out.println("[MohistAI] MySQL 断开连接!");
-            } catch (final SQLException e) {
-                System.out.println("[MohistAI] MySQL 断开失败!" + e.getMessage());
-            }
-        }
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + "?autoReconnect=true", user, password);
-            System.out.println("[MohistAI] MySQL 连接建立!");
-        } catch (final SQLException e) {
-            System.out.println("[MohistAI] MySQL 连接失败!" + e.getMessage());
-        }
-    }
-
     private static void createTable() {
         try {
             con.prepareStatement("CREATE TABLE IF NOT EXISTS rpginsider (NAME VARCHAR(100), value TINYINT(1), admin TINYINT(1))").executeUpdate();

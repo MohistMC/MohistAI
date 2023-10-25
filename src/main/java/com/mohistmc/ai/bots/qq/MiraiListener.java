@@ -13,7 +13,11 @@ import com.mohistmc.ai.pfcraft.ScInsiderAPI;
 import com.mohistmc.ai.pfcraft.config.GameID;
 import com.mohistmc.tools.HasteUtils;
 import com.mohistmc.tools.IOUtil;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import net.mamoe.mirai.event.EventHandler;
@@ -130,6 +134,15 @@ public class MiraiListener extends SimpleListenerHost {
                                 }
                             }
                         }
+                    } else if (atMessage.equals("江湖状态")) {
+                        URL url = URI.create("https://api.loohpjames.com/serverbanner.png?ip=mc.mohistmc.cn").toURL();
+                        HttpURLConnection httpurlconn = (HttpURLConnection)url.openConnection();
+                        try (ExternalResource externalResource = ExternalResource.create(httpurlconn.getInputStream())) {
+                            Image offlineAudio = event.getGroup().uploadImage(externalResource);
+                            event.getGroup().sendMessage(MessageUtils.newChain(offlineAudio));
+                        } catch (IOException e) {
+                            event.getGroup().sendMessage("暂时无法获取!");
+                        }
                     } else if (atMessage.equals("开启自由对话")) {
                         if (permission > 0) {
                             ziyou.add(group);
@@ -149,7 +162,16 @@ public class MiraiListener extends SimpleListenerHost {
                             }
                             event.getGroup().sendMessage("已更改为: " + MohistConfig.ai_type.asName());
                         }
-                    } else if (atMessage.startsWith("绑定江湖ID")) {
+                    } else if (atMessage.equals("摇花手")) {
+                        if (permission > 0) {
+                            try (ExternalResource externalResource = ExternalResource.create(new FileInputStream("yaohuashou.gif"))) {
+                                Image offlineAudio = event.getGroup().uploadImage(externalResource);
+                                event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender().getId()), offlineAudio));
+                            } catch (IOException e) {
+                                event.getGroup().sendMessage("妈, 我不会!");
+                            }
+                        }
+                    }  else if (atMessage.startsWith("绑定江湖ID")) {
                         if (atMessage.contains(" ")) {
                             String[] a = atMessage.split(" ");
                             if (a.length == 2) {
@@ -202,6 +224,8 @@ public class MiraiListener extends SimpleListenerHost {
                                 }
                             }
                         }
+                    } else if (atMessage.equals("客户端")) {
+                        event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender().getId()), new PlainText(" http://s1.devicloud.cn:25119/fish/pfcraft-1.20.1.zip")));
                     } else {
                         System.out.println(atMessage);
                         if (permission > 0 || ziyou.contains(group)) {
