@@ -17,7 +17,7 @@ import mjson.Json;
  */
 public class VersionsCheck {
 
-    public static final ScheduledExecutorService LIVE = new ScheduledThreadPoolExecutor(1, new NamedThreadFactory("Minecraft - versions check"));
+    public static ScheduledExecutorService LIVE = new ScheduledThreadPoolExecutor(1, new NamedThreadFactory("Minecraft - versions check"));
     public static VersionsCheck INSTANCE = new VersionsCheck();
 
     public void run() {

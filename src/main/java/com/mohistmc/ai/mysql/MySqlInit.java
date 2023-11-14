@@ -12,7 +12,7 @@ public class MySqlInit {
     public static String database;
     public static String password;
     public static String port;
-    public static final Timer timer = new Timer();
+    public static Timer timer = new Timer();
 
     public static void connect(String host, String user, String database, String password, String port) {
         MySqlInit.host = host;
@@ -37,7 +37,7 @@ public class MySqlInit {
         try {
             con.prepareStatement("CREATE TABLE IF NOT EXISTS rpginsider (NAME VARCHAR(100), value TINYINT(1), admin TINYINT(1))").executeUpdate();
             con.prepareStatement("CREATE TABLE IF NOT EXISTS scinsider (NAME VARCHAR(100), value TINYINT(1), admin TINYINT(1))").executeUpdate();
-        } catch (final SQLException e) {
+        } catch (SQLException e) {
             System.out.println("[MohistAI] MySQL 创建表失败!" + e.getMessage());
         }
     }

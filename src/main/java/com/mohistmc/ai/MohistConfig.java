@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MohistConfig {
 
-    private static final List<String> HEADER = Arrays.asList("""
+    private static List<String> HEADER = Arrays.asList("""
             This is the main configuration file for MohistAI.
             https://wiki.mohistmc.com/
 
@@ -50,7 +50,7 @@ public class MohistConfig {
     public static String mysql_password;
     public static String mysql_port;
     static int version;
-    private static final File CONFIG_FILE = new File("mohist-config", "mohist.yml");
+    private static File CONFIG_FILE = new File("mohist-config", "mohist.yml");
 
     public static void init() {
         config = new YamlConfiguration();

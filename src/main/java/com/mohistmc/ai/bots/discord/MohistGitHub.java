@@ -149,7 +149,7 @@ public class MohistGitHub {
         }
     }
 
-    public static void sendMsgToGroup(final String msg) {
+    public static void sendMsgToGroup(String msg) {
         MohistAI.sendMsgToGroup(Account.mohistQQGGroup, msg);
     }
 }

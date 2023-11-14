@@ -1,6 +1,8 @@
 package com.mohistmc.ai.dashscope;
 
 import com.mohistmc.ai.MohistConfig;
+import com.mohistmc.ai.baidu.Baidu;
+import com.mohistmc.ai.baidu.BaiduSession;
 
 /**
  * @author Mgazul by MohistMC
@@ -8,19 +10,21 @@ import com.mohistmc.ai.MohistConfig;
  */
 public class ChatAPI {
 
-    public static String send(String message, ChatApiType chatApiType) {
+    public static String send(Long id, String message, ChatApiType chatApiType) {
         if (chatApiType == ChatApiType.BAIDU) {
-            return Baidu.main(message);
+            BaiduSession session = BaiduSession.getSession(String.valueOf(id));
+            return Baidu.aichat(session, message);
         } else if (chatApiType == ChatApiType.ALIBABA) {
             return QianWen.sendText(message);
         }
         return message;
     }
 
-    public static String send(String message) {
+    public static String send(Long id, String message) {
         ChatApiType DEFAULT = MohistConfig.ai_type;
         if (DEFAULT == ChatApiType.BAIDU) {
-            return Baidu.main(message);
+            BaiduSession session = BaiduSession.getSession(String.valueOf(id));
+            return Baidu.aichat(session, message);
         } else if (DEFAULT == ChatApiType.ALIBABA) {
             return QianWen.sendText(message);
         }

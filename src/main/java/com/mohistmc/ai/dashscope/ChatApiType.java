@@ -6,7 +6,7 @@ package com.mohistmc.ai.dashscope;
  */
 public enum ChatApiType {
 
-    BAIDU("文心一言"),
+    BAIDU("Mohist思维框架"),
     ALIBABA("通义千问");
 
     String name;

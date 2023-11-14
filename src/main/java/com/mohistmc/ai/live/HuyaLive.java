@@ -17,7 +17,7 @@ import mjson.Json;
  */
 public class HuyaLive {
 
-    public static final ScheduledExecutorService LIVE = new ScheduledThreadPoolExecutor(1, new NamedThreadFactory("Huya - Live"));
+    public static ScheduledExecutorService LIVE = new ScheduledThreadPoolExecutor(1, new NamedThreadFactory("Huya - Live"));
     public static HuyaLive INSTANCE = new HuyaLive();
 
     public static void main(String[] args) throws IOException {

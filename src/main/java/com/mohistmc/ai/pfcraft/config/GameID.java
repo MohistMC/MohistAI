@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class GameID {
 
-    private static final List<String> HEADER = Arrays.asList("""
+    private static List<String> HEADER = Arrays.asList("""
             This is the main configuration file for MohistAI.
             https://wiki.mohistmc.com/
 
@@ -31,7 +31,7 @@ public class GameID {
     public static YamlConfiguration config;
     public static String def;
     static int version;
-    private static final File CONFIG_FILE = new File("pfcraft", "gameID.yml");
+    private static File CONFIG_FILE = new File("pfcraft", "gameID.yml");
 
     public static void init() {
         config = new YamlConfiguration();

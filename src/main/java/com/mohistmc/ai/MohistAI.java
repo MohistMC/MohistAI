@@ -22,7 +22,7 @@ import net.mamoe.mirai.message.data.PlainText;
  * @date 2023/7/14 15:06:30
  */
 public class MohistAI extends JavaPlugin {
-    public static final MohistAI INSTANCE = new MohistAI();
+    public static MohistAI INSTANCE = new MohistAI();
     public Bot QQ;
 
     private MohistAI() {

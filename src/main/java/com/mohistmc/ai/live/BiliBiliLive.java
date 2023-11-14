@@ -13,7 +13,7 @@ import mjson.Json;
 
 public class BiliBiliLive {
 
-    public static final ScheduledExecutorService LIVE = new ScheduledThreadPoolExecutor(1, new NamedThreadFactory("BiliBili - Live"));
+    public static ScheduledExecutorService LIVE = new ScheduledThreadPoolExecutor(1, new NamedThreadFactory("BiliBili - Live"));
     public static BiliBiliLive INSTANCE = new BiliBiliLive();
 
     public void run() {
