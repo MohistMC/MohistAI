@@ -22,15 +22,14 @@ public class MySqlInit {
         MySqlInit.port = port;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            MySqlInit.con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + "?autoReconnect=true", user, password);
+            MySqlInit.con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, user, password);
+            createTable();
             System.out.println("[MohistAI] MySQL 连接建立!");
         } catch (SQLException e) {
             System.out.println("[MohistAI] MySQL 连接失败!" + e.getMessage());
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
-        createTable();
     }
 
     private static void createTable() {
