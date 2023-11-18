@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.ByteBuffer;
 
@@ -41,7 +42,7 @@ public class QianWen {
                             .enableSearch(true)
                             .build();
             GenerationResult result = gen.call(param);
-            return result.getOutput().getChoices().get(0).getMessage().getContent();
+            return result.getOutput().getChoices().getFirst().getMessage().getContent();
         } catch (Exception e) {
             return "妈, 这题好难^~^";
         }
@@ -79,6 +80,6 @@ public class QianWen {
                         .build();
 
         ImageSynthesisResult result = is.call(param);
-        return new URL(result.getOutput().getResults().get(0).get("url"));
+        return URI.create(result.getOutput().getResults().getFirst().get("url")).toURL();
     }
 }

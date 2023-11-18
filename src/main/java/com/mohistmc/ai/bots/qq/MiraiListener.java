@@ -61,7 +61,7 @@ public class MiraiListener extends SimpleListenerHost {
         if (event.getSender().getId() == 1947585689L) {
             return ListeningStatus.STOPPED;
         }
-        if (group == Account.mohistQQGGroup) {
+        if (group.equals(Account.mohistQQGGroup)) {
             for (SingleMessage s : event.getMessage()) {
                 if (s instanceof FileMessage f) {
                     //获取文件的下载链接

@@ -49,7 +49,7 @@ public class OpenAI {
                     .presencePenalty(0.6)
                     .stop(Arrays.asList("Human:", "AI:"))
                     .build();
-            return service.createCompletion(request).getChoices().get(0).getText();
+            return service.createCompletion(request).getChoices().getFirst().getText();
         });
     }
 }
