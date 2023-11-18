@@ -84,7 +84,7 @@ public class Baidu {
         catch (final Exception e) {
             e.printStackTrace();
             session.recall();
-            resultMsg += "妈, 这题好难^~^";
+            return null;
         }
         return resultMsg;
     }

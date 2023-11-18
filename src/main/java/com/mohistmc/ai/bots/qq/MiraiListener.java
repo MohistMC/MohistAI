@@ -232,8 +232,10 @@ public class MiraiListener extends SimpleListenerHost {
                         if (permission > 0 || ziyou.contains(group)) {
                             if (!atMessage.equals("[动画表情]") && !atMessage.equals("[图片]") && !atMessage.equals("[表情]") && !atMessage.isEmpty()) {
                                 String m = ChatAPI.send(sender, atMessage);
-                                // event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender().getId()), new PlainText(" " + m)));
-                                event.getGroup().sendMessage(MessageUtils.newChain(new PlainText(" " + m)));
+                                if (m != null) {
+                                    // event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender().getId()), new PlainText(" " + m)));
+                                    event.getGroup().sendMessage(MessageUtils.newChain(new PlainText(" " + m)));
+                                }
                             }
                         }
                     }
