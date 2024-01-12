@@ -40,7 +40,7 @@ dependencies {
     implementation 'com.mysql:mysql-connector-j:8.0.33'
     implementation 'com.theokanning.openai-gpt3-java:service:0.18.1'
     implementation 'com.mohistmc:json:0.2'
-    implementation 'com.alibaba:dashscope-sdk-java:2.8.2'
+    implementation 'com.alibaba:dashscope-sdk-java:2.9.2'
     implementation 'org.apache.httpcomponents:httpclient:4.5.14'
     implementation 'org.apache.httpcomponents:httpcore:4.4.16'
 
