@@ -67,15 +67,12 @@ public class MohistGitHub {
                                 ======GitHub更新推送======
                                 仓库: %s
                                 分支: %s
+                                提交人: %s
                                 提交时间: %s
                                 提交信息: %s
                                 """)
-                                .formatted(strings1[0], strings1[1].replace("\\", ""), sd, TJ.replace(TJ.split(" ")[0], ""));
-                        if (strings1[0].equals("MPS")) {
-                            MohistAI.INSTANCE.QQ.getGroup(Account.mohistQQGGroup).sendMessage(sendMsg);
-                        } else {
-                            MohistAI.INSTANCE.QQ.getGroup(Account.mohistQQGGroup).sendMessage(sendMsg);
-                        }
+                                .formatted(strings1[0], strings1[1].replace("\\", ""), author, sd, TJ.replace(TJ.split(" ")[0], ""));
+                        MohistAI.INSTANCE.QQ.getGroup(Account.mohistQQGGroup).sendMessage(sendMsg);
                     }
                 }
             }
@@ -123,23 +120,23 @@ public class MohistGitHub {
                             String[] a = issuesNa.split(" ");
                             String b = a[a.length - 1];
                             if (b.startsWith("#")) {
-                                sendMsg = sendMsg.formatted(ck, title.split(":")[1], b, "新回复", author, des);
+                                sendMsg = sendMsg.formatted(ck, titles, b, "新回复", author, des);
                                 MohistAI.INSTANCE.QQ.getGroup(Account.mohistQQGGroup).sendMessage(sendMsg.replace("\\", ""));
                             }
 
-                            String xhS = (title.split(":")[1]).split(" ")[1];
+                            String xhS = titles.split(" ")[1];
                             if (title.split(":")[0].endsWith("closed")) {
-                                sendMsg0 = sendMsg0.formatted(ck, (title.split(":")[1]).replace(xhS + " ", ""), xhS, "关闭", author);
+                                sendMsg0 = sendMsg0.formatted(ck, titles.replace(xhS + " ", ""), xhS, "关闭", author);
                                 MohistAI.INSTANCE.QQ.getGroup(Account.mohistQQGGroup).sendMessage(sendMsg0.replace("\\", ""));
                             }
 
                             if (title.split(":")[0].endsWith("Issue opened")) {
-                                sendMsg = sendMsg.formatted(ck, title.split(":")[1], b, "新鲜出炉的虫子", author, des);
+                                sendMsg = sendMsg.formatted(ck, titles, b, "新鲜出炉的虫子", author, des);
                                 sendMsgToGroup(sendMsg.replace("\\", ""));
                             }
 
                             if (title.split(":")[0].endsWith("Pull request opened")) {
-                                sendMsg = sendMsg.formatted(ck, title.split(":")[1], b, "有新的小伙伴加入", author, des);
+                                sendMsg = sendMsg.formatted(ck, titles, b, "有新的小伙伴加入", author, des);
                                 sendMsgToGroup(sendMsg.replace("\\", ""));
                             }
                         }
