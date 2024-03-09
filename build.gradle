@@ -10,8 +10,6 @@ group = 'com.mohistmc.miraimbot'
 version = project.version
 archivesBaseName = project.name.toLowerCase()
 
-def enablePreview = '--enable-preview'
-
 tasks.withType(JavaCompile).configureEach {
     options.warnings = false
     options.encoding = 'UTF-8'
@@ -37,7 +35,7 @@ dependencies {
     implementation 'com.mohistmc:yaml:0.5'
     implementation 'com.mohistmc:tools:0.2'
     implementation 'org.yaml:snakeyaml:2.2'
-    implementation 'com.mysql:mysql-connector-j:8.0.33'
+    implementation 'com.mysql:mysql-connector-j:8.2.0'
     implementation 'com.theokanning.openai-gpt3-java:service:0.18.1'
     implementation 'com.mohistmc:json:0.2'
     implementation 'com.alibaba:dashscope-sdk-java:2.9.2'
