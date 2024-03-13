@@ -1,45 +1,12 @@
 package com.mohistmc.ai.bots.qq;
 
-import com.alibaba.dashscope.exception.NoApiKeyException;
-import com.mohistmc.ai.Account;
-import com.mohistmc.ai.MohistAI;
-import com.mohistmc.ai.MohistConfig;
-import com.mohistmc.ai.dashscope.ChatAPI;
-import com.mohistmc.ai.dashscope.ChatApiType;
-import com.mohistmc.ai.dashscope.QianWen;
-import com.mohistmc.ai.live.HuyaLive;
-import com.mohistmc.ai.pfcraft.RpgInsiderAPI;
-import com.mohistmc.ai.pfcraft.ScInsiderAPI;
-import com.mohistmc.ai.pfcraft.config.GameID;
-import com.mohistmc.tools.HasteUtils;
-import com.mohistmc.tools.IOUtil;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import net.mamoe.mirai.event.EventHandler;
-import net.mamoe.mirai.event.ListeningStatus;
-import net.mamoe.mirai.event.SimpleListenerHost;
-import net.mamoe.mirai.event.events.BotOnlineEvent;
-import net.mamoe.mirai.event.events.GroupMessageEvent;
-import net.mamoe.mirai.message.data.At;
-import net.mamoe.mirai.message.data.FileMessage;
-import net.mamoe.mirai.message.data.Image;
-import net.mamoe.mirai.message.data.MessageUtils;
-import net.mamoe.mirai.message.data.OfflineAudio;
-import net.mamoe.mirai.message.data.PlainText;
-import net.mamoe.mirai.message.data.SingleMessage;
-import net.mamoe.mirai.utils.ExternalResource;
-
 /**
  * @author Mgazul by MohistMC
  * @date 2023/7/12 16:00:30
  */
-public class MiraiListener extends SimpleListenerHost {
+public class MiraiListener  {
 
+    /*
     public static List<Long> ziyou = new ArrayList<>();
 
     @EventHandler
@@ -245,5 +212,5 @@ public class MiraiListener extends SimpleListenerHost {
 
         return ListeningStatus.LISTENING; // 表示继续监听事件
     }
-
+*/
 }

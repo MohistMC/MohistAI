@@ -1,7 +1,5 @@
 package com.mohistmc.ai.live;
 
-import com.mohistmc.ai.Account;
-import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.MohistConfig;
 import com.mohistmc.tools.NamedThreadFactory;
 import java.net.URI;
@@ -31,7 +29,7 @@ public class BiliBiliLive {
 
         if (liveStatus == 1) {
             // TODO 添加可配置Bot识别
-            if (MohistAI.INSTANCE.QQ != null && !MohistConfig.live_bilibili_pushqq) {
+            if (!MohistConfig.live_bilibili_pushqq) {
                 String ms = ("""
                         你关注的主播已开播
                                             
@@ -40,7 +38,6 @@ public class BiliBiliLive {
                         """).formatted(title);
 
                 System.out.println(ms);
-                MohistAI.sendMsgToGroup(Account.mohistQQGGroup, ms);
                 MohistConfig.set("live.bilibili.pushqq", true);
                 System.out.println("已推送至QQ");
             }

@@ -1,19 +1,20 @@
 plugins {
     id 'java'
     id 'idea'
-    id 'org.jetbrains.kotlin.jvm' version '1.9.20-Beta2'
-    id 'net.mamoe.mirai-console' version '2.15.0'
     id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
-group = 'com.mohistmc.miraimbot'
+group = 'com.mohistmc'
 version = project.version
 archivesBaseName = project.name.toLowerCase()
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
 
 tasks.withType(JavaCompile).configureEach {
     options.warnings = false
     options.encoding = 'UTF-8'
-    // options.compilerArgs += [enablePreview]
 }
 
 repositories {
@@ -23,7 +24,6 @@ repositories {
     maven { url 'https://maven.aliyun.com/repository/public/' }
     maven { url 'https://jitpack.io/' }
     maven { url 'https://repo.opencollab.dev/maven-releases/' }
-    maven { url 'https://repo.mirai.mamoe.net/snapshots' }
     maven { url 'https://repo.maven.apache.org/maven2' }
 }
 
@@ -32,8 +32,8 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
     implementation 'org.javacord:javacord:3.8.0' // Discord 机器人
-    implementation 'com.mohistmc:yaml:0.5'
-    implementation 'com.mohistmc:tools:0.2'
+    implementation 'com.mohistmc:yaml:0.6'
+    implementation 'com.mohistmc:tools:0.5.1'
     implementation 'org.yaml:snakeyaml:2.2'
     implementation 'com.mysql:mysql-connector-j:8.2.0'
     implementation 'com.theokanning.openai-gpt3-java:service:0.18.1'
@@ -42,8 +42,4 @@ dependencies {
     implementation 'org.apache.httpcomponents:httpclient:4.5.14'
     implementation 'org.apache.httpcomponents:httpcore:4.4.16'
 
-}
-
-mirai {
-    jvmTarget JavaVersion.VERSION_21
 }

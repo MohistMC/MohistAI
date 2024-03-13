@@ -1,6 +1,5 @@
 package com.mohistmc.ai.minecraft;
 
-import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.MohistConfig;
 import com.mohistmc.tools.NamedThreadFactory;
 import java.net.URI;
@@ -61,7 +60,6 @@ public class VersionsCheck {
                         发布时间: %s""").formatted(type, id, f.asString("releaseTime"));
                 System.out.println(sendMsg);
                 MohistConfig.set("minecraft." + type, version);
-                MohistAI.sendAll(sendMsg);
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.mohistmc.ai.live;
 
-import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.MohistConfig;
 import com.mohistmc.tools.IOUtil;
 import com.mohistmc.tools.NamedThreadFactory;
@@ -59,7 +58,6 @@ public class HuyaLive {
                         """).formatted(title);
 
                 System.out.println(ms);
-                MohistAI.sendAllAt(ms);
                 MohistConfig.set("live.huya.pushqq", true);
                 System.out.println("已推送至QQ");
             }
