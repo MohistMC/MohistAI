@@ -10,7 +10,7 @@ import mjson.Json;
 
 public class QQ {
 
-    public static final String mohist = MohistConfig.QQ_REQUEST_API_MOHIST;
+    public static final String mohist = MohistConfig.qq_request_api_mohist;
 
     public static void send_group_msg(String group_id, String message) {
         MohistAI.LOGGER.info(message);

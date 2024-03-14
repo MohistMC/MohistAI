@@ -29,6 +29,7 @@ public class MohistConfig {
     public static String chatgpt_api_key;
     public static boolean discord;
     public static String discord_token;
+    public static boolean discord_proxy_enable;
     public static String discord_proxy_address;
     public static int discord_proxy_port;
     public static boolean live_bilibili;
@@ -50,7 +51,7 @@ public class MohistConfig {
     public static String mysql_password;
     public static String mysql_port;
 
-    public static String QQ_REQUEST_API_MOHIST;
+    public static String qq_request_api_mohist;
     static int version;
     private static File CONFIG_FILE = new File("mohist-config", "mohist.yml");
 
@@ -134,6 +135,7 @@ public class MohistConfig {
         chatgpt_api_key = getString("chatgpt.api_key", "");
         discord = getBoolean("discord.enable", false);
         discord_token = getString("discord.token", "");
+        discord_proxy_enable = getBoolean("discord.proxy.enable", false);
         discord_proxy_address = getString("discord.proxy.address", "127.0.0.1");
         discord_proxy_port = getInt("discord.proxy.port", 7890);
         live_bilibili = getBoolean("live.bilibili.enable", true);
@@ -149,7 +151,7 @@ public class MohistConfig {
         minecraft_release = getString("minecraft.release", "");
         minecraft_snapshot = getString("minecraft.snapshot", "");
 
-        QQ_REQUEST_API_MOHIST = getString("qq.request.api.mohist", "http://0.0.0.0:3000");
+        qq_request_api_mohist = getString("qq.request.api.mohist", "http://0.0.0.0:3000");
 
         mysql_host = getString("mysql.host", "");
         mysql_username = getString("mysql.username", "");

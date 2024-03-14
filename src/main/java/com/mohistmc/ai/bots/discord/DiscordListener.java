@@ -13,13 +13,13 @@ import org.javacord.api.event.message.MessageCreateEvent;
  * @author Mgazul by MohistMC
  * @date 2023/7/14 15:12:59
  */
-public class MohistGitHub {
+public class DiscordListener {
 
     public static void onMessage(MessageCreateEvent event) {
         String message = event.getMessageContent();
         if (String.valueOf(event.getChannel().getId()).equals(Account.discordAnnonces)) {
             String sendMsg = "===有新的公告-来自Discord===" + "\n" + message;
-            //MohistAI.INSTANCE.QQ.getGroup(Account.mohistQQGGroup).sendMessage(sendMsg);
+            sendToMohistGroup(sendMsg);
         }
 
         if (!event.getMessage().getEmbeds().isEmpty()) {
@@ -37,7 +37,7 @@ public class MohistGitHub {
                                     项目: %s
                                     构建号: %s""")
                                     .formatted(titles[0], titles[1]);
-                            //MohistAI.INSTANCE.QQ.getGroup(Account.mohistQQGGroup).sendMessage(sendMsg);
+                            sendToMohistGroup(sendMsg);
                         }
                     }
                 }
@@ -72,8 +72,7 @@ public class MohistGitHub {
                                 提交信息: %s
                                 """)
                                 .formatted(strings1[0], strings1[1].replace("\\", ""), author, sd, TJ.replace(TJ.split(" ")[0], ""));
-                        // MohistAI.INSTANCE.QQ.getGroup(Account.mohistQQGGroup).sendMessage(sendMsg);
-                        sendMsgToGroup(sendMsg);
+                        sendToMohistGroup(sendMsg);
                     }
                 }
             }
@@ -122,23 +121,23 @@ public class MohistGitHub {
                             String b = a[a.length - 1];
                             if (b.startsWith("#")) {
                                 sendMsg = sendMsg.formatted(ck, titles, b, "新回复", author, des);
-                                //MohistAI.INSTANCE.QQ.getGroup(Account.mohistQQGGroup).sendMessage(sendMsg.replace("\\", ""));
+                                sendToMohistGroup(sendMsg.replace("\\", ""));
                             }
 
                             String xhS = titles.split(" ")[1];
                             if (title.split(":")[0].endsWith("closed")) {
                                 sendMsg0 = sendMsg0.formatted(ck, titles.replace(xhS + " ", ""), xhS, "关闭", author);
-                                //MohistAI.INSTANCE.QQ.getGroup(Account.mohistQQGGroup).sendMessage(sendMsg0.replace("\\", ""));
+                                sendToMohistGroup(sendMsg0.replace("\\", ""));
                             }
 
                             if (title.split(":")[0].endsWith("Issue opened")) {
                                 sendMsg = sendMsg.formatted(ck, titles, b, "新鲜出炉的虫子", author, des);
-                                sendMsgToGroup(sendMsg.replace("\\", ""));
+                                sendToMohistGroup(sendMsg.replace("\\", ""));
                             }
 
                             if (title.split(":")[0].endsWith("Pull request opened")) {
                                 sendMsg = sendMsg.formatted(ck, titles, b, "有新的小伙伴加入", author, des);
-                                sendMsgToGroup(sendMsg.replace("\\", ""));
+                                sendToMohistGroup(sendMsg.replace("\\", ""));
                             }
                         }
                     }
@@ -147,7 +146,7 @@ public class MohistGitHub {
         }
     }
 
-    public static void sendMsgToGroup(String msg) {
+    public static void sendToMohistGroup(String msg) {
         QQ.send_group_msg(String.valueOf(Account.mohistQQGGroup), msg);
     }
 }
