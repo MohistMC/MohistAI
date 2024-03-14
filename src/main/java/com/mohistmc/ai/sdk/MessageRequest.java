@@ -28,7 +28,7 @@ public class MessageRequest {
 record Message(Data data, String type) {
 }
 
-record Data(String text) {
+record Data(String text, String id, String file, String url, String file_size) {
 }
 
 record Sender(long user_id, String nickname, String card, String role) {
