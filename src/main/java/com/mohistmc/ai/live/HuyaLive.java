@@ -1,5 +1,6 @@
 package com.mohistmc.ai.live;
 
+import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.MohistConfig;
 import com.mohistmc.tools.IOUtil;
 import com.mohistmc.tools.NamedThreadFactory;
@@ -22,17 +23,17 @@ public class HuyaLive {
     public static void main(String[] args) throws IOException {
         String jsonText = IOUtil.readContent(IOUtil.getInputStream("https://www.huya.com/pinkfish")).split("TT_ROOM_DATA = ")[1].split("};")[0] + "}";
         Json json = Json.read(jsonText);
-        System.out.println(jsonText);
-        System.out.println("直播间: " + "https://www.huya.com/pinkfish");
-        System.out.println("直播状态: " + (json.asString("state").equals("REPLAY") ? "重播中" : "直播中"));
-        System.out.println("直播提醒: " + (json.asBoolean("isOn") ? "直播中" : "未开播"));
-        System.out.println("标题: " + json.asString("introduction"));
+        MohistAI.LOGGER.info(jsonText);
+        MohistAI.LOGGER.info("直播间: " + "https://www.huya.com/pinkfish");
+        MohistAI.LOGGER.info("直播状态: " + (json.asString("state").equals("REPLAY") ? "重播中" : "直播中"));
+        MohistAI.LOGGER.info("直播提醒: " + (json.asBoolean("isOn") ? "直播中" : "未开播"));
+        MohistAI.LOGGER.info("标题: " + json.asString("introduction"));
         new HuyaLive().run();
     }
 
     public void run() {
         if (!MohistConfig.live_huya) return;
-        System.out.println("虎牙开播推送服务已启用");
+        MohistAI.LOGGER.info("虎牙开播推送服务已启用");
         LIVE.scheduleAtFixedRate(this::run0, 1000, 1000 * 5, TimeUnit.MILLISECONDS);
     }
 
@@ -57,13 +58,13 @@ public class HuyaLive {
                         直播地址：https://www.huya.com/pinkfish
                         """).formatted(title);
 
-                System.out.println(ms);
+                MohistAI.LOGGER.info(ms);
                 MohistConfig.set("live.huya.pushqq", true);
-                System.out.println("已推送至QQ");
+                MohistAI.LOGGER.info("已推送至QQ");
             }
         } else {
             if (MohistConfig.live_huya_pushqq) {
-                System.out.println("已初始化推送(HuYa)");
+                MohistAI.LOGGER.info("已初始化推送(HuYa)");
                 MohistConfig.set("live.huya.pushqq", false);
             }
         }

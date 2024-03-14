@@ -1,6 +1,7 @@
 package com.mohistmc.ai.pfcraft.config;
 
 import com.google.common.base.Throwables;
+import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.MohistConfig;
 import com.mohistmc.yaml.InvalidConfigurationException;
 import com.mohistmc.yaml.file.YamlConfiguration;
@@ -38,8 +39,7 @@ public class GameID {
         try {
             config.load(CONFIG_FILE);
         } catch (IOException | InvalidConfigurationException ex) {
-            System.out.println("Could not load mohist.yml, please correct your syntax errors");
-            Throwables.throwIfUnchecked(ex);
+            MohistAI.LOGGER.info("Could not load mohist.yml, please correct your syntax errors");
         }
 
         config.options().setHeader(HEADER);
@@ -64,7 +64,7 @@ public class GameID {
                     } catch (InvocationTargetException ex) {
                         Throwables.throwIfUnchecked(ex.getCause());
                     } catch (Exception ex) {
-                        System.out.println("Error invoking " + method);
+                        MohistAI.LOGGER.info("Error invoking " + method);
                     }
                 }
             }
@@ -73,7 +73,7 @@ public class GameID {
         try {
             config.save(CONFIG_FILE);
         } catch (IOException ex) {
-            System.out.println("Could not save " + CONFIG_FILE);
+            MohistAI.LOGGER.info("Could not save " + CONFIG_FILE);
         }
     }
 

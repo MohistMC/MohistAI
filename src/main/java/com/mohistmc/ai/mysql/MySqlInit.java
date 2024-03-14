@@ -1,5 +1,6 @@
 package com.mohistmc.ai.mysql;
 
+import com.mohistmc.ai.MohistAI;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -24,9 +25,9 @@ public class MySqlInit {
             Class.forName("com.mysql.cj.jdbc.Driver");
             MySqlInit.con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, user, password);
             createTable();
-            System.out.println("[MohistAI] MySQL 连接建立!");
+            MohistAI.LOGGER.info("[MohistAI] MySQL 连接建立!");
         } catch (SQLException e) {
-            System.out.println("[MohistAI] MySQL 连接失败!" + e.getMessage());
+            MohistAI.LOGGER.info("[MohistAI] MySQL 连接失败!" + e.getMessage());
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -37,7 +38,7 @@ public class MySqlInit {
             con.prepareStatement("CREATE TABLE IF NOT EXISTS rpginsider (NAME VARCHAR(100), value TINYINT(1), admin TINYINT(1))").executeUpdate();
             con.prepareStatement("CREATE TABLE IF NOT EXISTS scinsider (NAME VARCHAR(100), value TINYINT(1), admin TINYINT(1))").executeUpdate();
         } catch (SQLException e) {
-            System.out.println("[MohistAI] MySQL 创建表失败!" + e.getMessage());
+            MohistAI.LOGGER.info("[MohistAI] MySQL 创建表失败!" + e.getMessage());
         }
     }
 

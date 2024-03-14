@@ -195,7 +195,7 @@ public class MiraiListener  {
                     } else if (atMessage.equals("客户端")) {
                         event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender().getId()), new PlainText(" http://s1.devicloud.cn:25119/fish/pfcraft-1.20.1.zip")));
                     } else {
-                        System.out.println(atMessage);
+                        MohistAI.LOGGER.info(atMessage);
                         if (permission > 0 || ziyou.contains(group)) {
                             if (!atMessage.equals("[动画表情]") && !atMessage.equals("[图片]") && !atMessage.equals("[表情]") && !atMessage.isEmpty()) {
                                 String m = ChatAPI.send(sender, atMessage);

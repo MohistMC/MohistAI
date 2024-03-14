@@ -1,5 +1,6 @@
 package com.mohistmc.ai.bots.discord;
 
+import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.MohistConfig;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
@@ -19,12 +20,12 @@ public class DiscordBot {
         if (!MohistConfig.discord) return;
         DiscordApiBuilder builder = new DiscordApiBuilder();
         Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(MohistConfig.discord_proxy_address, MohistConfig.discord_proxy_port));
-        builder.setProxy(proxy);
+        // builder.setProxy(proxy);
         builder.addIntents(Intent.MESSAGE_CONTENT);
         builder.addMessageCreateListener(MohistGitHub::onMessage);
-
         System.out.println("尝试登入Discord...");
         discord = builder.setToken(MohistConfig.discord_token).login().join();
         System.out.println("Discord 登录成功");
+
     }
 }

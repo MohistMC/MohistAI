@@ -1,5 +1,6 @@
 package com.mohistmc.ai.minecraft;
 
+import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.MohistConfig;
 import com.mohistmc.tools.NamedThreadFactory;
 import java.net.URI;
@@ -21,7 +22,7 @@ public class VersionsCheck {
 
     public void run() {
         if (!MohistConfig.minecraft_versionscheck) return;
-        System.out.println("MC新版本推送服务已启用");
+        MohistAI.LOGGER.info("MC新版本推送服务已启用");
         LIVE.scheduleAtFixedRate(this::run0, 1000 * 10, 1000 * 20, TimeUnit.MILLISECONDS);
     }
 
@@ -36,7 +37,7 @@ public class VersionsCheck {
         if (MohistConfig.minecraft_release.isEmpty() && MohistConfig.minecraft_snapshot.isEmpty()) {
             MohistConfig.set("minecraft.release", release);
             MohistConfig.set("minecraft.snapshot", snapshot);
-            System.out.println("初始化MC版本完成!");
+            MohistAI.LOGGER.info("初始化MC版本完成!");
             System.out.printf("Release: %s%n", MohistConfig.minecraft_release);
             System.out.printf("Snapshot: %s%n", MohistConfig.minecraft_snapshot);
         }
@@ -58,7 +59,7 @@ public class VersionsCheck {
                         类型: %s
                         版本号: %s
                         发布时间: %s""").formatted(type, id, f.asString("releaseTime"));
-                System.out.println(sendMsg);
+                MohistAI.LOGGER.info(sendMsg);
                 MohistConfig.set("minecraft." + type, version);
             }
         }

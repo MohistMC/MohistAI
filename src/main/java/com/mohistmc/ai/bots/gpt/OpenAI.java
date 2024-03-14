@@ -19,7 +19,7 @@ public class OpenAI {
 
     public static void init() {
         if (!MohistConfig.chatgpt) return;
-        System.out.println("初始化ChatGPT...");
+        MohistAI.LOGGER.info("初始化ChatGPT...");
         service = new OpenAiService(MohistConfig.chatgpt_api_key, Duration.ZERO);
         CACHE = CacheBuilder.newBuilder()
                 .expireAfterWrite(30, TimeUnit.MINUTES)
@@ -28,10 +28,10 @@ public class OpenAI {
                         return;
                     }
                     if (notification.getCause() == RemovalCause.EXPIRED) {
-                        System.out.println("ChatGPT 已断开连接");
+                        MohistAI.LOGGER.info("ChatGPT 已断开连接");
                     }
                 }).build();
-        System.out.println("初始化ChatGPT完毕...");
+        MohistAI.LOGGER.info("初始化ChatGPT完毕...");
 
     }
 

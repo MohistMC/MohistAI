@@ -49,6 +49,8 @@ public class MohistConfig {
     public static String mysql_database;
     public static String mysql_password;
     public static String mysql_port;
+
+    public static String QQ_REQUEST_API_MOHIST;
     static int version;
     private static File CONFIG_FILE = new File("mohist-config", "mohist.yml");
 
@@ -67,6 +69,7 @@ public class MohistConfig {
         version = getInt("config-version", 1);
         set("config-version", 1);
         readConfig();
+        MohistAI.LOGGER.info("配置文件初始化完毕");
     }
 
     public static void save() {
@@ -83,7 +86,7 @@ public class MohistConfig {
                     } catch (InvocationTargetException ex) {
                         Throwables.throwIfUnchecked(ex.getCause());
                     } catch (Exception ex) {
-                        System.out.println("Error invoking " + method);
+                        MohistAI.LOGGER.info("Error invoking " + method);
                     }
                 }
             }
@@ -92,7 +95,7 @@ public class MohistConfig {
         try {
             config.save(CONFIG_FILE);
         } catch (IOException ex) {
-            System.out.println("Could not save " + CONFIG_FILE);
+            MohistAI.LOGGER.info("Could not save " + CONFIG_FILE);
         }
     }
 
@@ -145,6 +148,8 @@ public class MohistConfig {
         minecraft_versionscheck = getBoolean("minecraft.versions-check", false);
         minecraft_release = getString("minecraft.release", "");
         minecraft_snapshot = getString("minecraft.snapshot", "");
+
+        QQ_REQUEST_API_MOHIST = getString("qq.request.api.mohist", "http://0.0.0.0:3000");
 
         mysql_host = getString("mysql.host", "");
         mysql_username = getString("mysql.username", "");

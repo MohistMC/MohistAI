@@ -1,9 +1,5 @@
 package com.mohistmc.ai.dashscope;
 
-import com.mohistmc.ai.MohistConfig;
-import com.mohistmc.ai.baidu.Baidu;
-import com.mohistmc.ai.baidu.BaiduSession;
-
 /**
  * @author Mgazul by MohistMC
  * @date 2023/9/16 4:07:36

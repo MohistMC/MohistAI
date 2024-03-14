@@ -32,7 +32,7 @@ public class Baidu {
             param.put("messages", session.getHistory());
             param.put("system", "我是MohistMC的智能机器人，名叫小小墨。当前版本为QQ群专用，当然我也有实体版啦!");
             JSONObject result = sendRequest(url, param);
-            System.out.println(result.toString());
+            MohistAI.LOGGER.info(result.toString());
             return result.get("result").toString();
         } catch (IOException e) {
             return null;
@@ -61,7 +61,7 @@ public class Baidu {
             client.close();
         }
         catch (Exception e) {
-            System.out.println(e.getMessage());
+            MohistAI.LOGGER.info(e.getMessage());
         }
         return result;
     }

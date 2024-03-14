@@ -1,6 +1,7 @@
 package com.mohistmc.ai.bots.discord;
 
 import com.mohistmc.ai.Account;
+import com.mohistmc.ai.api.QQ;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
@@ -72,6 +73,7 @@ public class MohistGitHub {
                                 """)
                                 .formatted(strings1[0], strings1[1].replace("\\", ""), author, sd, TJ.replace(TJ.split(" ")[0], ""));
                         // MohistAI.INSTANCE.QQ.getGroup(Account.mohistQQGGroup).sendMessage(sendMsg);
+                        sendMsgToGroup(sendMsg);
                     }
                 }
             }
@@ -146,6 +148,6 @@ public class MohistGitHub {
     }
 
     public static void sendMsgToGroup(String msg) {
-        // MohistAI.sendMsgToGroup(Account.mohistQQGGroup, msg);
+        QQ.send_group_msg(String.valueOf(Account.mohistQQGGroup), msg);
     }
 }
