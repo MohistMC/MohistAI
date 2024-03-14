@@ -1,13 +1,9 @@
 package com.mohistmc.ai;
 
-import lombok.Data;
-
-@Data
 public class Account {
 
-    public static Long mohistQQGGroup = 782534813L;
-    public static Long pfcraftQQGGroup = 488295670L;
-    public static String discordGitHub = "511810108594847774";
-    public static String discordAnnonces = "550911071188418571";
-    public static String discordJenkins = "986956489061204018";
+    public static final String mohistQQGGroup = "782534813";
+    public static final String discordGitHub = "511810108594847774";
+    public static final String discordAnnonces = "550911071188418571";
+    public static final String discordJenkins = "986956489061204018";
 }

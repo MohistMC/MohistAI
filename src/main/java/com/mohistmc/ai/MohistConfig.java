@@ -52,6 +52,8 @@ public class MohistConfig {
     public static String mysql_port;
 
     public static String qq_request_api_mohist;
+    public static String qq_request_api_fish;
+    public static boolean qq_request_debug;
     static int version;
     private static File CONFIG_FILE = new File("mohist-config", "mohist.yml");
 
@@ -151,7 +153,9 @@ public class MohistConfig {
         minecraft_release = getString("minecraft.release", "");
         minecraft_snapshot = getString("minecraft.snapshot", "");
 
-        qq_request_api_mohist = getString("qq.request.api.mohist", "http://0.0.0.0:3000");
+        qq_request_api_mohist = getString("qq.request.api.mohist", "http://localhost:3000");
+        qq_request_api_fish = getString("qq.request.api.fish", "http://localhost:3000");
+        qq_request_debug = getBoolean("qq.request.debug", true);
 
         mysql_host = getString("mysql.host", "");
         mysql_username = getString("mysql.username", "");

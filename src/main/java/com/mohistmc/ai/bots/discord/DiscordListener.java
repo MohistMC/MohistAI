@@ -19,7 +19,7 @@ public class DiscordListener {
         String message = event.getMessageContent();
         if (String.valueOf(event.getChannel().getId()).equals(Account.discordAnnonces)) {
             String sendMsg = "===有新的公告-来自Discord===" + "\n" + message;
-            sendToMohistGroup(sendMsg);
+            QQ.sendToMohistGroup(sendMsg);
         }
 
         if (!event.getMessage().getEmbeds().isEmpty()) {
@@ -37,7 +37,7 @@ public class DiscordListener {
                                     项目: %s
                                     构建号: %s""")
                                     .formatted(titles[0], titles[1]);
-                            sendToMohistGroup(sendMsg);
+                            QQ.sendToMohistGroup(sendMsg);
                         }
                     }
                 }
@@ -69,10 +69,9 @@ public class DiscordListener {
                                 分支: %s
                                 提交人: %s
                                 提交时间: %s
-                                提交信息: %s
-                                """)
+                                提交信息: %s""")
                                 .formatted(strings1[0], strings1[1].replace("\\", ""), author, sd, TJ.replace(TJ.split(" ")[0], ""));
-                        sendToMohistGroup(sendMsg);
+                        QQ.sendToMohistGroup(sendMsg);
                     }
                 }
             }
@@ -103,8 +102,7 @@ public class DiscordListener {
                                     序号: %s
                                     状态: %s
                                     笔者: %s
-                                    内容: %s
-                                    """;
+                                    内容: %s""";
 
                             String sendMsg0 = """
                                     ======GitHub issues======
@@ -112,8 +110,7 @@ public class DiscordListener {
                                     标题: %s
                                     序号: %s
                                     状态: %s
-                                    执行者: %s
-                                    """;
+                                    执行者: %s""";
 
 
                             String issuesNa = title.split(":")[0];
@@ -121,32 +118,28 @@ public class DiscordListener {
                             String b = a[a.length - 1];
                             if (b.startsWith("#")) {
                                 sendMsg = sendMsg.formatted(ck, titles, b, "新回复", author, des);
-                                sendToMohistGroup(sendMsg.replace("\\", ""));
+                                QQ.sendToMohistGroup(sendMsg.replace("\\", ""));
                             }
 
                             String xhS = titles.split(" ")[1];
                             if (title.split(":")[0].endsWith("closed")) {
                                 sendMsg0 = sendMsg0.formatted(ck, titles.replace(xhS + " ", ""), xhS, "关闭", author);
-                                sendToMohistGroup(sendMsg0.replace("\\", ""));
+                                QQ.sendToMohistGroup(sendMsg0.replace("\\", ""));
                             }
 
                             if (title.split(":")[0].endsWith("Issue opened")) {
                                 sendMsg = sendMsg.formatted(ck, titles, b, "新鲜出炉的虫子", author, des);
-                                sendToMohistGroup(sendMsg.replace("\\", ""));
+                                QQ.sendToMohistGroup(sendMsg.replace("\\", ""));
                             }
 
                             if (title.split(":")[0].endsWith("Pull request opened")) {
                                 sendMsg = sendMsg.formatted(ck, titles, b, "有新的小伙伴加入", author, des);
-                                sendToMohistGroup(sendMsg.replace("\\", ""));
+                                QQ.sendToMohistGroup(sendMsg.replace("\\", ""));
                             }
                         }
                     }
                 }
             }
         }
-    }
-
-    public static void sendToMohistGroup(String msg) {
-        QQ.send_group_msg(String.valueOf(Account.mohistQQGGroup), msg);
     }
 }

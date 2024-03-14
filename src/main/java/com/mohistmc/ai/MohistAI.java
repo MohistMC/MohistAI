@@ -5,7 +5,6 @@ import com.mohistmc.ai.bots.discord.DiscordBot;
 import com.mohistmc.ai.live.BiliBiliLive;
 import com.mohistmc.ai.minecraft.VersionsCheck;
 import com.mohistmc.ai.mysql.MySqlInit;
-import com.mohistmc.ai.pfcraft.config.GameID;
 import jakarta.annotation.PostConstruct;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,10 +30,7 @@ public class MohistAI {
 
     public void onEnable() {
         LOGGER.info("初始化后端");
-        //System.setProperty("https.proxyHost", "127.0.0.1");
-        //System.setProperty("https.proxyPort", "7890");
         MohistConfig.init();
-        GameID.init();
         DiscordBot.init();
         Constants.apiKey = MohistConfig.dashscope_apikey;
         BiliBiliLive.INSTANCE.run();

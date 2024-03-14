@@ -4,7 +4,6 @@ import com.mohistmc.ai.MohistAI;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Timer;
 
 public class MySqlInit {
     public static Connection con;
@@ -13,7 +12,6 @@ public class MySqlInit {
     public static String database;
     public static String password;
     public static String port;
-    public static Timer timer = new Timer();
 
     public static void connect(String host, String user, String database, String password, String port) {
         MySqlInit.host = host;
