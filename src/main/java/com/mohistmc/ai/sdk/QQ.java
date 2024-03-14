@@ -1,4 +1,4 @@
-package com.mohistmc.ai.api;
+package com.mohistmc.ai.sdk;
 
 import com.mohistmc.ai.Account;
 import com.mohistmc.ai.MohistAI;

@@ -1,6 +1,6 @@
 package com.mohistmc.ai.network;
 
-import com.mohistmc.ai.api.QQ;
+import com.mohistmc.ai.sdk.QQ;
 import com.mohistmc.tools.NamedThreadFactory;
 import java.net.URI;
 import java.net.http.HttpClient;

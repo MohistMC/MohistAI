@@ -1,7 +1,7 @@
 package com.mohistmc.ai.bots.discord;
 
 import com.mohistmc.ai.Account;
-import com.mohistmc.ai.api.QQ;
+import com.mohistmc.ai.sdk.QQ;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
