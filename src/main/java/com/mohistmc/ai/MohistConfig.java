@@ -60,6 +60,9 @@ public class MohistConfig {
     public static void init() {
         config = new YamlConfiguration();
         try {
+            if (!CONFIG_FILE.exists()) {
+                CONFIG_FILE.createNewFile();
+            }
             config.load(CONFIG_FILE);
         } catch (IOException | InvalidConfigurationException ex) {
             System.out.println("Could not load mohist.yml, please correct your syntax errors");

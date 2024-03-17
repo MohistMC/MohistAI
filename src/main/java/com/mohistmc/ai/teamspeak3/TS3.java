@@ -3,6 +3,7 @@ package com.mohistmc.ai.teamspeak3;
 import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.TS3Config;
 import com.github.theholywaffle.teamspeak3.TS3Query;
+import com.github.theholywaffle.teamspeak3.api.ClientProperty;
 import com.github.theholywaffle.teamspeak3.api.event.ChannelCreateEvent;
 import com.github.theholywaffle.teamspeak3.api.event.ChannelDeletedEvent;
 import com.github.theholywaffle.teamspeak3.api.event.ChannelDescriptionEditedEvent;
@@ -16,29 +17,36 @@ import com.github.theholywaffle.teamspeak3.api.event.PrivilegeKeyUsedEvent;
 import com.github.theholywaffle.teamspeak3.api.event.ServerEditedEvent;
 import com.github.theholywaffle.teamspeak3.api.event.TS3Listener;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
+import com.mohistmc.ai.sdk.QQ;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TS3 {
 
-    public static void main(String[] args) {
+    public static TS3Api api;
+
+    public static void init() {
         final TS3Config config = new TS3Config();
-        config.setHost("s1.devicloud.cn");
-        config.setQueryPort(31319);
+        config.setHost("0.0.0.0");
+        //config.setQueryPort(9987);
         config.setEnableCommunicationsLogging(true);
 
         final TS3Query query = new TS3Query(config);
         query.connect();
 
-        final TS3Api api = query.getApi();
+        api = query.getApi();
+        api.login("serveradmin", "tPATEwFI");
         api.selectVirtualServerById(1);
         api.setNickname("鱼酱-TS3");
-        api.sendChannelMessage("鱼酱-TS3 is online!");
-
         api.registerAllEvents();
         api.addTS3Listeners(new TS3Listener() {
 
             @Override
             public void onTextMessage(TextMessageEvent e) {
-                System.out.println("Text message received in " + e.getTargetMode());
+                System.out.printf("[TS][%s]: %s%n", e.getInvokerName(), e.getMessage().replace("ts ", ""));
+                if (e.getMessage().startsWith("ts ")) {
+                    QQ.sendToFishGroup("[TS][%s]: %s".formatted(e.getInvokerName(), e.getMessage().replace("ts ", "")));
+                }
             }
 
             @Override
@@ -53,12 +61,12 @@ public class TS3 {
 
             @Override
             public void onClientLeave(ClientLeaveEvent e) {
-                // ...
+                System.out.println(e.getInvokerName() + " 退出了TS服务器");
             }
 
             @Override
             public void onClientJoin(ClientJoinEvent e) {
-                // ...
+                System.out.println(e.getClientNickname() + " 进入了TS服务器");
             }
 
             @Override

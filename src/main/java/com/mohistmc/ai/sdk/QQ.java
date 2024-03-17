@@ -11,21 +11,23 @@ import mjson.Json;
 
 public class QQ {
 
-    public static final String mohist = MohistConfig.qq_request_api_mohist;
-    public static final String fish = MohistConfig.qq_request_api_mohist;
     public static final boolean debug = MohistConfig.qq_request_debug;
 
     public static void sendToMohistGroup(String message) {
-        send_group_msg(Account.mohistQQGGroup, message);
+        send_group_msg(BotType.MOHIST, Account.mohistQQGGroup, message);
     }
 
-    public static void send_group_msg(String group_id, String message) {
+    public static void sendToFishGroup(String message) {
+        send_group_msg(BotType.FISH, Account.上线了, message);
+    }
+
+    public static void send_group_msg(BotType botType, String group_id, String message) {
         debug(message);
         try {
             HashMap<String, Object> param = new HashMap<>();
             param.put("group_id", group_id);
             param.put("message", message);
-            var string = HttpRequestUtils.post("/send_group_msg", param)
+            var string = HttpRequestUtils.post(botType, "/send_group_msg", param)
                     .thenApplyAsync(HttpResponse::body)
                     .get();
 

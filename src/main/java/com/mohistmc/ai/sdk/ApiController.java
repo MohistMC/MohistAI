@@ -1,7 +1,7 @@
 package com.mohistmc.ai.sdk;
 
 import com.mohistmc.ai.MohistAI;
-import com.mohistmc.tools.XMLUtil;
+import com.mohistmc.ai.teamspeak3.TS3;
 import lombok.SneakyThrows;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,15 +15,25 @@ public class ApiController {
     public ResponseEntity<MessageRequest> qq(@RequestBody MessageRequest request) {
         String t = request.getMessage_type();
         if (t == null) {
-            System.out.print("==================================================");
+            System.out.print("==================================================\n");
             System.out.printf(request.toString());
-            System.out.print("==================================================");
+            System.out.print("\n==================================================\n");
         }
         if (t != null && t.equals("group")) {
             MohistAI.LOGGER.info("[群消息] 群号<%s> 发言者<%s>: %s".formatted(
                     request.getGroup_id(),
                     request.getUser_id(),
-                    XMLUtil.unescapeXML(request.getRaw_message())));
+                    request.getRaw_message()));
+            if (request.getGroup_id() == 743486411L) {
+                if (request.getMessage().getFirst().type().equals("text")) {
+                    if (request.getRaw_message().startsWith("ts ")) {
+                        String message = request.getRaw_message().replace("ts ", "");
+                        if (TS3.api != null) {
+                            TS3.api.sendServerMessage("[%s]: %s".formatted(request.getSender().nickname(), message));
+                        }
+                    }
+                }
+            }
         }
         return ResponseEntity.ok(request);
     }

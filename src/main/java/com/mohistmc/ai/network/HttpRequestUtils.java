@@ -1,5 +1,6 @@
 package com.mohistmc.ai.network;
 
+import com.mohistmc.ai.sdk.BotType;
 import com.mohistmc.ai.sdk.QQ;
 import com.mohistmc.tools.NamedThreadFactory;
 import java.net.URI;
@@ -18,10 +19,10 @@ public class HttpRequestUtils {
     public static ExecutorService LIVE = Executors.newFixedThreadPool(1, new NamedThreadFactory("HttpClient Async"));
     private static final HttpClient client = HttpClient.newBuilder().build();
 
-    public static CompletableFuture<HttpResponse<String>> post(String path, Map<String, Object> body) {
+    public static CompletableFuture<HttpResponse<String>> post(BotType botType, String path, Map<String, Object> body) {
         var json = new JSONObject();
         body.forEach(json::put);
-        var request = HttpRequest.newBuilder().uri(URI.create(QQ.mohist + path))
+        var request = HttpRequest.newBuilder().uri(URI.create(botType.getApi() + path))
                 .header("Content-Type", "application/json; charset=UTF-8")
                 .POST(HttpRequest.BodyPublishers.ofString(json.toString(), StandardCharsets.UTF_8))
                 .build();
