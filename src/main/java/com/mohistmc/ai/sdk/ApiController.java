@@ -1,6 +1,7 @@
 package com.mohistmc.ai.sdk;
 
 import com.mohistmc.ai.MohistAI;
+import com.mohistmc.tools.XMLUtil;
 import lombok.SneakyThrows;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +17,7 @@ public class ApiController {
             MohistAI.LOGGER.info("[群消息] 群号<%s> 发言者<%s>: %s".formatted(
                     request.getGroup_id(),
                     request.getUser_id(),
-                    request.getRaw_message()));
+                    XMLUtil.unescapeXML(request.getRaw_message())));
         }
         return ResponseEntity.ok(request);
     }

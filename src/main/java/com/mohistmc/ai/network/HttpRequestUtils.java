@@ -15,8 +15,6 @@ import json.JSONObject;
 
 public class HttpRequestUtils {
 
-
-
     public static ExecutorService LIVE = Executors.newFixedThreadPool(1, new NamedThreadFactory("HttpClient Async"));
     private static final HttpClient client = HttpClient.newBuilder().build();
 
