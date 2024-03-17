@@ -13,7 +13,13 @@ public class ApiController {
 
     @PostMapping("/qq")
     public ResponseEntity<MessageRequest> qq(@RequestBody MessageRequest request) {
-        if (request.getMessage_type().equals("group")) {
+        String t = request.getMessage_type();
+        if (t == null) {
+            System.out.print("==================================================");
+            System.out.printf(request.toString());
+            System.out.print("==================================================");
+        }
+        if (t != null && t.equals("group")) {
             MohistAI.LOGGER.info("[群消息] 群号<%s> 发言者<%s>: %s".formatted(
                     request.getGroup_id(),
                     request.getUser_id(),
