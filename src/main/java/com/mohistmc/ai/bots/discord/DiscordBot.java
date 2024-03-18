@@ -15,10 +15,10 @@ import retrofit2.http.HEAD;
 public class DiscordBot {
 
     public static void init() {
-        if (!MohistConfig.discord) return;
+        if (!MohistConfig.discord.asBoolean()) return;
         DiscordApiBuilder builder = new DiscordApiBuilder();
-        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(MohistConfig.discord_proxy_address, MohistConfig.discord_proxy_port));
-        if (MohistConfig.discord_proxy_enable) builder.setProxy(proxy);
+        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(MohistConfig.discord_proxy_address.asString(), MohistConfig.discord_proxy_port.asInt()));
+        if (MohistConfig.discord_proxy_enable.asBoolean()) builder.setProxy(proxy);
         builder.addIntents(Intent.MESSAGE_CONTENT);
         builder.addMessageCreateListener(MohistGitHub::onMessage);
         System.out.println("尝试登入Discord...");

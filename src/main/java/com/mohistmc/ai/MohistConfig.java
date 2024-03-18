@@ -3,62 +3,49 @@ package com.mohistmc.ai;
 import com.google.common.base.Throwables;
 import com.mohistmc.ai.dashscope.ChatApiType;
 import com.mohistmc.yaml.InvalidConfigurationException;
-import com.mohistmc.yaml.file.YamlConfiguration;
-import java.io.File;
+import com.mohistmc.yml.Yaml;
+import com.mohistmc.yml.YamlSection;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.Arrays;
-import java.util.List;
+import lombok.SneakyThrows;
+import retrofit2.http.HEAD;
 
 public class MohistConfig {
 
-    private static List<String> HEADER = Arrays.asList("""
-            This is the main configuration file for MohistAI.
-            https://wiki.mohistmc.com/
-
-            Discord: https://discord.gg/mohistmc
-            Forums: https://mohistmc.com/
-            Forums (CN): https://mohistmc.cn/
-                        
-            """.split("\\n"));
-    /*========================================================================*/
-    public static YamlConfiguration config;
-    public static boolean chatgpt;
-    public static String chatgpt_api_key;
-    public static boolean discord;
-    public static String discord_token;
-    public static boolean discord_proxy_enable;
-    public static String discord_proxy_address;
-    public static int discord_proxy_port;
-    public static boolean live_bilibili;
-    public static boolean live_huya;
-    public static boolean live_bilibili_pushqq;
-    public static boolean live_huya_pushqq;
-    public static String dashscope_apikey;
-    public static String baidu_apikey;
-    public static String baidu_secretkey;
-    public static ChatApiType ai_type;
+    public static Yaml yaml = new Yaml("mohist-config/mohist.yml");
+    
+    public static YamlSection chatgpt;
+    public static YamlSection chatgpt_api_key;
+    public static YamlSection discord;
+    public static YamlSection discord_token;
+    public static YamlSection discord_proxy_enable;
+    public static YamlSection discord_proxy_address;
+    public static YamlSection discord_proxy_port;
+    public static YamlSection live_bilibili;
+    public static YamlSection live_huya;
+    public static YamlSection live_bilibili_pushqq;
+    public static YamlSection live_huya_pushqq;
+    public static YamlSection dashscope_apikey;
+    public static YamlSection baidu_apikey;
+    public static YamlSection baidu_secretkey;
+    public static YamlSection ai_type;
     // minecraft
-    public static boolean minecraft_versionscheck;
-    public static String minecraft_release;
-    public static String minecraft_snapshot;
+    public static YamlSection minecraft_versionscheck;
+    public static YamlSection minecraft_release;
+    public static YamlSection minecraft_snapshot;
 
-    public static String mysql_host;
-    public static String mysql_username;
-    public static String mysql_database;
-    public static String mysql_password;
-    public static String mysql_port;
+    public static YamlSection mysql_host;
+    public static YamlSection mysql_username;
+    public static YamlSection mysql_database;
+    public static YamlSection mysql_password;
+    public static YamlSection mysql_port;
 
-    public static String qq_request_api_mohist;
-    public static String qq_request_api_fish;
-    public static boolean qq_request_debug;
-    static int version;
-    private static File CONFIG_FILE = new File("mohist-config", "mohist.yml");
+    public static YamlSection qq_request_api_mohist;
+    public static YamlSection qq_request_api_fish;
+    public static YamlSection qq_request_debug;
 
     public static void init() {
-        config = new YamlConfiguration();
         try {
             if (!CONFIG_FILE.exists()) {
                 CONFIG_FILE.createNewFile();
@@ -67,17 +54,17 @@ public class MohistConfig {
         } catch (IOException | InvalidConfigurationException ex) {
             System.out.println("Could not load mohist.yml, please correct your syntax errors");
             Throwables.throwIfUnchecked(ex);
+            yaml.load();
+            mohist();
+            yaml.save();
+        } catch (Exception ex) {
+            MohistAI.LOGGER.info("mohist.yml初始化失败", ex);
         }
 
-        config.options().setHeader(HEADER);
-        config.options().copyDefaults(true);
-
-        version = getInt("config-version", 1);
-        set("config-version", 1);
-        readConfig();
         MohistAI.LOGGER.info("配置文件初始化完毕");
     }
 
+    @SneakyThrows
     public static void save() {
         readConfig();
     }
@@ -133,37 +120,39 @@ public class MohistConfig {
     private static double getDouble(String path, double def) {
         config.addDefault(path, def);
         return config.getDouble(path, config.getDouble(path));
+        yaml.save();
     }
 
+    @SneakyThrows
     private static void mohist() {
-        chatgpt = getBoolean("chatgpt.enable", false);
-        chatgpt_api_key = getString("chatgpt.api_key", "");
-        discord = getBoolean("discord.enable", false);
-        discord_token = getString("discord.token", "");
-        discord_proxy_enable = getBoolean("discord.proxy.enable", false);
-        discord_proxy_address = getString("discord.proxy.address", "127.0.0.1");
-        discord_proxy_port = getInt("discord.proxy.port", 7890);
-        live_bilibili = getBoolean("live.bilibili.enable", true);
-        live_bilibili_pushqq = getBoolean("live.bilibili.pushqq", false);
-        live_huya = getBoolean("live.huya.enable", true);
-        live_huya_pushqq = getBoolean("live.huya.pushqq", false);
-        dashscope_apikey = getString("dashscope.apikey", "");
-        baidu_apikey = getString("baidu.apikey", "");
-        baidu_secretkey = getString("baidu.secretkey", "");
-        ai_type = ChatApiType.valueOf(getString("ai_type", ChatApiType.ALIBABA.name()));
+        chatgpt = yaml.put("chatgpt", "enable").setDefValues(false);
+        chatgpt_api_key = yaml.put("chatgpt", "api_key").setDefValues("");
+        discord = yaml.put("discord", "enable").setDefValues(false);
+        discord_token = yaml.put("discord", "token").setDefValues("");
+        discord_proxy_enable = yaml.put("discord", "proxy", "enable").setDefValues(false);
+        discord_proxy_address = yaml.put("discord", "proxy", "address").setDefValues("127.0.0.1");
+        discord_proxy_port = yaml.put("discord", "proxy", "port").setDefValues(7890);
+        live_bilibili = yaml.put("live", "bilibili", "enable").setDefValues(true);
+        live_bilibili_pushqq = yaml.put("live", "bilibili", "pushqq").setDefValues(false);
+        live_huya = yaml.put("live", "huya", "enable").setDefValues(true);
+        live_huya_pushqq = yaml.put("live", "huya", "pushqq").setDefValues(false);
+        dashscope_apikey = yaml.put("dashscope", "apikey").setDefValues("");
+        baidu_apikey = yaml.put("baidu", "apikey").setDefValues("");
+        baidu_secretkey = yaml.put("baidu", "secretkey").setDefValues("");
+        ai_type = yaml.put("ai_type").setDefValues(ChatApiType.ALIBABA.name());
 
-        minecraft_versionscheck = getBoolean("minecraft.versions-check", false);
-        minecraft_release = getString("minecraft.release", "");
-        minecraft_snapshot = getString("minecraft.snapshot", "");
+        minecraft_versionscheck = yaml.put("minecraft", "versions-check").setDefValues(false);
+        minecraft_release = yaml.put("minecraft", "release").setDefValues("");
+        minecraft_snapshot = yaml.put("minecraft", "snapshot").setDefValues("");
 
-        qq_request_api_mohist = getString("qq.request.api.mohist", "http://localhost:3000");
-        qq_request_api_fish = getString("qq.request.api.fish", "http://localhost:3000");
-        qq_request_debug = getBoolean("qq.request.debug", true);
+        qq_request_api_mohist = yaml.put("qq", "request", "api", "mohist").setDefValues("http://localhost:3000");
+        qq_request_api_fish = yaml.put("qq", "request", "api", "fish").setDefValues("http://localhost:3000");
+        qq_request_debug = yaml.put("qq", "request", "debug").setDefValues(true);
 
-        mysql_host = getString("mysql.host", "");
-        mysql_username = getString("mysql.username", "");
-        mysql_database = getString("mysql.database", "");
-        mysql_password = getString("mysql.password", "");
-        mysql_port = getString("mysql.port", "");
+        mysql_host = yaml.put("mysql", "host").setDefValues("");
+        mysql_username = yaml.put("mysql", "username").setDefValues("");
+        mysql_database = yaml.put("mysql", "database").setDefValues("");
+        mysql_password = yaml.put("mysql", "password").setDefValues("");
+        mysql_port = yaml.put("mysql", "port").setDefValues("");
     }
 }

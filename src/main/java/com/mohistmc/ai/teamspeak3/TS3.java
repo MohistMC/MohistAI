@@ -32,7 +32,11 @@ public class TS3 {
         config.setEnableCommunicationsLogging(true);
 
         final TS3Query query = new TS3Query(config);
-        query.connect();
+        try {
+            query.connect();
+        } catch (Exception e) {
+            return;
+        }
 
         api = query.getApi();
         api.login("serveradmin", "tPATEwFI");

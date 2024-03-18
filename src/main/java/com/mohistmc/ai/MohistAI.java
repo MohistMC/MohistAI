@@ -3,10 +3,12 @@ package com.mohistmc.ai;
 import com.alibaba.dashscope.utils.Constants;
 import com.mohistmc.ai.bots.discord.DiscordBot;
 import com.mohistmc.ai.live.BiliBiliLive;
+import com.mohistmc.ai.live.HuyaLive;
 import com.mohistmc.ai.minecraft.VersionsCheck;
 import com.mohistmc.ai.mysql.MySqlInit;
 import com.mohistmc.ai.teamspeak3.TS3;
 import jakarta.annotation.PostConstruct;
+import lombok.SneakyThrows;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.core.annotation.Order;
@@ -31,6 +33,7 @@ public class MohistAI {
 
     public static MohistAI INSTANCE = new MohistAI();
 
+    @SneakyThrows
     public void onEnable() {
         LOGGER.info("初始化后端");
         MohistConfig.init();
@@ -38,17 +41,16 @@ public class MohistAI {
         Constants.apiKey = MohistConfig.dashscope_apikey;
         BiliBiliLive.INSTANCE.run();
         VersionsCheck.INSTANCE.run();
-        connectMySql();
         TS3.init();
         LOGGER.info("初始化后端完毕");
     }
 
     public void connectMySql() {
-        String host = MohistConfig.config.getString("mysql.host");
-        String user = MohistConfig.config.getString("mysql.username");
-        String database = MohistConfig.config.getString("mysql.database");
-        String password = MohistConfig.config.getString("mysql.password");
-        String port = MohistConfig.config.getString("mysql.port");
+        String host = MohistConfig.mysql_host.asString();
+        String user = MohistConfig.mysql_username.asString();
+        String database = MohistConfig.mysql_database.asString();
+        String password = MohistConfig.mysql_password.asString();
+        String port = MohistConfig.mysql_port.asString();
         MySqlInit.connect(host, user, database, password, port);
     }
 }

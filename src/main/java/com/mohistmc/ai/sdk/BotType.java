@@ -6,8 +6,8 @@ import lombok.Getter;
 
 @Getter
 public enum BotType {
-    MOHIST(MohistConfig.qq_request_api_mohist),
-    FISH(MohistConfig.qq_request_api_fish);
+    MOHIST(MohistConfig.qq_request_api_mohist.asString()),
+    FISH(MohistConfig.qq_request_api_fish.asString());
 
     final String api;
 

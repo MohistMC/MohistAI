@@ -21,7 +21,7 @@ public class VersionsCheck {
     public static VersionsCheck INSTANCE = new VersionsCheck();
 
     public void run() {
-        if (!MohistConfig.minecraft_versionscheck) return;
+        if (!MohistConfig.minecraft_versionscheck.asBoolean()) return;
         MohistAI.LOGGER.info("MC新版本推送服务已启用");
         LIVE.scheduleAtFixedRate(this::run0, 1000 * 10, 1000 * 20, TimeUnit.MILLISECONDS);
     }
@@ -34,17 +34,18 @@ public class VersionsCheck {
         List<Json> versions = json.at("versions").asJsonList();
 
         // 初始化版本缓存
-        if (MohistConfig.minecraft_release.isEmpty() && MohistConfig.minecraft_snapshot.isEmpty()) {
-            MohistConfig.set("minecraft.release", release);
-            MohistConfig.set("minecraft.snapshot", snapshot);
+        if (MohistConfig.minecraft_release.asString().isEmpty() && MohistConfig.minecraft_snapshot.asString().isEmpty()) {
+            MohistConfig.minecraft_release.setValues(release);
+            MohistConfig.minecraft_snapshot.setValues(snapshot);
+            MohistConfig.save();
             MohistAI.LOGGER.info("初始化MC版本完成!");
-            System.out.printf("Release: %s%n", MohistConfig.minecraft_release);
-            System.out.printf("Snapshot: %s%n", MohistConfig.minecraft_snapshot);
+            System.out.printf("Release: %s%n", MohistConfig.minecraft_release.asString());
+            System.out.printf("Snapshot: %s%n", MohistConfig.minecraft_snapshot.asString());
         }
-        if (!MohistConfig.minecraft_release.equals(release)) {
+        if (!MohistConfig.minecraft_release.asString().equals(release)) {
             f(release, versions);
         }
-        if (!MohistConfig.minecraft_snapshot.equals(snapshot)) {
+        if (!MohistConfig.minecraft_snapshot.asString().equals(snapshot)) {
             f(snapshot, versions);
         }
     }
@@ -60,7 +61,14 @@ public class VersionsCheck {
                         版本号: %s
                         发布时间: %s""").formatted(type, id, f.asString("releaseTime"));
                 MohistAI.LOGGER.info(sendMsg);
-                MohistConfig.set("minecraft." + type, version);
+                if (type.equals("release")) {
+                    MohistConfig.minecraft_release.setValues(version);
+                    MohistConfig.save();
+                }
+                if (type.equals("snapshot")) {
+                    MohistConfig.minecraft_snapshot.setValues(version);
+                    MohistConfig.save();
+                }
             }
         }
     }

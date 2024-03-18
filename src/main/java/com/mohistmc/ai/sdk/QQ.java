@@ -11,7 +11,7 @@ import mjson.Json;
 
 public class QQ {
 
-    public static final boolean debug = MohistConfig.qq_request_debug;
+    public static final boolean debug = MohistConfig.qq_request_debug.asBoolean();
 
     public static void sendToMohistGroup(String message) {
         send_group_msg(BotType.MOHIST, Account.mohistQQGGroup, message);

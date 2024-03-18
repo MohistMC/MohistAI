@@ -16,7 +16,7 @@ public class BiliBiliLive {
     public static BiliBiliLive INSTANCE = new BiliBiliLive();
 
     public void run() {
-        if (!MohistConfig.live_bilibili) return;
+        if (!MohistConfig.live_bilibili.asBoolean()) return;
         MohistAI.LOGGER.info("B站开播推送服务已启用");
         LIVE.scheduleAtFixedRate(this::run0, 1000, 1000 * 10, TimeUnit.MILLISECONDS);
     }
@@ -30,7 +30,7 @@ public class BiliBiliLive {
 
         if (liveStatus == 1) {
             // TODO 添加可配置Bot识别
-            if (!MohistConfig.live_bilibili_pushqq) {
+            if (!MohistConfig.live_bilibili_pushqq.asBoolean()) {
                 String ms = ("""
                         你关注的主播已开播
                                             
@@ -39,12 +39,15 @@ public class BiliBiliLive {
                         """).formatted(title);
 
                 MohistAI.LOGGER.info(ms);
-                MohistConfig.set("live.bilibili.pushqq", true);
+                MohistConfig.live_bilibili_pushqq.setValues(true);
+                MohistConfig.save();
                 MohistAI.LOGGER.info("已推送至QQ");
             }
         } else {
-            if (MohistConfig.live_bilibili_pushqq) {
-                MohistConfig.set("live.bilibili.pushqq", false);
+            if (MohistConfig.live_bilibili_pushqq.asBoolean()) {
+                MohistAI.LOGGER.info("已初始化推送(BiliBili)");
+                MohistConfig.live_bilibili_pushqq.setValues(false);
+                MohistConfig.save();
             }
         }
     }
