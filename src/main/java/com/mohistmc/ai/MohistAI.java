@@ -2,6 +2,7 @@ package com.mohistmc.ai;
 
 import com.alibaba.dashscope.utils.Constants;
 import com.mohistmc.ai.bots.discord.DiscordBot;
+import com.mohistmc.ai.bots.mcbots.Main;
 import com.mohistmc.ai.live.BiliBiliLive;
 import com.mohistmc.ai.live.HuyaLive;
 import com.mohistmc.ai.minecraft.VersionsCheck;
@@ -45,7 +46,6 @@ public class MohistAI {
         HuyaLive.INSTANCE.run();
         VersionsCheck.INSTANCE.run();
         TS3.init();
-        QQ.get_group_list(BotType.FISH);
         LOGGER.info("初始化后端完毕");
     }
 

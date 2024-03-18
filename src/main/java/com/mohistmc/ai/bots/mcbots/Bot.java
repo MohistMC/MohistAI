@@ -48,7 +48,6 @@ public class Bot extends Thread {
         this.address = address;
         this.proxy = proxy;
 
-        Log.info("Creating bot", nickname);
         protocol = new MinecraftProtocol(nickname);
         client = new TcpClientSession(address.getHostString(), address.getPort(), protocol, proxy);
     }
@@ -58,7 +57,6 @@ public class Bot extends Thread {
         this.address = address;
         this.proxy = proxy;
 
-        Log.info("Creating bot", nickname);
         protocol = new MinecraftProtocol(authService.getSelectedProfile(), authService.getAccessToken());
 
         client = new TcpClientSession(address.getHostString(), address.getPort(), protocol, proxy);
@@ -77,7 +75,6 @@ public class Bot extends Thread {
                 public void packetReceived(Session session, Packet packet) {
                     if (packet instanceof ClientboundLoginPacket) {
                         connected = true;
-                        Log.info(nickname + " connected");
                     }
                     else if (packet instanceof ClientboundPlayerPositionPacket p) {
 
@@ -89,7 +86,6 @@ public class Bot extends Thread {
                     }
                     else if (packet instanceof ClientboundPlayerCombatKillPacket){
                         if (Main.autoRespawnDelay >= 0) {
-                            Log.info("Bot " + nickname + " died. Respawning in " + Main.autoRespawnDelay + " ms.");
                             new Timer().schedule(
                                     new TimerTask() {
                                         @Override
@@ -107,7 +103,6 @@ public class Bot extends Thread {
                 @Override
                 public void disconnected(DisconnectedEvent event) {
                     connected = false;
-                    Log.info(nickname + " disconnected");
 
                     // Do not write disconnect reason if disconnected by command
                     if (!manualDisconnecting) {
@@ -145,26 +140,11 @@ public class Bot extends Thread {
     public void registerMainListener() {
         hasMainListener = true;
         if (Main.isMinimal()) return;
-        client.addListener(new MainListener(nickname));
+        client.addListener(new MainListener());
     }
 
     public boolean hasMainListener() {
         return hasMainListener;
-    }
-
-    public void fallDown()
-    {
-        if (connected && lastY > 0) {
-            move(0, -0.5, 0);
-        }
-    }
-
-    public void move(double x, double y, double z)
-    {
-        lastX += x;
-        lastY += y;
-        lastZ += z;
-        moveTo(lastX, lastY, lastZ);
     }
 
     public void moveTo(double x, double y, double z)

@@ -11,8 +11,7 @@ import com.github.steveice10.packetlib.packet.Packet;
 
 public class MainListener implements SessionListener {
 
-    public MainListener(String nickname) {
-        Log.info("MainListener registered for: " + nickname);
+    public MainListener() {
     }
 
     @Override

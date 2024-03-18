@@ -22,8 +22,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Timer;
-import java.util.TimerTask;
 import lombok.Getter;
 import org.xbill.DNS.Lookup;
 import org.xbill.DNS.Record;
@@ -40,10 +38,10 @@ public class Main {
     public static int autoRespawnDelay = 100;
     static ArrayList<Bot> bots = new ArrayList<>();
     private static int triedToConnect;
-    private static int botCount = 10;
+    private static int botCount = 100;
     private static boolean isMainListenerMissing = true;
-    private static int delayMin = 500;
-    private static int delayMax = 1000;
+    private static int delayMin = 100;
+    private static int delayMax = 500;
     @Getter
     private static boolean minimal = false;
     private static boolean mostMinimal = false;
@@ -51,7 +49,6 @@ public class Main {
     private static int proxyIndex = 0;
     private static int proxyCount = 0;
     private static ProxyInfo.Type proxyType;
-    private static Timer timer = new Timer();
 
     public static void main(String[] args) throws Exception {
         main(false, false, false);
@@ -264,7 +261,7 @@ public class Main {
                                 proxyInfo
                         );
                     } else {
-                        bot = new Bot(nickGen.nextNick(), inetAddr, proxyInfo
+                        bot = new Bot(RandomChineseNameGenerator.generateRandomName(), inetAddr, proxyInfo
                         );
                     }
 
@@ -281,7 +278,6 @@ public class Main {
 
                     if (i < botCount - 1) {
                         long delay = getRandomDelay();
-                        Log.info("Waiting", delay + "", "ms");
                         Thread.sleep(delay);
                     }
 
@@ -290,17 +286,9 @@ public class Main {
                 }
 
             }
+            System.out.println(bots.size() + "个Bot已接入完毕!");
         }).start();
 
-        //gravity timer
-        if (gravity) {
-            timer.scheduleAtFixedRate(new TimerTask() {
-                @Override
-                public void run() {
-                    bots.forEach(Bot::fallDown);
-                }
-            }, 1000L, 500L);
-        }
     }
 
     public static synchronized void renewMainListener() {
