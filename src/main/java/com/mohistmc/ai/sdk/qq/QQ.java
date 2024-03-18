@@ -68,6 +68,6 @@ public class QQ {
     }
 
     public static void debug(String debug_message){
-        if (debug) MohistAI.LOGGER.debug(debug_message);
+        if (debug) MohistAI.LOGGER.info(debug_message);
     }
 }

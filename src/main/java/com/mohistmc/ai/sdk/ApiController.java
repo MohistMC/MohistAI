@@ -3,16 +3,15 @@ package com.mohistmc.ai.sdk;
 import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.teamspeak3.TS3;
 import lombok.SneakyThrows;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.noear.solon.annotation.Body;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
 
-@RestController
+@Controller
 public class ApiController {
 
-    @PostMapping("/qq")
-    public ResponseEntity<MessageRequest> qq(@RequestBody MessageRequest request) {
+    @Mapping("/qq")
+    public MessageRequest qq(@Body MessageRequest request) {
         String t = request.getMessage_type();
         if (t == null) {
             System.out.print("==================================================\n");
@@ -35,16 +34,16 @@ public class ApiController {
                 }
             }
         }
-        return ResponseEntity.ok(request);
+        return request;
     }
 
     /**
      * 用于DEBUG调试
      */
     @SneakyThrows
-    @PostMapping("/qq_string")
-    public ResponseEntity<String> qq_string(@RequestBody String request) {
+    @Mapping("/qq_string")
+    public String qq_string(@Body String request) {
         System.out.printf(request);
-        return ResponseEntity.ok(request);
+        return request;
     }
 }

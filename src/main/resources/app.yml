@@ -1,0 +1,5 @@
+server.port: 2025
+
+solon.app:
+  name: 'mohist-ai'
+  group: 'com.mohistmc'
