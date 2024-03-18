@@ -6,6 +6,8 @@ import com.mohistmc.ai.live.BiliBiliLive;
 import com.mohistmc.ai.live.HuyaLive;
 import com.mohistmc.ai.minecraft.VersionsCheck;
 import com.mohistmc.ai.mysql.MySqlInit;
+import com.mohistmc.ai.sdk.BotType;
+import com.mohistmc.ai.sdk.qq.QQ;
 import com.mohistmc.ai.teamspeak3.TS3;
 import jakarta.annotation.PostConstruct;
 import lombok.SneakyThrows;
@@ -40,8 +42,10 @@ public class MohistAI {
         DiscordBot.init();
         Constants.apiKey = MohistConfig.dashscope_apikey;
         BiliBiliLive.INSTANCE.run();
+        HuyaLive.INSTANCE.run();
         VersionsCheck.INSTANCE.run();
         TS3.init();
+        QQ.get_group_list(BotType.FISH);
         LOGGER.info("初始化后端完毕");
     }
 

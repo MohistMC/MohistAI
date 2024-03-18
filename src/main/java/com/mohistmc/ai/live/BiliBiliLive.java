@@ -2,6 +2,7 @@ package com.mohistmc.ai.live;
 
 import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.MohistConfig;
+import com.mohistmc.ai.sdk.qq.QQ;
 import com.mohistmc.tools.NamedThreadFactory;
 import java.net.URI;
 import java.util.concurrent.ScheduledExecutorService;
@@ -31,16 +32,17 @@ public class BiliBiliLive {
         if (liveStatus == 1) {
             // TODO 添加可配置Bot识别
             if (!MohistConfig.live_bilibili_pushqq.asBoolean()) {
-                String ms = ("""
+                String ms = """
                         你关注的主播已开播
                                             
                         直播标题： %s
-                        直播地址：https://live.bilibili.com/43087
-                        """).formatted(title);
+                        直播地址：https://live.bilibili.com/43087"""
+                        .formatted(title);
 
                 MohistAI.LOGGER.info(ms);
                 MohistConfig.live_bilibili_pushqq.setValues(true);
                 MohistConfig.save();
+                QQ.sendToMohistGroup(ms);
                 MohistAI.LOGGER.info("已推送至QQ");
             }
         } else {

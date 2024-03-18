@@ -2,6 +2,7 @@ package com.mohistmc.ai.live;
 
 import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.MohistConfig;
+import com.mohistmc.ai.sdk.qq.QQ;
 import com.mohistmc.tools.IOUtil;
 import com.mohistmc.tools.NamedThreadFactory;
 import java.io.IOException;
@@ -48,19 +49,19 @@ public class HuyaLive {
         boolean liveStatus = json.asBoolean("isOn");
         var title = json.asString("introduction");
 
-        // TODO 添加艾特所有人的功能
         if (liveStatus) {
             if (!MohistConfig.live_huya_pushqq.asBoolean()) {
-                String ms = ("""
+                String ms = """
                         你关注的主播已开播
                                             
                         直播标题： %s
-                        直播地址：https://www.huya.com/pinkfish
-                        """).formatted(title);
+                        直播地址：https://www.huya.com/pinkfish"""
+                        .formatted(title);
 
                 MohistAI.LOGGER.info(ms);
                 MohistConfig.live_huya_pushqq.setValues(true);
                 MohistConfig.save();
+                QQ.sendToFishAllGroup(ms);
                 MohistAI.LOGGER.info("已推送至QQ");
             }
         } else {

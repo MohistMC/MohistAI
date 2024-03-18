@@ -1,7 +1,7 @@
 package com.mohistmc.ai.bots.discord;
 
 import com.mohistmc.ai.Account;
-import com.mohistmc.ai.sdk.QQ;
+import com.mohistmc.ai.sdk.qq.QQ;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
@@ -32,10 +32,10 @@ public class DiscordListener {
                         String des = Odes.get();
                         if (!des.contains("No changes") && !des.contains("failure") && !title.contains("started")) {
                             String[] titles = title.split(" ");
-                            String sendMsg = ("""
+                            String sendMsg = """
                                     ======Jenkins构建推送======
                                     项目: %s
-                                    构建号: %s""")
+                                    构建号: %s"""
                                     .formatted(titles[0], titles[1]);
                             QQ.sendToMohistGroup(sendMsg);
                         }
@@ -63,13 +63,13 @@ public class DiscordListener {
                         String sd = sdf.format(new Date(event.getMessage().getCreationTimestamp().toEpochMilli()));      // 时间戳转换成时间
                         String[] mm = des.split("/");
                         String TJ = des.replace(mm[6].substring(7, 40), "").replace(" - " + author, "");
-                        String sendMsg = ("""
+                        String sendMsg = """
                                 ======GitHub更新推送======
                                 仓库: %s
                                 分支: %s
                                 提交人: %s
                                 提交时间: %s
-                                提交信息: %s""")
+                                提交信息: %s"""
                                 .formatted(strings1[0], strings1[1].replace("\\", ""), author, sd, TJ.replace(TJ.split(" ")[0], ""));
                         QQ.sendToMohistGroup(sendMsg);
                     }

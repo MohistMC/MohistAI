@@ -3,7 +3,6 @@ package com.mohistmc.ai.teamspeak3;
 import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.TS3Config;
 import com.github.theholywaffle.teamspeak3.TS3Query;
-import com.github.theholywaffle.teamspeak3.api.ClientProperty;
 import com.github.theholywaffle.teamspeak3.api.event.ChannelCreateEvent;
 import com.github.theholywaffle.teamspeak3.api.event.ChannelDeletedEvent;
 import com.github.theholywaffle.teamspeak3.api.event.ChannelDescriptionEditedEvent;
@@ -17,9 +16,7 @@ import com.github.theholywaffle.teamspeak3.api.event.PrivilegeKeyUsedEvent;
 import com.github.theholywaffle.teamspeak3.api.event.ServerEditedEvent;
 import com.github.theholywaffle.teamspeak3.api.event.TS3Listener;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
-import com.mohistmc.ai.sdk.QQ;
-import java.util.HashMap;
-import java.util.Map;
+import com.mohistmc.ai.sdk.qq.QQ;
 
 public class TS3 {
 
