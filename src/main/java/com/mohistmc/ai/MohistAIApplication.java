@@ -10,6 +10,8 @@ import org.noear.solon.annotation.SolonMain;
 @SolonMain
 public class MohistAIApplication {
     public static void main(String[] args) {
-        Solon.start(MohistAIApplication.class, args);
+        Solon.start(MohistAIApplication.class, args, app -> {
+            app.get("", ctx -> ctx.output("Hello Mohist AI!"));
+        });
     }
 }

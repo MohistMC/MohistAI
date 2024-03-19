@@ -57,8 +57,6 @@ dependencies {
     implementation "org.jline:jline-terminal-jansi:3.21.0" // Dep of TerminalConsoleAppender
 
     implementation 'com.github.steveice10:mcprotocollib:1.20.2-1'
-    implementation 'net.kyori:adventure-text-serializer-gson:4.16.0'
-    implementation 'com.diogonunes:JColor:5.2.0'
     implementation 'dnsjava:dnsjava:3.4.3'
 
     compileOnly 'org.jetbrains:annotations:24.1.0'
