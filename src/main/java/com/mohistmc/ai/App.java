@@ -8,8 +8,6 @@ import org.noear.solon.annotation.SolonMain;
 @SolonMain
 public class App {
     public static void main(String[] args) {
-        Solon.start(App.class, args, app -> {
-            app.get("", ctx -> ctx.output("Hello Mohist AI!"));
-        });
+        Solon.start(App.class, args, app -> app.get("", ctx -> ctx.output("Hello Mohist AI!")));
     }
 }

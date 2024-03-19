@@ -2,6 +2,7 @@ package com.mohistmc.ai.minecraft;
 
 import com.mohistmc.ai.MohistConfig;
 import com.mohistmc.ai.log.Log;
+import com.mohistmc.mjson.Json;
 import com.mohistmc.tools.NamedThreadFactory;
 import java.net.URI;
 import java.util.List;
@@ -9,7 +10,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import lombok.SneakyThrows;
-import mjson.Json;
 
 /**
  * @author Mgazul by MohistMC

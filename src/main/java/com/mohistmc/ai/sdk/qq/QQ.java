@@ -5,13 +5,17 @@ import com.mohistmc.ai.MohistConfig;
 import com.mohistmc.ai.log.Log;
 import com.mohistmc.ai.network.HttpRequestUtils;
 import com.mohistmc.ai.sdk.BotType;
+import com.mohistmc.ai.sdk.qq.grouplist.GroupList;
+import com.mohistmc.ai.sdk.qq.grouplist.GroupList.Data;
+import com.mohistmc.mjson.Json;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import lombok.SneakyThrows;
-import mjson.Json;
 
 public class QQ {
 
@@ -52,17 +56,18 @@ public class QQ {
 
     @SneakyThrows
     public static List<Integer> get_group_list(BotType botType) {
-        var string = HttpRequestUtils.post(botType, "/get_group_list", Map.of()).get();
-        var jsonRoot = Json.read(string);
-        if (Objects.equals(jsonRoot.asString("status"), "failed")) {
-            debug("获取失败");
-            return List.of();
-        }
-        var jsonList = jsonRoot.asJsonList("data");
         List<Integer> groups = new ArrayList<>();
-        for (Json o : jsonList) {
-            groups.add(o.asInteger("group_id"));
+        var string = HttpRequestUtils.post(botType, "/get_group_list", Map.of()).get();
+        if (string == null) {
+            return groups;
         }
+        var jsonRoot = Json.read(string);
+        GroupList groupList = jsonRoot.asBean(GroupList.class);
+        if (groupList.isFailed()) {
+            debug("获取失败");
+            return groups;
+        }
+        groups = Arrays.stream(groupList.getData()).map(Data::getGroup_id).collect(Collectors.toList());
         debug(groups.toString());
         return groups;
     }

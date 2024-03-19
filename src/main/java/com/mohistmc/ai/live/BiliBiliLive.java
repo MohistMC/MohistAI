@@ -3,13 +3,13 @@ package com.mohistmc.ai.live;
 import com.mohistmc.ai.MohistConfig;
 import com.mohistmc.ai.log.Log;
 import com.mohistmc.ai.sdk.qq.QQ;
+import com.mohistmc.mjson.Json;
 import com.mohistmc.tools.NamedThreadFactory;
 import java.net.URI;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import lombok.SneakyThrows;
-import mjson.Json;
 
 public class BiliBiliLive {
 
