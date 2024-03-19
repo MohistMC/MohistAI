@@ -43,18 +43,9 @@ dependencies {
     implementation 'com.mysql:mysql-connector-j:8.2.0'
     implementation 'com.theokanning.openai-gpt3-java:service:0.18.1'
     implementation 'com.mohistmc:json:0.2'
-    implementation 'com.alibaba:dashscope-sdk-java:2.9.2'
-    implementation 'org.apache.httpcomponents:httpclient:4.5.14'
-    implementation 'org.apache.httpcomponents:httpcore:4.4.16'
 
-    implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
-    implementation 'org.apache.logging.log4j:log4j-iostreams:2.20.0'
-    implementation 'org.apache.logging.log4j:log4j-api:2.20.0'
-    implementation 'org.apache.logging.log4j:log4j-slf4j2-impl:2.20.0'
-    implementation 'net.minecrell:terminalconsoleappender:1.4.0'
-    implementation "org.jline:jline-reader:3.21.0"   // Dep of TerminalConsoleAppender
-    implementation "org.jline:jline-terminal:3.21.0" // Dep of TerminalConsoleAppender
-    implementation "org.jline:jline-terminal-jansi:3.21.0" // Dep of TerminalConsoleAppender
+    implementation 'org.slf4j:slf4j-api:2.0.12'
+    implementation 'org.slf4j:slf4j-simple:2.0.12'
 
     implementation 'com.github.steveice10:mcprotocollib:1.20.2-1'
     implementation 'dnsjava:dnsjava:3.4.3'
@@ -62,10 +53,26 @@ dependencies {
     compileOnly 'org.jetbrains:annotations:24.1.0'
 }
 
+shadowJar {
+    dependencies {
+        exclude(dependency('net.kyori:adventure-api'))
+        exclude(dependency('net.kyori:adventure-text'))
+        exclude(dependency('net.kyori:adventure-key'))
+        exclude(dependency('net.kyori:adventure-nbt'))
+        exclude(dependency('net.kyori:adventure'))
+        exclude(dependency('net.kyori:examination-api'))
+        exclude(dependency('net.kyori:examination-string'))
+        exclude(dependency('net.kyori:adventure-text-serializer-json'))
+        exclude(dependency('net.kyori:adventure-text-serializer-gson'))
+        exclude(dependency('net.kyori:adventure-text-serializer-json-legacy-impl'))
+        exclude(dependency('net.kyori:adventure-text-serializer-gson-legacy-impl'))
+    }
+}
+
 jar {
     manifest {
         attributes(
-                'Main-Class': 'com.mohistmc.ai.MohistAIApplication'
+                'Main-Class': 'com.mohistmc.ai.App'
         )
     }
 }

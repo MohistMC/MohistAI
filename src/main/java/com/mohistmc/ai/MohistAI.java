@@ -4,29 +4,29 @@ import com.alibaba.dashscope.utils.Constants;
 import com.mohistmc.ai.bots.discord.DiscordBot;
 import com.mohistmc.ai.live.BiliBiliLive;
 import com.mohistmc.ai.live.HuyaLive;
+import com.mohistmc.ai.log.Log;
 import com.mohistmc.ai.minecraft.VersionsCheck;
 import com.mohistmc.ai.mysql.MySqlInit;
 import com.mohistmc.ai.teamspeak3.TS3;
 import lombok.SneakyThrows;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+/**
+ * @author Mgazul by MohistMC
+ * @date 2023/9/10 23:44:25
+ */
+@Component
 public class MohistAI {
     public static MohistAI INSTANCE = new MohistAI();
 
     public void onEnable() {
 
-    public static Logger LOGGER = LogManager.getLogger("MohistAI");
-
-    public static MohistAI INSTANCE = new MohistAI();
-
     @Init
+    public void init() {
+        Thread.ofVirtual().name("MohistAI").start(this::onEnable);
+    }
+
     @SneakyThrows
     public void onEnable() {
-        if (System.getProperty("log4j.configurationFile") == null) {
-            System.setProperty("log4j.configurationFile", "log4j2.xml");
-        }
-        LOGGER.info("初始化后端");
+        Log.info("初始化后端");
         MohistConfig.init();
         DiscordBot.init();
         Constants.apiKey = MohistConfig.dashscope_apikey;
@@ -34,7 +34,7 @@ public class MohistAI {
         HuyaLive.INSTANCE.run();
         VersionsCheck.INSTANCE.run();
         TS3.init();
-        LOGGER.info("初始化后端完毕");
+        Log.info("初始化后端完毕");
     }
 
     public void connectMySql() {

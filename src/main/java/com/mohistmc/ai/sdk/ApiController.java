@@ -1,6 +1,6 @@
 package com.mohistmc.ai.sdk;
 
-import com.mohistmc.ai.MohistAI;
+import com.mohistmc.ai.log.Log;
 import com.mohistmc.ai.teamspeak3.TS3;
 import lombok.SneakyThrows;
 import org.noear.solon.annotation.Body;
@@ -19,7 +19,7 @@ public class ApiController {
             System.out.print("\n==================================================\n");
         }
         if (t != null && t.equals("group")) {
-            MohistAI.LOGGER.info("[群消息] 群号<%s> 发言者<%s>: %s".formatted(
+            Log.info("[群消息] 群号<%s> 发言者<%s>: %s".formatted(
                     request.getGroup_id(),
                     request.getUser_id(),
                     request.getRaw_message()));

@@ -1,7 +1,7 @@
 package com.mohistmc.ai.live;
 
-import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.MohistConfig;
+import com.mohistmc.ai.log.Log;
 import com.mohistmc.ai.sdk.qq.QQ;
 import com.mohistmc.tools.NamedThreadFactory;
 import java.net.URI;
@@ -18,7 +18,7 @@ public class BiliBiliLive {
 
     public void run() {
         if (!MohistConfig.live_bilibili.asBoolean()) return;
-        MohistAI.LOGGER.info("B站开播推送服务已启用");
+        Log.info("B站开播推送服务已启用");
         LIVE.scheduleAtFixedRate(this::run0, 1000, 1000 * 10, TimeUnit.MILLISECONDS);
     }
 
@@ -39,15 +39,15 @@ public class BiliBiliLive {
                         直播地址：https://live.bilibili.com/43087"""
                         .formatted(title);
 
-                MohistAI.LOGGER.info(ms);
+                Log.info(ms);
                 MohistConfig.live_bilibili_pushqq.setValues(true);
                 MohistConfig.save();
                 QQ.sendToMohistGroup(ms);
-                MohistAI.LOGGER.info("已推送至QQ");
+                Log.info("已推送至QQ");
             }
         } else {
             if (MohistConfig.live_bilibili_pushqq.asBoolean()) {
-                MohistAI.LOGGER.info("已初始化推送(BiliBili)");
+                Log.info("已初始化推送(BiliBili)");
                 MohistConfig.live_bilibili_pushqq.setValues(false);
                 MohistConfig.save();
             }

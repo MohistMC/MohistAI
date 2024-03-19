@@ -58,10 +58,10 @@ public class MohistConfig {
             mohist();
             yaml.save();
         } catch (Exception ex) {
-            MohistAI.LOGGER.info("mohist.yml初始化失败");
+            Log.info("mohist.yml初始化失败");
         }
 
-        MohistAI.LOGGER.info("配置文件初始化完毕");
+        Log.info("配置文件初始化完毕");
     }
 
     @SneakyThrows

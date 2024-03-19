@@ -1,7 +1,7 @@
 package com.mohistmc.ai.bots.discord;
 
-import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.MohistConfig;
+import com.mohistmc.ai.log.Log;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import org.javacord.api.DiscordApiBuilder;
@@ -24,5 +24,10 @@ public class DiscordBot {
         System.out.println("尝试登入Discord...");
         discord = builder.setToken(MohistConfig.discord_token).login().join();
         System.out.println("Discord 登录成功");
+        builder.addMessageCreateListener(DiscordListener::onMessage);
+
+        Log.info("尝试登入Discord...");
+        builder.setToken(MohistConfig.discord_token.asString()).login().join();
+        Log.info("Discord 登录成功");
     }
 }

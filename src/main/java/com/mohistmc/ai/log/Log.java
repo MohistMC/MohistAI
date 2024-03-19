@@ -1,4 +1,4 @@
-package com.mohistmc.ai.bots.mcbots;
+package com.mohistmc.ai.log;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,15 +16,15 @@ public class Log {
     }
 
     public static void error(Exception e) {
-        log("ERROR | ");
+        log("[ERROR]: ");
         e.printStackTrace();
     }
 
     public static void info(String ...in) {
-        log("INFO | " + String.join(" ", in));
+        log("[INFO]: " + String.join(" ", in));
     }
     public static void info() {
-        log("INFO | ");
+        log("[INFO]: ");
     }
 
     public static void warn(String ...in) {

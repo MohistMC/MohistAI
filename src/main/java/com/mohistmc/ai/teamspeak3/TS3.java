@@ -16,6 +16,7 @@ import com.github.theholywaffle.teamspeak3.api.event.PrivilegeKeyUsedEvent;
 import com.github.theholywaffle.teamspeak3.api.event.ServerEditedEvent;
 import com.github.theholywaffle.teamspeak3.api.event.TS3Listener;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
+import com.mohistmc.ai.log.Log;
 import com.mohistmc.ai.sdk.qq.QQ;
 
 public class TS3 {
@@ -52,22 +53,22 @@ public class TS3 {
 
             @Override
             public void onServerEdit(ServerEditedEvent e) {
-                System.out.println("Server edited by " + e.getInvokerName());
+                Log.info("Server edited by " + e.getInvokerName());
             }
 
             @Override
             public void onClientMoved(ClientMovedEvent e) {
-                System.out.println("Client has been moved " + e.getClientId());
+                Log.info("Client has been moved " + e.getClientId());
             }
 
             @Override
             public void onClientLeave(ClientLeaveEvent e) {
-                System.out.println(e.getInvokerName() + " 退出了TS服务器");
+                Log.info(e.getInvokerName() + " 退出了TS服务器");
             }
 
             @Override
             public void onClientJoin(ClientJoinEvent e) {
-                System.out.println(e.getClientNickname() + " 进入了TS服务器");
+                Log.info(e.getClientNickname() + " 进入了TS服务器");
             }
 
             @Override

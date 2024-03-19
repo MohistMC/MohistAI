@@ -1,8 +1,8 @@
 package com.mohistmc.ai.sdk.qq;
 
 import com.mohistmc.ai.Account;
-import com.mohistmc.ai.MohistAI;
 import com.mohistmc.ai.MohistConfig;
+import com.mohistmc.ai.log.Log;
 import com.mohistmc.ai.network.HttpRequestUtils;
 import com.mohistmc.ai.sdk.BotType;
 import java.util.ArrayList;
@@ -68,6 +68,6 @@ public class QQ {
     }
 
     public static void debug(String debug_message){
-        if (debug) MohistAI.LOGGER.info(debug_message);
+        if (debug) Log.info(debug_message);
     }
 }

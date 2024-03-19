@@ -1,5 +1,6 @@
 package com.mohistmc.ai.bots.mcbots;
 
+import com.mohistmc.ai.log.Log;
 import java.util.Random;
 
 public class RandomChineseNameGenerator {
@@ -17,7 +18,7 @@ public class RandomChineseNameGenerator {
     };
 
     public static void main(String[] args) {
-        System.out.println(generateRandomName());
+        Log.info(generateRandomName());
     }
 
     /**

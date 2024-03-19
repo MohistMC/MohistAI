@@ -6,6 +6,7 @@ import com.github.steveice10.mc.auth.service.MsaAuthenticationService;
 import com.github.steveice10.mc.auth.util.HTTP;
 import com.github.steveice10.mc.protocol.data.status.ServerStatusInfo;
 import com.github.steveice10.packetlib.ProxyInfo;
+import com.mohistmc.ai.log.Log;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -286,7 +287,7 @@ public class Main {
                 }
 
             }
-            System.out.println(bots.size() + "个Bot已接入完毕!");
+            Log.info(bots.size() + "个Bot已接入完毕!");
         }).start();
 
     }
