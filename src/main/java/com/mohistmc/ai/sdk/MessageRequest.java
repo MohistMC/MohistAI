@@ -1,13 +1,9 @@
 package com.mohistmc.ai.sdk;
 
 import java.util.List;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
-@Setter
-@Getter
-@ToString
+@Data
 public class MessageRequest {
     private long self_id;
     private long user_id;
@@ -23,13 +19,29 @@ public class MessageRequest {
     private String message_format;
     private String post_type;
     private long group_id;
+
+    @lombok.Data
+    public static class Message {
+        private Data data;
+        private  String type;
+    }
+
+    @lombok.Data
+    public static class Data {
+        private String text;
+        private String id;
+        private String file;
+        private String url;
+        private String file_size;
+    }
+
+    @lombok.Data
+    public static class Sender {
+        private long user_id;
+        private String nickname;
+        private String card;
+        private String role;
+    }
 }
 
-record Message(Data data, String type) {
-}
 
-record Data(String text, String id, String file, String url, String file_size) {
-}
-
-record Sender(long user_id, String nickname, String card, String role) {
-}

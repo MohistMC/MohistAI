@@ -24,11 +24,11 @@ public class ApiController {
                     request.getUser_id(),
                     request.getRaw_message()));
             if (request.getGroup_id() == 743486411L) {
-                if (request.getMessage().getFirst().type().equals("text")) {
+                if (request.getMessage().getFirst().getType().equals("text")) {
                     if (request.getRaw_message().startsWith("ts ")) {
                         String message = request.getRaw_message().replace("ts ", "");
                         if (TS3.api != null) {
-                            TS3.api.sendServerMessage("[%s]: %s".formatted(request.getSender().nickname(), message));
+                            TS3.api.sendServerMessage("[%s]: %s".formatted(request.getSender().getNickname(), message));
                         }
                     }
                 }
