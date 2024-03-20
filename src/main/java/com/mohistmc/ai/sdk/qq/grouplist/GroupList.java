@@ -1,15 +1,10 @@
 package com.mohistmc.ai.sdk.qq.grouplist;
 
 import com.mohistmc.json4bean.JSON;
-import java.util.List;
 import java.util.Objects;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
-@Setter
-@Getter
-@ToString
+@Data
 public class GroupList {
 
     @JSON
@@ -25,9 +20,7 @@ public class GroupList {
     @JSON
     private String echo;
 
-    @Setter
-    @Getter
-    @ToString
+    @lombok.Data
     public static class Data {
         @JSON
         private int group_id;

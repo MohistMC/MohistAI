@@ -30,28 +30,23 @@ public class QQ {
     }
 
     public static void sendToFishAllGroup(String message) {
-        for (Integer groupId : get_group_list(BotType.FISH)) {
-            send_group_msg(BotType.FISH, String.valueOf(groupId), message);
-        }
+        get_group_list(BotType.FISH).forEach(groupId -> send_group_msg(BotType.FISH, String.valueOf(groupId), message));
     }
 
+    @SneakyThrows
     public static void send_group_msg(BotType botType, String group_id, String message) {
         debug(message);
-        try {
-            HashMap<String, Object> param = new HashMap<>();
-            param.put("group_id", group_id);
-            param.put("message", message);
-            var string = HttpRequestUtils.post(botType, "/send_group_msg", param).get();
+        HashMap<String, String> param = new HashMap<>();
+        param.put("group_id", group_id);
+        param.put("message", message);
+        var string = HttpRequestUtils.post(botType, "/send_group_msg", param).get();
 
-            var json = Json.read(string);
-            if (Objects.equals(json.asString("status"), "failed")) {
-                debug("发送失败");
-                return;
-            }
-            debug("返回数据: " + json);
-        } catch (Exception e) {
-            e.printStackTrace();
+        var json = Json.read(string);
+        if (Objects.equals(json.asString("status"), "failed")) {
+            debug("发送失败");
+            return;
         }
+        debug("返回数据: " + json);
     }
 
     @SneakyThrows
