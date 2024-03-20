@@ -116,7 +116,7 @@ public class Bot extends Thread {
                             reason.append(matcher.group(1));
                         }
 
-                        Log.info(" -> " + reason.toString());
+                        Log.info(" -> " + reason);
 
                         if(event.getCause() != null) {
                             event.getCause().printStackTrace();

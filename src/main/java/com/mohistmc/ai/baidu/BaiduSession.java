@@ -3,11 +3,13 @@ package com.mohistmc.ai.baidu;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import lombok.Getter;
 
 /**
  * @author Mgazul by MohistMC
  * @date 2023/11/15 0:30:03
  */
+@Getter
 public class BaiduSession {
 
     private LinkedList<Map<String, String>> history = new LinkedList<>();
@@ -18,10 +20,6 @@ public class BaiduSession {
         map.put("role", role);
         map.put("content", content);
         this.history.add(map);
-    }
-
-    public LinkedList<Map<String, String>> getHistory() {
-        return this.history;
     }
 
     public void clear() {

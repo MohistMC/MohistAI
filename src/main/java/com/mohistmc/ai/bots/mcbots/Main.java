@@ -303,7 +303,7 @@ public class Main {
             Log.info("Bot with MainListener removed");
             isMainListenerMissing = true;
         }
-        if (bots.size() > 0) {
+        if (!bots.isEmpty()) {
             if (isMainListenerMissing && !isMinimal()) {
                 Log.info("Renewing MainListener");
                 renewMainListener();

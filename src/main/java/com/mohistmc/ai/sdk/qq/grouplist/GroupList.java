@@ -1,34 +1,34 @@
 package com.mohistmc.ai.sdk.qq.grouplist;
 
-import com.mohistmc.json4bean.JSON;
+import com.mohistmc.mjson.ToJson;
 import java.util.Objects;
 import lombok.Data;
 
 @Data
 public class GroupList {
 
-    @JSON
+    @ToJson
     private String status;
-    @JSON
+    @ToJson
     private int retcode;
-    @JSON
+    @ToJson
     private Data[] data;
-    @JSON
+    @ToJson
     private String message;
-    @JSON
+    @ToJson
     private String wording;
-    @JSON
+    @ToJson
     private String echo;
 
     @lombok.Data
     public static class Data {
-        @JSON
+        @ToJson
         private int group_id;
-        @JSON
+        @ToJson
         private String group_name;
-        @JSON
+        @ToJson
         private int member_count;
-        @JSON
+        @ToJson
         private int max_member_count;
     }
 
