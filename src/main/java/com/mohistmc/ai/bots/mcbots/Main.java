@@ -293,7 +293,7 @@ public class Main {
     }
 
     public static synchronized void renewMainListener() {
-        bots.get(0).registerMainListener();
+        bots.getFirst().registerMainListener();
     }
 
     public static synchronized void removeBot(Bot bot) {

@@ -24,13 +24,9 @@ public class ServerInfo {
         MinecraftProtocol protocol = new MinecraftProtocol();
         client = new TcpClientSession(address.getHostString(), address.getPort(), protocol, null);
 
-        client.setFlag(MinecraftConstants.SERVER_INFO_HANDLER_KEY, (ServerInfoHandler) (session, info) -> {
-            this.serverStatusInfo = info;
-        });
+        client.setFlag(MinecraftConstants.SERVER_INFO_HANDLER_KEY, (ServerInfoHandler) (session, info) -> this.serverStatusInfo = info);
 
-        client.setFlag(MinecraftConstants.SERVER_PING_TIME_HANDLER_KEY, (ServerPingTimeHandler) (session, pingTime) -> {
-            this.ping = pingTime;
-        });
+        client.setFlag(MinecraftConstants.SERVER_PING_TIME_HANDLER_KEY, (ServerPingTimeHandler) (session, pingTime) -> this.ping = pingTime);
 
         client.addListener(new SessionAdapter() {
             @Override

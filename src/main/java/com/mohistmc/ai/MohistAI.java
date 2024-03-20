@@ -8,6 +8,7 @@ import com.mohistmc.ai.log.Log;
 import com.mohistmc.ai.minecraft.VersionsCheck;
 import com.mohistmc.ai.mysql.MySqlInit;
 import com.mohistmc.ai.teamspeak3.TS3;
+import com.mohistmc.tools.JavaVersion;
 import lombok.SneakyThrows;
 /**
  * @author Mgazul by MohistMC
@@ -27,6 +28,7 @@ public class MohistAI {
     @SneakyThrows
     public void onEnable() {
         Log.info("初始化后端");
+        Log.info("Java: %s %s".formatted(JavaVersion.as(), JavaVersion.asClass()));
         MohistConfig.init();
         DiscordBot.init();
         Constants.apiKey = MohistConfig.dashscope_apikey;
