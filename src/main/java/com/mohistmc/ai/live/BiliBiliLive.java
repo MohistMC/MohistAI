@@ -1,6 +1,7 @@
 package com.mohistmc.ai.live;
 
 import com.mohistmc.ai.MohistConfig;
+import com.mohistmc.ai.live.entity.RoomInfo;
 import com.mohistmc.ai.log.Log;
 import com.mohistmc.ai.sdk.qq.QQ;
 import com.mohistmc.mjson.Json;
@@ -26,10 +27,9 @@ public class BiliBiliLive {
     @SneakyThrows
     private void run0() {
         Json json = Json.read(URI.create("https://api.live.bilibili.com/xlive/web-room/v1/index/getInfoByRoom?room_id=43087").toURL());
-        var liveStatus = json.at("data").at("room_info").asInteger("live_status");
-        var title = json.at("data").at("room_info").asString("title");
-
-        if (liveStatus == 1) {
+        var room_info_json = json.at("data").at("room_info");
+        RoomInfo roomInfo = room_info_json.asBean(RoomInfo.class);
+        if (roomInfo.isLive()) {
             // TODO 添加可配置Bot识别
             if (!MohistConfig.live_bilibili_pushqq.asBoolean()) {
                 String ms = """
@@ -37,7 +37,7 @@ public class BiliBiliLive {
                                             
                         直播标题： %s
                         直播地址：https://live.bilibili.com/43087"""
-                        .formatted(title);
+                        .formatted(roomInfo.getTitle());
 
                 Log.info(ms);
                 MohistConfig.live_bilibili_pushqq.setValues(true);
