@@ -35,7 +35,7 @@ public class MohistAI {
         HuyaLive.INSTANCE.run();
         VersionsCheck.INSTANCE.run();
         TS3.init();
-        ApiController.start(MohistConfig.http_server_port.asInt());
+        ApiController.init();
         Log.info("初始化后端完毕");
     }
 
