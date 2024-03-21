@@ -23,6 +23,7 @@ public class Log {
     public static void info(String ...in) {
         log("[INFO]: " + String.join(" ", in));
     }
+
     public static void info() {
         log("[INFO]: ");
     }
@@ -30,12 +31,9 @@ public class Log {
     public static void warn(String ...in) {
         log("WARN | " + String.join(" ", in));
     }
+
     public static void warn() {
         log("WARN | ");
-    }
-
-    public static void chat(String ...in) {
-        log("CHAT | " + String.join(" ", in));
     }
 
     public static void crit(Exception e) {

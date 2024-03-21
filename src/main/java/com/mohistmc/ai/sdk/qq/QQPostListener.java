@@ -4,18 +4,17 @@ import com.mohistmc.ai.log.Log;
 import com.mohistmc.ai.network.event.BaseListener;
 import com.mohistmc.ai.network.event.HttpPostEvent;
 import com.mohistmc.ai.sdk.MessageRequest;
-import com.mohistmc.ai.sdk.qq.grouplist.GroupList;
 import com.mohistmc.ai.teamspeak3.TS3;
+import com.mohistmc.mjson.Json;
 
 public class QQPostListener implements BaseListener {
     public void onEvent(HttpPostEvent event) {
+        Json json = event.getJson();
         if (event.isQQ()) {
-            MessageRequest request = event.getJson().asBean(MessageRequest.class);
+            MessageRequest request = json.asBean(MessageRequest.class);
             String t = request.getMessage_type();
             if (t == null) {
-                Log.info(new StringBuilder().repeat("↓", 40).toString());
-                Log.info(event.getJson().toString());
-                Log.info(new StringBuilder().repeat("↑", 40).toString());
+                debug(event);
             }
             if (t != null && t.equals("group")) {
                 Log.info("[群消息] 群号<%s> 发言者<%s>: %s".formatted(request.getGroup_id(), request.getUser_id(), request.getRaw_message()));
@@ -31,8 +30,16 @@ public class QQPostListener implements BaseListener {
                 }
             }
         } else {
-            GroupList groupList = event.getJson().asBean(GroupList.class);
-            Log.info("HttpPostEvent: %s -> %s".formatted(event.getRequestPath(), groupList.toString()));
+            debug(event);
         }
+    }
+
+    public void debug(HttpPostEvent event) {
+        StringBuilder sb = new StringBuilder().repeat("=", 20);
+        Log.info();
+        Log.info(sb + " <<HttpPostEvent>> " + sb);
+        Log.info("RequestPath: %s ".formatted(event.getRequestPath()));
+        Log.info(event.getJson().toString());
+        Log.info();
     }
 }
