@@ -26,10 +26,6 @@ public class MohistConfig {
     public static YamlSection live_huya;
     public static YamlSection live_bilibili_pushqq;
     public static YamlSection live_huya_pushqq;
-    public static YamlSection dashscope_apikey;
-    public static YamlSection baidu_apikey;
-    public static YamlSection baidu_secretkey;
-    public static YamlSection ai_type;
     // minecraft
     public static YamlSection minecraft_versionscheck;
     public static YamlSection minecraft_release;
@@ -137,10 +133,6 @@ public class MohistConfig {
         live_bilibili_pushqq = yaml.put("live", "bilibili", "pushqq").setDefValues(false);
         live_huya = yaml.put("live", "huya", "enable").setDefValues(true);
         live_huya_pushqq = yaml.put("live", "huya", "pushqq").setDefValues(false);
-        dashscope_apikey = yaml.put("dashscope", "apikey").setDefValues("");
-        baidu_apikey = yaml.put("baidu", "apikey").setDefValues("");
-        baidu_secretkey = yaml.put("baidu", "secretkey").setDefValues("");
-        ai_type = yaml.put("ai_type").setDefValues(ChatApiType.ALIBABA.name());
 
         minecraft_versionscheck = yaml.put("minecraft", "versions-check").setDefValues(false);
         minecraft_release = yaml.put("minecraft", "release").setDefValues("");
