@@ -7,6 +7,7 @@ import com.mohistmc.ai.live.HuyaLive;
 import com.mohistmc.ai.log.Log;
 import com.mohistmc.ai.minecraft.VersionsCheck;
 import com.mohistmc.ai.mysql.MySqlInit;
+import com.mohistmc.ai.network.ApiController;
 import com.mohistmc.ai.teamspeak3.TS3;
 import com.mohistmc.tools.JavaVersion;
 import lombok.SneakyThrows;
@@ -14,19 +15,17 @@ import lombok.SneakyThrows;
  * @author Mgazul by MohistMC
  * @date 2023/9/10 23:44:25
  */
-@Component
 public class MohistAI {
     public static MohistAI INSTANCE = new MohistAI();
 
     public void onEnable() {
 
-    @Init
-    public void init() {
-        Thread.ofVirtual().name("MohistAI").start(this::onEnable);
+    public static void main(String[] args) {
+        onEnable();
     }
 
     @SneakyThrows
-    public void onEnable() {
+    public static void onEnable() {
         Log.info("初始化后端");
         Log.info("Java: %s %s".formatted(JavaVersion.as(), JavaVersion.asClass()));
         MohistConfig.init();
@@ -36,6 +35,7 @@ public class MohistAI {
         HuyaLive.INSTANCE.run();
         VersionsCheck.INSTANCE.run();
         TS3.init();
+        ApiController.start(MohistConfig.http_server_port.asInt());
         Log.info("初始化后端完毕");
     }
 

@@ -44,6 +44,7 @@ public class MohistConfig {
     public static YamlSection qq_request_api_mohist;
     public static YamlSection qq_request_api_fish;
     public static YamlSection qq_request_debug;
+    public static YamlSection http_server_port;
 
     public static void init() {
         try {
@@ -154,5 +155,7 @@ public class MohistConfig {
         mysql_database = yaml.put("mysql", "database").setDefValues("");
         mysql_password = yaml.put("mysql", "password").setDefValues("");
         mysql_port = yaml.put("mysql", "port").setDefValues("");
+
+        http_server_port = yaml.put("http_server", "port").setDefValues("2024");
     }
 }

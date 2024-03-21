@@ -3,15 +3,10 @@ package com.mohistmc.ai.sdk;
 import com.mohistmc.ai.log.Log;
 import com.mohistmc.ai.teamspeak3.TS3;
 import lombok.SneakyThrows;
-import org.noear.solon.annotation.Body;
-import org.noear.solon.annotation.Controller;
-import org.noear.solon.annotation.Mapping;
 
-@Controller
 public class ApiController {
 
-    @Mapping("/qq")
-    public MessageRequest qq(@Body MessageRequest request) {
+    public MessageRequest qq(MessageRequest request) {
         String t = request.getMessage_type();
         if (t == null) {
             System.out.print("==================================================\n");
@@ -41,8 +36,7 @@ public class ApiController {
      * 用于DEBUG调试
      */
     @SneakyThrows
-    @Mapping("/qq_string")
-    public String qq_string(@Body String request) {
+    public String qq_string(String request) {
         System.out.printf(request);
         return request;
     }
