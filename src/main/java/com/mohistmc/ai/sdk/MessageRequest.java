@@ -27,7 +27,7 @@ public class MessageRequest {
     @ToJson
     private String sub_type;
     @ToJson
-    private List<Message> message;
+    private Message[] message;
     @ToJson
     private String message_format;
     @ToJson

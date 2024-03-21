@@ -19,7 +19,7 @@ public class QQPostListener implements BaseListener {
             if (t != null && t.equals("group")) {
                 Log.info("[群消息] 群号<%s> 发言者<%s>: %s".formatted(request.getGroup_id(), request.getUser_id(), request.getRaw_message()));
                 if (request.getGroup_id() == 743486411L) {
-                    if (request.getMessage().getFirst().getType().equals("text")) {
+                    if (request.getMessage()[0].getType().equals("text")) {
                         if (request.getRaw_message().startsWith("ts ")) {
                             String message = request.getRaw_message().replace("ts ", "");
                             if (TS3.api != null) {

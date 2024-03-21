@@ -32,7 +32,9 @@ public class TS3 {
         final TS3Query query = new TS3Query(config);
         try {
             query.connect();
+            Log.info("TS3连接成功");
         } catch (Exception e) {
+            Log.info("TS3连接失败");
             return;
         }
 
@@ -45,7 +47,7 @@ public class TS3 {
 
             @Override
             public void onTextMessage(TextMessageEvent e) {
-                System.out.printf("[TS][%s]: %s%n", e.getInvokerName(), e.getMessage().replace("ts ", ""));
+                Log.info("[TS][%s]: %s%n", e.getInvokerName(), e.getMessage().replace("ts ", ""));
                 if (e.getMessage().startsWith("ts ")) {
                     QQ.sendToFishGroup("[TS][%s]: %s".formatted(e.getInvokerName(), e.getMessage().replace("ts ", "")));
                 }
