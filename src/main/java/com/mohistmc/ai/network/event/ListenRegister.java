@@ -8,9 +8,9 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class ListenRegister {
 
-    private static ListenRegister listenrRegister;
-    private List<BaseListener> lstListener;
-    private Lock lock = new ReentrantLock();
+    private static ListenRegister listenerRegister;
+    private final List<BaseListener> lstListener;
+    private final Lock lock = new ReentrantLock();
 
     private ListenRegister() {
         lstListener = new ArrayList<>();
@@ -18,10 +18,10 @@ public class ListenRegister {
 
     public static ListenRegister getInstance() {
         synchronized (ListenRegister.class) {
-            if (null == listenrRegister) {
-                listenrRegister = new ListenRegister();
+            if (null == listenerRegister) {
+                listenerRegister = new ListenRegister();
             }
-            return listenrRegister;
+            return listenerRegister;
         }
     }
 
@@ -32,7 +32,7 @@ public class ListenRegister {
                 lstListener.add(listenter);
             }
 
-        } catch (Exception ex) {
+        } catch (Exception _) {
 
         } finally {
             lock.unlock();

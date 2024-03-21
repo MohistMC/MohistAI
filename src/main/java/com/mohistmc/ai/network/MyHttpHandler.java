@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import lombok.SneakyThrows;
 
 public class MyHttpHandler implements HttpHandler {
     @Override
@@ -22,27 +23,42 @@ public class MyHttpHandler implements HttpHandler {
             String response = "Hello, Mohist AI!";
             os.write(response.getBytes());
             os.close();
-        } else if (requestMethod.equalsIgnoreCase("POST") && requestPath.equals("/")) {
+        } else if (requestMethod.equalsIgnoreCase("POST")) {
             t.getResponseHeaders().add("Content-Type", "application/json; charset=UTF-8");
-            StringBuilder requestBody = new StringBuilder();
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(t.getRequestBody(), StandardCharsets.UTF_8))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    requestBody.append(line);
-                }
+            RequestPath p = RequestPath.as(requestPath);
+            if (p.isUnknown()) {
+                close(t);
+            } else {
+                post(t, p);
             }
-            Json json = Json.read(requestBody.toString());
-            HttpPostEvent event = new HttpPostEvent(this, json);
-            ApiController.eventBus.onEvent(event);
-            byte[] responseBytes = json.asBytes();
-            t.sendResponseHeaders(200, responseBytes.length);
-            OutputStream os = t.getResponseBody();
-            os.write(responseBytes);
-            os.close();
         } else {
-            t.sendResponseHeaders(404, 0);
-            OutputStream os = t.getResponseBody();
-            os.close();
+            close(t);
         }
+    }
+
+    @SneakyThrows
+    private void close(HttpExchange t) {
+        t.sendResponseHeaders(404, 0);
+        OutputStream os = t.getResponseBody();
+        os.close();
+    }
+
+    @SneakyThrows
+    private void post(HttpExchange t, RequestPath path) {
+        StringBuilder requestBody = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(t.getRequestBody(), StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                requestBody.append(line);
+            }
+        }
+        Json json = Json.read(requestBody.toString());
+        HttpPostEvent event = new HttpPostEvent(this, json, path);
+        ApiController.eventBus.onEvent(event);
+        byte[] responseBytes = json.asBytes();
+        t.sendResponseHeaders(200, responseBytes.length);
+        OutputStream os = t.getResponseBody();
+        os.write(responseBytes);
+        os.close();
     }
 }
