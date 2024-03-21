@@ -55,7 +55,7 @@ public class MyHttpHandler implements HttpHandler {
         Json json = Json.read(requestBody.toString());
         HttpPostEvent event = new HttpPostEvent(this, json, path);
         ApiController.eventBus.onEvent(event);
-        byte[] responseBytes = json.asBytes();
+        byte[] responseBytes = json.toString().getBytes(StandardCharsets.UTF_8);
         t.sendResponseHeaders(200, responseBytes.length);
         OutputStream os = t.getResponseBody();
         os.write(responseBytes);
