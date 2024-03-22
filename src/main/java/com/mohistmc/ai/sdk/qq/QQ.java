@@ -35,12 +35,12 @@ public class QQ {
 
     @SneakyThrows
     public static void send_group_msg(BotType botType, String group_id, String message) {
-        debug(message);
         HashMap<String, String> param = new HashMap<>();
         param.put("group_id", group_id);
         param.put("message", message);
         var string = HttpRequestUtils.post(botType, "/send_group_msg", param).get();
         if (string == null) return;
+        debug(message);
         var json = Json.read(string);
         if (Objects.equals(json.asString("status"), "failed")) {
             debug("发送失败");
