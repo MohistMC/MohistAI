@@ -40,7 +40,7 @@ public class QQ {
         param.put("group_id", group_id);
         param.put("message", message);
         var string = HttpRequestUtils.post(botType, "/send_group_msg", param).get();
-
+        if (string == null) return;
         var json = Json.read(string);
         if (Objects.equals(json.asString("status"), "failed")) {
             debug("发送失败");
