@@ -28,18 +28,6 @@ public class MiraiListener  {
         if (event.getSender().getId() == 1947585689L) {
             return ListeningStatus.STOPPED;
         }
-        if (group.equals(Account.mohistQQGGroup)) {
-            for (SingleMessage s : event.getMessage()) {
-                if (s instanceof FileMessage f) {
-                    //获取文件的下载链接
-                    if (f.getName().endsWith(".log") || f.getName().endsWith(".txt") || f.getName().endsWith(".yml")) {
-                        String url = f.toAbsoluteFile(event.getSubject()).getUrl();
-                        String read = IOUtil.readContent(IOUtil.getInputStream(url));
-                        event.getGroup().sendMessage("文件名: " + f.getName() + " 已自动上传至: " + HasteUtils.pasteMohist(read));
-                    }
-                }
-            }
-        }
 
         for (SingleMessage sm : event.getMessage()) {
             if (sm instanceof At at) {

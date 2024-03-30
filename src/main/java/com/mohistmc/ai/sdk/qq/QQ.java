@@ -5,8 +5,9 @@ import com.mohistmc.ai.MohistConfig;
 import com.mohistmc.ai.log.Log;
 import com.mohistmc.ai.network.HttpRequestUtils;
 import com.mohistmc.ai.sdk.BotType;
-import com.mohistmc.ai.sdk.qq.grouplist.GroupList;
-import com.mohistmc.ai.sdk.qq.grouplist.GroupList.Data;
+import com.mohistmc.ai.sdk.qq.entity.GetFile;
+import com.mohistmc.ai.sdk.qq.entity.GroupList;
+import com.mohistmc.ai.sdk.qq.entity.GroupList.Data;
 import com.mohistmc.mjson.Json;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +23,7 @@ public class QQ {
     public static final boolean debug = MohistConfig.qq_request_debug.asBoolean();
 
     public static void sendToMohistGroup(String message) {
-        send_group_msg(BotType.MOHIST, Account.mohistQQGGroup, message);
+        send_group_msg(BotType.MOHIST, String.valueOf(Account.mohistQQGGroup), message);
     }
 
     public static void sendToFishGroup(String message) {
@@ -65,6 +66,24 @@ public class QQ {
         groups = Arrays.stream(groupList.getData()).map(Data::getGroup_id).collect(Collectors.toList());
         debug(groups.toString());
         return groups;
+    }
+
+    @SneakyThrows
+    public static GetFile get_file(BotType botType, String file_id) {
+        HashMap<String, String> param = new HashMap<>();
+        param.put("file_id", file_id);
+        var string = HttpRequestUtils.post(botType, "/get_file", param).get();
+        if (string == null) {
+            return null;
+        }
+        var jsonRoot = Json.read(string);
+        GetFile groupList = jsonRoot.asBean(GetFile.class);
+        if (groupList.isFailed()) {
+            debug("获取失败");
+            return null;
+        }
+        debug(groupList.toString());
+        return groupList;
     }
 
     public static void debug(String debug_message){

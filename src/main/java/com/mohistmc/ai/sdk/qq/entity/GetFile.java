@@ -1,18 +1,18 @@
-package com.mohistmc.ai.sdk.qq.grouplist;
+package com.mohistmc.ai.sdk.qq.entity;
 
 import com.mohistmc.mjson.ToJson;
 import java.util.Objects;
 import lombok.Data;
 
 @Data
-public class GroupList {
+public class GetFile {
 
     @ToJson
     private String status;
     @ToJson
     private int retcode;
     @ToJson
-    private Data[] data;
+    private Data data;
     @ToJson
     private String message;
     @ToJson
@@ -23,17 +23,14 @@ public class GroupList {
     @lombok.Data
     public static class Data {
         @ToJson
-        private int group_id;
+        private String file;
         @ToJson
-        private String group_name;
+        private String file_size;
         @ToJson
-        private int member_count;
-        @ToJson
-        private int max_member_count;
+        private String file_name;
     }
 
     public boolean isFailed() {
         return Objects.equals(status, "failed");
     }
-
 }

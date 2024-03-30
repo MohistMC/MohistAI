@@ -1,4 +1,4 @@
-package com.mohistmc.ai.sdk;
+package com.mohistmc.ai.sdk.qq.entity;
 
 import com.mohistmc.mjson.ToJson;
 import java.util.List;
@@ -51,6 +51,8 @@ public class MessageRequest {
         private String id;
         @ToJson
         private String file;
+        @ToJson
+        private String file_id;
         @ToJson
         private String url;
         @ToJson
