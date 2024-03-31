@@ -2,6 +2,7 @@ package com.mohistmc.ai;
 
 import com.google.common.base.Throwables;
 import com.mohistmc.ai.dashscope.ChatApiType;
+import com.mohistmc.ai.log.Log;
 import com.mohistmc.yaml.InvalidConfigurationException;
 import com.mohistmc.yml.Yaml;
 import com.mohistmc.yml.YamlSection;
@@ -22,9 +23,12 @@ public class MohistConfig {
     public static YamlSection discord_proxy_enable;
     public static YamlSection discord_proxy_address;
     public static YamlSection discord_proxy_port;
+
     public static YamlSection live_bilibili;
-    public static YamlSection live_huya;
     public static YamlSection live_bilibili_pushqq;
+    public static YamlSection live_bilibili_concerns;
+
+    public static YamlSection live_huya;
     public static YamlSection live_huya_pushqq;
     // minecraft
     public static YamlSection minecraft_versionscheck;
@@ -129,8 +133,11 @@ public class MohistConfig {
         discord_proxy_enable = yaml.put("discord", "proxy", "enable").setDefValues(false);
         discord_proxy_address = yaml.put("discord", "proxy", "address").setDefValues("127.0.0.1");
         discord_proxy_port = yaml.put("discord", "proxy", "port").setDefValues(7890);
+
         live_bilibili = yaml.put("live", "bilibili", "enable").setDefValues(true);
         live_bilibili_pushqq = yaml.put("live", "bilibili", "pushqq").setDefValues(false);
+        live_bilibili_concerns = yaml.put("live", "bilibili", "concerns").setDefValues(List.of("43087", "43087"));
+
         live_huya = yaml.put("live", "huya", "enable").setDefValues(true);
         live_huya_pushqq = yaml.put("live", "huya", "pushqq").setDefValues(false);
 

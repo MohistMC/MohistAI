@@ -1,7 +1,6 @@
 package com.mohistmc.ai.sdk.qq.entity;
 
 import com.mohistmc.mjson.ToJson;
-import java.util.List;
 import lombok.Data;
 
 @Data
