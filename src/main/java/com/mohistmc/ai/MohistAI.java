@@ -6,6 +6,7 @@ import com.mohistmc.ai.live.BiliBiliLive;
 import com.mohistmc.ai.live.HuyaLive;
 import com.mohistmc.ai.log.Log;
 import com.mohistmc.ai.minecraft.VersionsCheck;
+import com.mohistmc.ai.minecraft.mohistchain.MohistChinaAPI;
 import com.mohistmc.ai.mysql.MySqlInit;
 import com.mohistmc.ai.network.ApiController;
 import com.mohistmc.ai.teamspeak3.TS3;
@@ -36,6 +37,7 @@ public class MohistAI {
         VersionsCheck.INSTANCE.run();
         TS3.init();
         ApiController.init();
+        MohistChinaAPI.init();
         Log.info("初始化后端完毕");
     }
 

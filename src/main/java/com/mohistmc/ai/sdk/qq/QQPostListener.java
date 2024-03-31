@@ -2,7 +2,9 @@ package com.mohistmc.ai.sdk.qq;
 
 import com.mohistmc.ai.Account;
 import com.mohistmc.ai.log.Log;
+import com.mohistmc.ai.minecraft.mohistchain.ChinaAPIListener;
 import com.mohistmc.ai.network.event.BaseListener;
+import com.mohistmc.ai.network.event.HttpGetEvent;
 import com.mohistmc.ai.network.event.HttpPostEvent;
 import com.mohistmc.ai.sdk.BotType;
 import com.mohistmc.ai.sdk.qq.entity.GetFile;
@@ -41,7 +43,6 @@ public class QQPostListener implements BaseListener {
                     for (var s : request.getMessage()) {
                         if (s.getType().equals("file")) {
                             GetFile getFile = QQ.get_file(BotType.MOHIST, s.getData().getFile_id());
-                            //获取文件的下载链接
                             if (getFile != null) {
                                 String file_name = getFile.getData().getFile_name();
                                 if (file_name.endsWith(".log") || file_name.endsWith(".txt") || file_name.endsWith(".yml")) {
@@ -62,6 +63,11 @@ public class QQPostListener implements BaseListener {
         } else {
             // debug(event);
         }
+    }
+
+    @Override
+    public void onEvent(HttpGetEvent e) {
+        ChinaAPIListener.onEvent(e);
     }
 
     public void debug(HttpPostEvent event) {

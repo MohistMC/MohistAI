@@ -45,4 +45,10 @@ public class ListenRegister {
         }
     }
 
+    public void onEvent(HttpGetEvent baseEvent) {
+        for (BaseListener listenter : lstListener) {
+            listenter.onEvent(baseEvent);
+        }
+    }
+
 }

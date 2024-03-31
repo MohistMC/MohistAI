@@ -4,4 +4,5 @@ import java.util.EventListener;
 
 public interface BaseListener extends EventListener {
     void onEvent(HttpPostEvent e);
+    void onEvent(HttpGetEvent e);
 }

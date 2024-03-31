@@ -2,14 +2,19 @@ package com.mohistmc.ai.network;
 
 import java.util.HashMap;
 import java.util.Map;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
 public enum RequestPath {
     DEFAULT("/"),
     QQ("/qq"),
     QQ_DEBUG("/qq_debug"),
+    GITHUB("/github"),
     UNKNOWN(null);
 
-    final String path;
+    @Setter
+    String path;
     private static final Map<String, RequestPath> parse = new HashMap<>();
 
     static {
