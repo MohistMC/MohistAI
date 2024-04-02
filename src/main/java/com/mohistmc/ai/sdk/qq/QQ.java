@@ -26,6 +26,10 @@ public class QQ {
         send_group_msg(BotType.MOHIST, String.valueOf(Account.mohistQQGGroup), message);
     }
 
+    public static void sendToACGroup(String message) {
+        send_group_msg(BotType.MOHIST, "432790401", message);
+    }
+
     public static void sendToFishGroup(String message) {
         send_group_msg(BotType.FISH, Account.上线了, message);
     }

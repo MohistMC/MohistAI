@@ -71,6 +71,9 @@ public class DiscordListener {
                                 提交时间: %s
                                 提交信息: %s"""
                                 .formatted(strings1[0], strings1[1].replace("\\", ""), author, sd, TJ.replace(TJ.split(" ")[0], ""));
+                        if (strings1[0].equals("AcademyCraft")) {
+                            QQ.sendToACGroup(sendMsg);
+                        }
                         QQ.sendToMohistGroup(sendMsg);
                     }
                 }
