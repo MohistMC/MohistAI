@@ -6,7 +6,6 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.intent.Intent;
-import retrofit2.http.HEAD;
 
 /**
  * @author Mgazul by MohistMC
@@ -20,10 +19,6 @@ public class DiscordBot {
         Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(MohistConfig.discord_proxy_address.asString(), MohistConfig.discord_proxy_port.asInt()));
         if (MohistConfig.discord_proxy_enable.asBoolean()) builder.setProxy(proxy);
         builder.addIntents(Intent.MESSAGE_CONTENT);
-        builder.addMessageCreateListener(MohistGitHub::onMessage);
-        System.out.println("尝试登入Discord...");
-        discord = builder.setToken(MohistConfig.discord_token).login().join();
-        System.out.println("Discord 登录成功");
         builder.addMessageCreateListener(DiscordListener::onMessage);
 
         Log.info("尝试登入Discord...");

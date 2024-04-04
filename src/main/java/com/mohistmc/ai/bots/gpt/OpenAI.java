@@ -1,19 +1,8 @@
 package com.mohistmc.ai.bots.gpt;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.RemovalCause;
-import com.google.common.cache.RemovalListener;
-import com.mohistmc.ai.MohistConfig;
-import com.theokanning.openai.completion.CompletionRequest;
-import com.theokanning.openai.service.OpenAiService;
-import java.time.Duration;
-import java.util.Arrays;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
-
 public class OpenAI {
 
+    /*
     public static Cache<Long, StringBuilder> CACHE;
     private static OpenAiService service;
 
@@ -52,4 +41,6 @@ public class OpenAI {
             return service.createCompletion(request).getChoices().getFirst().getText();
         });
     }
+
+     */
 }

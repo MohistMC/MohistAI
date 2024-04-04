@@ -1,6 +1,5 @@
 package com.mohistmc.ai;
 
-import com.alibaba.dashscope.utils.Constants;
 import com.mohistmc.ai.bots.discord.DiscordBot;
 import com.mohistmc.ai.live.BiliBiliLive;
 import com.mohistmc.ai.live.HuyaLive;
@@ -12,14 +11,12 @@ import com.mohistmc.ai.network.ApiController;
 import com.mohistmc.ai.teamspeak3.TS3;
 import com.mohistmc.tools.JavaVersion;
 import lombok.SneakyThrows;
+
 /**
  * @author Mgazul by MohistMC
  * @date 2023/9/10 23:44:25
  */
 public class MohistAI {
-    public static MohistAI INSTANCE = new MohistAI();
-
-    public void onEnable() {
 
     public static void main(String[] args) {
         onEnable();
@@ -31,10 +28,10 @@ public class MohistAI {
         Log.info("Java: %s %s".formatted(JavaVersion.as(), JavaVersion.asClass()));
         MohistConfig.init();
         DiscordBot.init();
-        Constants.apiKey = MohistConfig.dashscope_apikey;
         BiliBiliLive.INSTANCE.run();
         HuyaLive.INSTANCE.run();
         VersionsCheck.INSTANCE.run();
+        //connectMySql();
         TS3.init();
         ApiController.init();
         MohistChinaAPI.init();

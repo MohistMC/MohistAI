@@ -1,16 +1,10 @@
 package com.mohistmc.ai;
 
-import com.google.common.base.Throwables;
-import com.mohistmc.ai.dashscope.ChatApiType;
 import com.mohistmc.ai.log.Log;
-import com.mohistmc.yaml.InvalidConfigurationException;
 import com.mohistmc.yml.Yaml;
 import com.mohistmc.yml.YamlSection;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Modifier;
+import java.util.List;
 import lombok.SneakyThrows;
-import retrofit2.http.HEAD;
 
 public class MohistConfig {
 
@@ -48,13 +42,6 @@ public class MohistConfig {
 
     public static void init() {
         try {
-            if (!CONFIG_FILE.exists()) {
-                CONFIG_FILE.createNewFile();
-            }
-            config.load(CONFIG_FILE);
-        } catch (IOException | InvalidConfigurationException ex) {
-            System.out.println("Could not load mohist.yml, please correct your syntax errors");
-            Throwables.throwIfUnchecked(ex);
             yaml.load();
             mohist();
             yaml.save();
@@ -67,60 +54,6 @@ public class MohistConfig {
 
     @SneakyThrows
     public static void save() {
-        readConfig();
-    }
-
-    static void readConfig() {
-        for (Method method : MohistConfig.class.getDeclaredMethods()) {
-            if (Modifier.isPrivate(method.getModifiers())) {
-                if (method.getParameterTypes().length == 0 && method.getReturnType() == Void.TYPE) {
-                    try {
-                        method.setAccessible(true);
-                        method.invoke(null);
-                    } catch (InvocationTargetException ex) {
-                        Throwables.throwIfUnchecked(ex.getCause());
-                    } catch (Exception ex) {
-                        MohistAI.LOGGER.info("Error invoking " + method);
-                    }
-                }
-            }
-        }
-
-        try {
-            config.save(CONFIG_FILE);
-        } catch (IOException ex) {
-            MohistAI.LOGGER.info("Could not save " + CONFIG_FILE);
-        }
-    }
-
-    public static void set(String path, Object val) {
-        config.set(path, val);
-        save();
-    }
-
-    private static boolean getBoolean(String path, boolean def) {
-        config.addDefault(path, def);
-        return config.getBoolean(path, config.getBoolean(path));
-    }
-
-    private static int getInt(String path, int def) {
-        config.addDefault(path, def);
-        return config.getInt(path, config.getInt(path));
-    }
-
-    private static <T> List getList(String path, T def) {
-        config.addDefault(path, def);
-        return config.getList(path, config.getList(path));
-    }
-
-    private static String getString(String path, String def) {
-        config.addDefault(path, def);
-        return config.getString(path, config.getString(path));
-    }
-
-    private static double getDouble(String path, double def) {
-        config.addDefault(path, def);
-        return config.getDouble(path, config.getDouble(path));
         yaml.save();
     }
 
