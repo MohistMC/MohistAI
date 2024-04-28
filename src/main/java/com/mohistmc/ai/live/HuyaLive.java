@@ -53,7 +53,7 @@ public class HuyaLive {
             if (!MohistConfig.live_huya_pushqq.asBoolean()) {
                 String ms = """
                         你关注的主播已开播
-                                            
+                        
                         直播标题： %s
                         直播地址：https://www.huya.com/pinkfish"""
                         .formatted(title);
