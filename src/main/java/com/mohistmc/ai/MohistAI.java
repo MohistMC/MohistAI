@@ -34,7 +34,7 @@ public class MohistAI {
         //connectMySql();
         TS3.init();
         ApiController.init();
-        MohistChinaAPI.init();
+        // MohistChinaAPI.init();
         Log.info("初始化后端完毕");
     }
 
